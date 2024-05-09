@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 public class NPC {
     private int position_x;
     private int position_y;
+
+
     private int speed;
 
 
@@ -150,6 +152,8 @@ public class NPC {
     public void setSpriteNum(int spriteNum) {
         this.spriteNum = spriteNum;
     }
+
+
 }
 
 

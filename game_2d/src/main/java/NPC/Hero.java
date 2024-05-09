@@ -16,6 +16,9 @@ public class Hero extends NPC {
     Game_controls game_controls;
     BufferedImage image = null;
 
+    private  int screen_x;
+    private  int screen_y;
+
 
 
 
@@ -27,10 +30,12 @@ public class Hero extends NPC {
     }
 
     public void setHero(){
-        setPosition_x(100);
-        setPosition_y(100);
+        setPosition_x(910);
+        setPosition_y(540);
         setSpeed(5);
         setDirection("down");
+        setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
+        setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
     }
 
     private void getHeroImages(){
@@ -127,11 +132,23 @@ public class Hero extends NPC {
 
         }
 
-        g2.drawImage(image,getPosition_x(),getPosition_y(), game_panel.getTile_size_x(), game_panel.getTile_size_y(), null);
+        g2.drawImage(image, getScreen_x(), getScreen_y(), game_panel.getTile_size_x(), game_panel.getTile_size_y(), null);
     }
 
 
+    public int getScreen_x() {
+        return screen_x;
+    }
 
+    public void setScreen_x(int screen_x) {
+        this.screen_x = screen_x;
+    }
 
+    public int getScreen_y() {
+        return screen_y;
+    }
 
+    public void setScreen_y(int screen_y) {
+        this.screen_y = screen_y;
+    }
 }

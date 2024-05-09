@@ -13,22 +13,26 @@ public class Game_panel extends JPanel implements Runnable{
 
 
 
-
+    //GAME SETTINGS
     private int tile_size_x = 48;
     private int tile_size_y = 48;
+    private final int max_world_col = 128;
+    private final int max_world_row = 128;
 
-    private final int max_world_col = 1920/tile_size_x; //40
+    private final int max_world_width = getMax_world_col() * tile_size_x;
+    private final int max_world_heigth = getMax_world_col() * tile_size_y;
 
-    private final int max_world_row = 1920/tile_size_y; //22
+    //SCREEN SETTINGS
 
-    private int max_screen_col =1920/tile_size_x;
-    private int max_screen_row =1080/tile_size_y;
-
-    final int window_width = 1920;
-    final int window_height = 1080;
-
+    private final int window_width = 1920;
+    private final int window_height = 1080;
+    private int max_screen_col = window_width/tile_size_x;
+    private int max_screen_row = window_height/tile_size_y;
 
 
+
+
+    //CREATION OF THE GAME WINDOW AND THREAD
     Game_controls game_controls = new Game_controls();
 
     Thread gameThread;
@@ -39,7 +43,7 @@ public class Game_panel extends JPanel implements Runnable{
 
     public void set_game_panel(){
 
-        this.setPreferredSize(new Dimension(window_width, window_height));
+        this.setPreferredSize(new Dimension(getWindow_width(), getWindow_height()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(game_controls);
@@ -125,5 +129,25 @@ public void update()
 
     public void setMax_screen_row(int max_screen_width) {
         this.max_screen_row = max_screen_row;
+    }
+
+    public int getWindow_width() {
+        return window_width;
+    }
+
+    public int getWindow_height() {
+        return window_height;
+    }
+
+    public int getMax_world_width() {
+        return max_world_width;
+    }
+
+    public int getMax_world_heigth() {
+        return max_world_heigth;
+    }
+
+    public Hero getHero(){
+       return hero;
     }
 }
