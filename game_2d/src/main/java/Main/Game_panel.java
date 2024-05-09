@@ -17,9 +17,9 @@ public class Game_panel extends JPanel implements Runnable{
     private int tile_size_x = 48;
     private int tile_size_y = 48;
 
-    private final int max_world_col = 1920/tile_size_x;
+    private final int max_world_col = 1920/tile_size_x; //40
 
-    private final int max_world_row = 1920/tile_size_y;
+    private final int max_world_row = 1920/tile_size_y; //22
 
     private int max_screen_col =1920/tile_size_x;
     private int max_screen_row =1080/tile_size_y;
@@ -60,7 +60,7 @@ public class Game_panel extends JPanel implements Runnable{
 
         while(gameThread != null) {
 
-            hero.updatehero();
+            update();
             repaint();
             try {
                 Thread.sleep(1000 / 60); // Задержка для 60 FPS
