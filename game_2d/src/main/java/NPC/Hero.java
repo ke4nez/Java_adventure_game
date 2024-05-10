@@ -37,7 +37,7 @@ public class Hero extends NPC {
         setPosition_x(0);
         setPosition_y(0);
         setSpeed(2);
-        setDirection("down");
+        setDirection("stands");
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
     }
@@ -53,7 +53,8 @@ public class Hero extends NPC {
           setRight2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_right_2.png")) );
           setDown1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/kvadratni.png")) );
           setDown2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_down_2.png")) );
-          //setStands(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/hero_defoult.png")));
+          setStands(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/stands.png")));
+          setStands2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/stands2.png")));
 
         }catch (IOException e){
             System.out.println("get hero images not working");
@@ -64,10 +65,8 @@ public class Hero extends NPC {
         if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left) {
             if (game_controls.go_right) {
                 setDirection("right");
-
                 setCollision(false);
                 collisionChecker.check_tile(this);
-
                 if(getCollision() != true){
                     setPosition_x(getPosition_x() + getSpeed());
                 }
@@ -75,36 +74,27 @@ public class Hero extends NPC {
 
             if (game_controls.go_left) {
                 setDirection("left");
-
                 setCollision(false);
                 collisionChecker.check_tile(this);
-
                 if(getCollision() != true){
                     setPosition_x(getPosition_x() - getSpeed());
                 }
             }
             if (game_controls.go_up) {
                 setDirection("up");
-
                 setCollision(false);
                 collisionChecker.check_tile(this);
-
                 if(getCollision() != true){
                     setPosition_y(getPosition_y() - getSpeed());
                 }
-
-
             }
             if (game_controls.go_down) {
                 setDirection("down");
-
                 setCollision(false);
                 collisionChecker.check_tile(this);
-
                 if(getCollision() != true){
                     setPosition_y(getPosition_y() + getSpeed());
                 }
-
 
             }
 
@@ -155,6 +145,22 @@ public class Hero extends NPC {
 
         }
 
+
+        if(!game_controls.go_right  && !game_controls.go_down && !game_controls.go_up && !game_controls.go_left){
+            setDirection("stands");
+
+            setSpriteCounter(getSpriteCounter() + 1);
+            if (getSpriteCounter() > 90) {
+                if (getSpriteNum() == 1) {
+                    setSpriteNum(2);
+                } else if (getSpriteNum() == 2) {
+                    setSpriteNum(1);
+                }
+                setSpriteCounter(0);
+            }
+
+        }
+
         //setDirection("stands");
 
 
@@ -199,7 +205,14 @@ public class Hero extends NPC {
                 }
                 break;
             case"stands":
-                image = getStands();
+
+                if(getSpriteNum()==1){
+                    image = getStands();
+                }
+                if(getSpriteNum()==2){
+                    image = getStands2();
+                }
+                break;
 
         }
 

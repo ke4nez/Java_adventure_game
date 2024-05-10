@@ -15,6 +15,7 @@ public class Main {
         Game_panel game_panel = new Game_panel();
 
         game_panel.set_game_panel();
+        game_panel.setGame();
 
         window.add(game_panel);
         window.pack();

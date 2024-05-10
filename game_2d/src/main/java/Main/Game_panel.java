@@ -5,14 +5,9 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
 import NPC.Hero;
+import Objects.Game_Object;
 import Objects.Lamp;
-import Objects.Object;
 import surroundings.TileManager;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 
 
 public class Game_panel extends JPanel implements Runnable{
@@ -48,11 +43,19 @@ public class Game_panel extends JPanel implements Runnable{
 
     private Lamp lamp = new Lamp(this);
 
+    private Game_Object[] obj = new Game_Object[10];
 
-
+    private AssetManager assetManager = new AssetManager(this);
 
     private TileManager tileManager = new TileManager(this);
     private CollisionChecker collisionChecker = new CollisionChecker(this);
+
+
+
+    public void setGame(){
+        assetManager.setObjects();
+
+    }
 
 
     public void set_game_panel(){
@@ -100,9 +103,14 @@ public void update()
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        getTileManager().draw(g2);
-        getHero().painthero(g2);
-        lamp.paintObject(g2);
+        tileManager.draw(g2);
+
+        for(int i = 0 ; i < obj.length; i++) {
+            if (obj[i] != null) {
+                obj[i].paintObject(g2);
+            }
+        }
+        hero.painthero(g2);
     }
 
     public int getMax_world_row() {
@@ -183,5 +191,12 @@ public void update()
 
     public void setCollisionChecker(CollisionChecker collisionChecker) {
         this.collisionChecker = collisionChecker;
+    }
+
+    public Game_Object[] getObj() {
+        return obj;
+    }
+    public void setObj(Game_Object[] obj) {
+        this.obj = obj;
     }
 }

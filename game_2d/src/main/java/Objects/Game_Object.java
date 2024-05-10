@@ -5,7 +5,7 @@ import Main.Game_panel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Object {
+public class Game_Object {
 
     private BufferedImage image;
     private String name;

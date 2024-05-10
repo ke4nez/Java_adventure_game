@@ -14,6 +14,8 @@ public class NPC {
 
 
 
+
+
     private BufferedImage up1;
     private BufferedImage up2;
     private BufferedImage down1;
@@ -23,6 +25,7 @@ public class NPC {
     private BufferedImage right1;
     private BufferedImage right2;
     private BufferedImage stands;
+    private BufferedImage stands2;
     private String direction;
 
     private  int spriteCounter = 0;
@@ -172,6 +175,14 @@ public class NPC {
 
     public void setCollision(boolean collision) {
         this.collision = collision;
+    }
+
+    public BufferedImage getStands2() {
+        return stands2;
+    }
+
+    public void setStands2(BufferedImage stands2) {
+        this.stands2 = stands2;
     }
 }
 
