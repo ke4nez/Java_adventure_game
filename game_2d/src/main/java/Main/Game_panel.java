@@ -5,7 +5,14 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
 import NPC.Hero;
+import Objects.Lamp;
+import Objects.Object;
 import surroundings.TileManager;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class Game_panel extends JPanel implements Runnable{
@@ -38,6 +45,12 @@ public class Game_panel extends JPanel implements Runnable{
     Thread gameThread;
 
     private Hero hero = new Hero(this,game_controls);
+
+    private Lamp lamp = new Lamp(this);
+
+
+
+
     private TileManager tileManager = new TileManager(this);
     private CollisionChecker collisionChecker = new CollisionChecker(this);
 
@@ -89,7 +102,7 @@ public void update()
         Graphics2D g2 = (Graphics2D)g;
         getTileManager().draw(g2);
         getHero().painthero(g2);
-
+        lamp.paintObject(g2);
     }
 
     public int getMax_world_row() {

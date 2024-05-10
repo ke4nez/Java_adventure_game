@@ -51,7 +51,7 @@ public class Hero extends NPC {
           setLeft2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_left_2.png")) );
           setRight1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_right_1.png")) );
           setRight2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_right_2.png")) );
-          setDown1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/hero.png")) );
+          setDown1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/kvadratni.png")) );
           setDown2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_down_2.png")) );
           //setStands(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/hero_defoult.png")));
 
@@ -165,7 +165,6 @@ public class Hero extends NPC {
 
     }
     public void painthero(Graphics2D g2) {
-
         switch(getDirection()){
             case "up":
                 if(getSpriteNum() == 1){
