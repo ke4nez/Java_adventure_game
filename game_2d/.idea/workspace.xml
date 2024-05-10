@@ -55,6 +55,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ke4Nez\Desktop\git_semestralka\lysenan1\lysenan1\game_2d\res\Hero" />
       <recent name="C:\Users\Ke4Nez\Desktop\semestralka\game_2d\res\Tile" />
       <recent name="C:\Users\Ke4Nez\Desktop\semestralka\game_2d\res\Hero" />
     </key>
@@ -104,20 +105,11 @@
       <workItem from="1715256827198" duration="2989000" />
       <workItem from="1715272818171" duration="5585000" />
       <workItem from="1715279193045" duration="3613000" />
+      <workItem from="1715283231913" duration="16809000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -1,5 +1,6 @@
 package NPC;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class NPC {
@@ -8,6 +9,9 @@ public class NPC {
 
 
     private int speed;
+    private Rectangle NPC_rectangle;
+    private boolean collision = false;
+
 
 
     private BufferedImage up1;
@@ -154,6 +158,21 @@ public class NPC {
     }
 
 
+    public Rectangle getNPC_rectangle() {
+        return NPC_rectangle;
+    }
+
+    public void setNPC_rectangle(Rectangle NPC_collision) {
+        this.NPC_rectangle = NPC_collision;
+    }
+
+    public boolean getCollision() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
 }
 
 

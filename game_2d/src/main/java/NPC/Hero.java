@@ -1,6 +1,7 @@
 package NPC;
 
 
+import Main.CollisionChecker;
 import Main.Game_controls;
 import Main.Game_panel;
 
@@ -18,6 +19,7 @@ public class Hero extends NPC {
 
     private  int screen_x;
     private  int screen_y;
+    CollisionChecker collisionChecker;
 
 
 
@@ -25,14 +27,16 @@ public class Hero extends NPC {
     public Hero(Game_panel game_panel ,Game_controls game_controls){
         this.game_controls = game_controls;
         this.game_panel = game_panel;
+        this.setNPC_rectangle(new Rectangle(8,16,game_panel.getTile_size_x()/2,game_panel.getTile_size_y()/2)) ;
+        collisionChecker = new CollisionChecker(game_panel);
         setHero();
         getHeroImages();
     }
 
     public void setHero(){
-        setPosition_x(910);
-        setPosition_y(540);
-        setSpeed(5);
+        setPosition_x(0);
+        setPosition_y(0);
+        setSpeed(2);
         setDirection("down");
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
@@ -47,7 +51,7 @@ public class Hero extends NPC {
           setLeft2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_left_2.png")) );
           setRight1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_right_1.png")) );
           setRight2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_right_2.png")) );
-          setDown1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_down_1.png")) );
+          setDown1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/hero.png")) );
           setDown2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_down_2.png")) );
           //setStands(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/hero_defoult.png")));
 
@@ -59,20 +63,49 @@ public class Hero extends NPC {
     public void updatehero(){
         if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left) {
             if (game_controls.go_right) {
-                setPosition_x(getPosition_x() + getSpeed());
                 setDirection("right");
+
+                setCollision(false);
+                collisionChecker.check_tile(this);
+
+                if(getCollision() != true){
+                    setPosition_x(getPosition_x() + getSpeed());
+                }
             }
+
             if (game_controls.go_left) {
-                setPosition_x(getPosition_x() - getSpeed());
                 setDirection("left");
+
+                setCollision(false);
+                collisionChecker.check_tile(this);
+
+                if(getCollision() != true){
+                    setPosition_x(getPosition_x() - getSpeed());
+                }
             }
             if (game_controls.go_up) {
-                setPosition_y(getPosition_y() - getSpeed());
                 setDirection("up");
+
+                setCollision(false);
+                collisionChecker.check_tile(this);
+
+                if(getCollision() != true){
+                    setPosition_y(getPosition_y() - getSpeed());
+                }
+
+
             }
             if (game_controls.go_down) {
-                setPosition_y(getPosition_y() + getSpeed());
                 setDirection("down");
+
+                setCollision(false);
+                collisionChecker.check_tile(this);
+
+                if(getCollision() != true){
+                    setPosition_y(getPosition_y() + getSpeed());
+                }
+
+
             }
 
             setSpriteCounter(getSpriteCounter() + 1);
@@ -84,9 +117,48 @@ public class Hero extends NPC {
                 }
                 setSpriteCounter(0);
             }
+
+
+          /// WITH THIS CODE CHARACTER CANT WALK IN 2 WAYS AT THE SAME TIME
+
+
+            //setCollision(false);
+           // collisionChecker.check_tile(this);
+
+
+           // if(getDirection() == "up"){
+            //    if(getCollision() != true){
+              //      setPosition_y(getPosition_y() - getSpeed());
+             //   }
+           // }
+
+           // if(getDirection() == "right"){
+           //     if(getCollision() != true){
+           //         setPosition_x(getPosition_x() + getSpeed());
+           //     }
+           // }
+
+           // if(getDirection() == "left"){
+           //     if(getCollision() != true){
+           //         setPosition_x(getPosition_x() - getSpeed());
+           //     }
+           // }
+
+
+           // if(getDirection() == "down"){
+            //    if(getCollision() != true){
+            //        setPosition_y(getPosition_y() + getSpeed());
+            //    }
+           // }
+
+
+
         }
 
         //setDirection("stands");
+
+
+
 
 
 

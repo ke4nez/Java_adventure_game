@@ -16,8 +16,8 @@ public class Game_panel extends JPanel implements Runnable{
     //GAME SETTINGS
     private int tile_size_x = 48;
     private int tile_size_y = 48;
-    private final int max_world_col = 128;
-    private final int max_world_row = 128;
+    private final int max_world_col = 32;
+    private final int max_world_row = 32;
 
     private final int max_world_width = getMax_world_col() * tile_size_x;
     private final int max_world_heigth = getMax_world_col() * tile_size_y;
@@ -37,8 +37,9 @@ public class Game_panel extends JPanel implements Runnable{
 
     Thread gameThread;
 
-    Hero hero = new Hero(this,game_controls);
-    TileManager tileManager = new TileManager(this);
+    private Hero hero = new Hero(this,game_controls);
+    private TileManager tileManager = new TileManager(this);
+    private CollisionChecker collisionChecker = new CollisionChecker(this);
 
 
     public void set_game_panel(){
@@ -80,14 +81,14 @@ public class Game_panel extends JPanel implements Runnable{
 
 public void update()
 {
-        hero.updatehero();
+        getHero().updatehero();
 }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        tileManager.draw(g2);
-        hero.painthero(g2);
+        getTileManager().draw(g2);
+        getHero().painthero(g2);
 
     }
 
@@ -149,5 +150,25 @@ public void update()
 
     public Hero getHero(){
        return hero;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+
+    public void setTileManager(TileManager tileManager) {
+        this.tileManager = tileManager;
+    }
+
+    public CollisionChecker getCollisionChecker() {
+        return collisionChecker;
+    }
+
+    public void setCollisionChecker(CollisionChecker collisionChecker) {
+        this.collisionChecker = collisionChecker;
     }
 }

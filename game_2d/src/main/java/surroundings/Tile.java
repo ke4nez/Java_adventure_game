@@ -7,6 +7,8 @@ private BufferedImage image;
 private boolean collision = false;
 
 
+
+
     public BufferedImage getImage() {
         return image;
     }
@@ -15,7 +17,7 @@ private boolean collision = false;
         this.image = image;
     }
 
-    public boolean isCollision() {
+    public boolean getIfNotPasseble() {
         return collision;
     }
 
