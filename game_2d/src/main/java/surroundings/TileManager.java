@@ -44,10 +44,9 @@ private void getTileImages(){
         getTiles()[4].setCollision(true);
 
         getTiles()[5] = new Tile();
-        getTiles()[5].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("")));
+        getTiles()[5].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/dirt.png")));
+        getTiles()[5].setCollision(true);
 
-        getTiles()[5] = new Tile();
-        getTiles()[5].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("")));
 
     }catch (Exception e){
         System.out.println("tile images not working");

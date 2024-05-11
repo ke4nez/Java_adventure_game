@@ -7,11 +7,10 @@ import javax.imageio.ImageIO;
 public class Lamp extends Game_Object {
 
     public Lamp (Game_panel game_panel){
+        this.setIndex(2);
         this.setGame_panel(game_panel);
         this.setName("Lamp");
-        this.setPosition_x(0);
-        this.setPosition_y(0);
-
+        this.setCollision(true);
 
         try{
             setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/Lamp.png")));

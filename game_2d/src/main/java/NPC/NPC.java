@@ -10,6 +10,14 @@ public class NPC {
 
     private int speed;
     private Rectangle NPC_rectangle;
+
+    private int NPC_rectangle_x;
+    private int NPC_rectangle_y;
+    private int NPC_rectangle_height = 48;
+    private int NPC_rectangle_width = 48;
+
+    private int NPC_rectangle_default_x;
+    private int NPC_rectangle_default_y;
     private boolean collision = false;
 
 
@@ -183,6 +191,54 @@ public class NPC {
 
     public void setStands2(BufferedImage stands2) {
         this.stands2 = stands2;
+    }
+
+    public int getNPC_rectangle_default_x() {
+        return NPC_rectangle_default_x;
+    }
+
+    public void setNPC_rectangle_default_x(int NPC_rectangle_default_x) {
+        this.NPC_rectangle_default_x = NPC_rectangle_default_x;
+    }
+
+    public int getNPC_rectangle_default_y() {
+        return NPC_rectangle_default_y;
+    }
+
+    public void setNPC_rectangle_default_y(int NPC_rectangle_default_y) {
+        this.NPC_rectangle_default_y = NPC_rectangle_default_y;
+    }
+
+    public int getNPC_rectangle_x() {
+        return NPC_rectangle_x;
+    }
+
+    public void setNPC_rectangle_x(int NPC_rectangle_x) {
+        this.NPC_rectangle_x = NPC_rectangle_x;
+    }
+
+    public int getNPC_rectangle_y() {
+        return NPC_rectangle_y;
+    }
+
+    public void setNPC_rectangle_y(int NPC_rectangle_y) {
+        this.NPC_rectangle_y = NPC_rectangle_y;
+    }
+
+    public int getNPC_rectangle_height() {
+        return NPC_rectangle_height;
+    }
+
+    public void setNPC_rectangle_height(int NPC_rectangle_height) {
+        this.NPC_rectangle_height = NPC_rectangle_height;
+    }
+
+    public int getNPC_rectangle_width() {
+        return NPC_rectangle_width;
+    }
+
+    public void setNPC_rectangle_width(int NPC_rectangle_width) {
+        this.NPC_rectangle_width = NPC_rectangle_width;
     }
 }
 

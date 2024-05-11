@@ -82,4 +82,95 @@ public class CollisionChecker {
             }
         }
     }
+
+    public int check_object(NPC npc, boolean isplayer) {
+
+        for (int i = 0; i < game_panel.getObj().length; i++) {
+            if (game_panel.getObjFromObjects(i) != null) {
+                npc.getNPC_rectangle().x = npc.getPosition_x() + npc.getNPC_rectangle().x;
+                npc.getNPC_rectangle().y = npc.getPosition_y() + npc.getNPC_rectangle().y;
+
+                game_panel.getObjFromObjects(i).getObject_rectangle().x = game_panel.getObjFromObjects(i).getPosition_x() + game_panel.getObjFromObjects(i).getObject_rectangle().x;
+                game_panel.getObjFromObjects(i).getObject_rectangle().y = game_panel.getObjFromObjects(i).getPosition_y() + game_panel.getObjFromObjects(i).getObject_rectangle().y;
+
+
+                switch (npc.getDirection()) {
+                    case "up":
+                        npc.getNPC_rectangle().y -= npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            System.out.println("up collision");
+                            if(game_panel.getObjFromObjects(i).isCollision() == true){
+                                npc.setCollision(true);
+                            }
+                        }
+
+                        break;
+
+                    case "down":
+                        npc.getNPC_rectangle().y += npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            System.out.println("down collision");
+                            if(game_panel.getObjFromObjects(i).isCollision() == true){
+                                npc.setCollision(true);
+                            }
+                        }
+                        break;
+                    case "left":
+                    npc.getNPC_rectangle().x -= npc.getSpeed();
+                    if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                        System.out.println("left collision");
+                        if(game_panel.getObjFromObjects(i).isCollision() == true){
+                            npc.setCollision(true);
+                        }
+                    }
+                    break;
+                    case "right":
+                        npc.getNPC_rectangle().x += npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            System.out.println("right collision");
+                            if(game_panel.getObjFromObjects(i).isCollision() == true){
+                                npc.setCollision(true);
+                            }
+                        }
+                        break;
+                }
+
+
+                npc.getNPC_rectangle().x = npc.getNPC_rectangle_default_x();
+                npc.getNPC_rectangle().y = npc.getNPC_rectangle_default_y();
+                game_panel.getObjFromObjects(i).getObject_rectangle().x = game_panel.getObjFromObjects(i).getObject_rectangle_default_x();
+                game_panel.getObjFromObjects(i).getObject_rectangle().y = game_panel.getObjFromObjects(i).getObject_rectangle_default_y();
+            }
+
+
+        }
+        return 1;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

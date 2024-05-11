@@ -18,8 +18,8 @@ public class Game_panel extends JPanel implements Runnable{
     //GAME SETTINGS
     private int tile_size_x = 48;
     private int tile_size_y = 48;
-    private final int max_world_col = 32;
-    private final int max_world_row = 32;
+    private final int max_world_col = 64;
+    private final int max_world_row = 64;
 
     private final int max_world_width = getMax_world_col() * tile_size_x;
     private final int max_world_heigth = getMax_world_col() * tile_size_y;
@@ -40,8 +40,6 @@ public class Game_panel extends JPanel implements Runnable{
     Thread gameThread;
 
     private Hero hero = new Hero(this,game_controls);
-
-    private Lamp lamp = new Lamp(this);
 
     private Game_Object[] obj = new Game_Object[10];
 
@@ -97,7 +95,7 @@ public class Game_panel extends JPanel implements Runnable{
 
 public void update()
 {
-        getHero().updatehero();
+        hero.updatehero();
 }
 
     public void paintComponent(Graphics g){
@@ -195,6 +193,10 @@ public void update()
 
     public Game_Object[] getObj() {
         return obj;
+    }
+
+    public Game_Object getObjFromObjects(int x) {
+        return obj[x];
     }
     public void setObj(Game_Object[] obj) {
         this.obj = obj;

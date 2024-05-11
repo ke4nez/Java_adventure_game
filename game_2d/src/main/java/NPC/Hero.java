@@ -27,7 +27,14 @@ public class Hero extends NPC {
     public Hero(Game_panel game_panel ,Game_controls game_controls){
         this.game_controls = game_controls;
         this.game_panel = game_panel;
-        this.setNPC_rectangle(new Rectangle(8,16,game_panel.getTile_size_x()/2,game_panel.getTile_size_y()/2)) ;
+        this.setNPC_rectangle_x(8);
+        this.setNPC_rectangle_y(16);
+        this.setNPC_rectangle_default_x(8);
+        this.setNPC_rectangle_default_y(16);
+        this.setNPC_rectangle_width(game_panel.getTile_size_x());
+        this.setNPC_rectangle_height(game_panel.getTile_size_y());
+        this.setNPC_rectangle(new Rectangle(8,16,getNPC_rectangle_width()/2,getNPC_rectangle_height()/2));
+
         collisionChecker = new CollisionChecker(game_panel);
         setHero();
         getHeroImages();
@@ -36,7 +43,7 @@ public class Hero extends NPC {
     public void setHero(){
         setPosition_x(0);
         setPosition_y(0);
-        setSpeed(2);
+        setSpeed(5);
         setDirection("stands");
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
@@ -67,6 +74,7 @@ public class Hero extends NPC {
                 setDirection("right");
                 setCollision(false);
                 collisionChecker.check_tile(this);
+                collisionChecker.check_object(this, true);
                 if(getCollision() != true){
                     setPosition_x(getPosition_x() + getSpeed());
                 }
@@ -76,6 +84,7 @@ public class Hero extends NPC {
                 setDirection("left");
                 setCollision(false);
                 collisionChecker.check_tile(this);
+                collisionChecker.check_object(this, true);
                 if(getCollision() != true){
                     setPosition_x(getPosition_x() - getSpeed());
                 }
@@ -84,6 +93,7 @@ public class Hero extends NPC {
                 setDirection("up");
                 setCollision(false);
                 collisionChecker.check_tile(this);
+                collisionChecker.check_object(this, true);
                 if(getCollision() != true){
                     setPosition_y(getPosition_y() - getSpeed());
                 }
@@ -92,6 +102,7 @@ public class Hero extends NPC {
                 setDirection("down");
                 setCollision(false);
                 collisionChecker.check_tile(this);
+                collisionChecker.check_object(this, true);
                 if(getCollision() != true){
                     setPosition_y(getPosition_y() + getSpeed());
                 }

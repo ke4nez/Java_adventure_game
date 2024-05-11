@@ -13,6 +13,19 @@ public class Game_Object {
     private int position_x;
     private int position_y;
 
+    private int index;
+
+    private int Obj_rectangle_x = 0;
+    private int Obj_rectangle_y = 0;
+    private int  Obj_rectangle_width = 48;
+    private int  Obj_rectangle_height = 48;
+
+    private Rectangle object_rectangle = new Rectangle(0,0,48,48);
+
+    private int object_rectangle_default_x = 0;
+    private int object_rectangle_default_y = 0;
+
+
     private Game_panel game_panel;
 
 
@@ -75,6 +88,70 @@ public class Game_Object {
 
     public void setGame_panel(Game_panel game_panel) {
         this.game_panel = game_panel;
+    }
+
+    public int getObject_rectangle_default_x() {
+        return object_rectangle_default_x;
+    }
+
+    public void setObject_rectangle_default_x(int object_rectangle_default_x) {
+        this.object_rectangle_default_x = object_rectangle_default_x;
+    }
+
+    public int getObject_rectangle_default_y() {
+        return object_rectangle_default_y;
+    }
+
+    public void setObject_rectangle_default_y(int object_rectangle_default_y) {
+        this.object_rectangle_default_y = object_rectangle_default_y;
+    }
+
+    public Rectangle getObject_rectangle() {
+        return object_rectangle;
+    }
+
+    public void setObject_rectangle(Rectangle object_rectangle) {
+        this.object_rectangle = object_rectangle;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getObj_rectangle_x() {
+        return Obj_rectangle_x;
+    }
+
+    public void setObj_rectangle_x(int obj_rectangle_x) {
+        Obj_rectangle_x = obj_rectangle_x;
+    }
+
+    public int getObj_rectangle_y() {
+        return Obj_rectangle_y;
+    }
+
+    public void setObj_rectangle_y(int obj_rectangle_y) {
+        Obj_rectangle_y = obj_rectangle_y;
+    }
+
+    public int getObj_rectangle_width() {
+        return Obj_rectangle_width;
+    }
+
+    public void setObj_rectangle_width(int obj_rectangle_width) {
+        Obj_rectangle_width = obj_rectangle_width;
+    }
+
+    public int getObj_rectangle_height() {
+        return Obj_rectangle_height;
+    }
+
+    public void setObj_rectangle_height(int obj_rectangle_height) {
+        Obj_rectangle_height = obj_rectangle_height;
     }
 }
 
