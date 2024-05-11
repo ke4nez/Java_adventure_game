@@ -19,8 +19,8 @@ public class Game_panel extends JPanel implements Runnable{
     private boolean logON = false;
     private int tile_size_x = 48;
     private int tile_size_y = 48;
-    private final int max_world_col = 64;
-    private final int max_world_row = 64;
+    private final int max_world_col = 128;
+    private final int max_world_row = 128;
 
     private final int max_world_width = getMax_world_col() * tile_size_x;
     private final int max_world_heigth = getMax_world_col() * tile_size_y;

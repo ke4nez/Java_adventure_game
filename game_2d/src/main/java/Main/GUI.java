@@ -21,7 +21,7 @@ public class GUI {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/GUI/bigdonstarve.ttf"));
 
             // Установка размера шрифта
-            this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 100);
+            this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 50);
         } catch (FontFormatException | IOException e) {
             System.out.println("Fail to load custom font: " + e.getMessage());
         }

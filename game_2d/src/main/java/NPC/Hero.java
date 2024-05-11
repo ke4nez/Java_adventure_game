@@ -43,8 +43,8 @@ public class Hero extends NPC {
     }
 
     public void setHero(){
-        setPosition_x(0);
-        setPosition_y(0);
+        setPosition_x(64 * game_panel.getTile_size_x());
+        setPosition_y(115 * game_panel.getTile_size_y());
         setSpeed(5);
         setDirection("stands");
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
