@@ -69,40 +69,57 @@ public class Hero extends NPC {
     }
 
     public void updatehero(){
-        if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left) {
+        if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction) {
+            int index = 99;
+           if(game_controls.interaction){
+
+               setDirection("interaction");
+               setCollision(false);
+
+               index = collisionChecker.check_object(this,true);
+
+               if(index != 99) {
+                   System.out.println("something is around you" + index);
+               }
+           }
+
             if (game_controls.go_right) {
+
                 setDirection("right");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                collisionChecker.check_object(this, true);
+                System.out.print(collisionChecker.check_object(this, true));
                 if(getCollision() != true){
                     setPosition_x(getPosition_x() + getSpeed());
                 }
             }
 
             if (game_controls.go_left) {
+
                 setDirection("left");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                collisionChecker.check_object(this, true);
+                System.out.print(collisionChecker.check_object(this, true));
                 if(getCollision() != true){
                     setPosition_x(getPosition_x() - getSpeed());
                 }
             }
             if (game_controls.go_up) {
+
                 setDirection("up");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                collisionChecker.check_object(this, true);
+                System.out.print(collisionChecker.check_object(this, true));
                 if(getCollision() != true){
                     setPosition_y(getPosition_y() - getSpeed());
                 }
             }
             if (game_controls.go_down) {
+
                 setDirection("down");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                collisionChecker.check_object(this, true);
+               System.out.print(collisionChecker.check_object(this, true));
                 if(getCollision() != true){
                     setPosition_y(getPosition_y() + getSpeed());
                 }

@@ -85,6 +85,8 @@ public class CollisionChecker {
 
     public int check_object(NPC npc, boolean isplayer) {
 
+        int index = 99;
+
         for (int i = 0; i < game_panel.getObj().length; i++) {
             if (game_panel.getObjFromObjects(i) != null) {
                 npc.getNPC_rectangle().x = npc.getPosition_x() + npc.getNPC_rectangle().x;
@@ -95,6 +97,37 @@ public class CollisionChecker {
 
 
                 switch (npc.getDirection()) {
+
+                    case "interaction":
+                        npc.getNPC_rectangle().y -= npc.getSpeed();//up
+
+                       // npc.getNPC_rectangle().x -= npc.getSpeed();// left
+                       // npc.getNPC_rectangle().x += npc.getSpeed();// right
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())){
+                            npc.setCollision(true);
+                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                        }
+                        npc.getNPC_rectangle().y += npc.getSpeed()*2;// down
+
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            npc.setCollision(true);
+                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                        }
+
+                        npc.getNPC_rectangle().y -= npc.getSpeed();//up
+                        npc.getNPC_rectangle().x -= npc.getSpeed();// left
+
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            npc.setCollision(true);
+                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                        }
+                        npc.getNPC_rectangle().x += npc.getSpeed()*2;// right
+
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            npc.setCollision(true);
+                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                        }
+                        break;
                     case "up":
                         npc.getNPC_rectangle().y -= npc.getSpeed();
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
@@ -102,6 +135,7 @@ public class CollisionChecker {
                             if(game_panel.getObjFromObjects(i).isCollision() == true){
                                 npc.setCollision(true);
                             }
+                            index = i;
                         }
 
                         break;
@@ -113,6 +147,7 @@ public class CollisionChecker {
                             if(game_panel.getObjFromObjects(i).isCollision() == true){
                                 npc.setCollision(true);
                             }
+                            index = i;
                         }
                         break;
                     case "left":
@@ -122,6 +157,7 @@ public class CollisionChecker {
                         if(game_panel.getObjFromObjects(i).isCollision() == true){
                             npc.setCollision(true);
                         }
+                        index = i;
                     }
                     break;
                     case "right":
@@ -132,6 +168,7 @@ public class CollisionChecker {
                                 npc.setCollision(true);
                             }
                         }
+                        index = i;
                         break;
                 }
 
@@ -144,7 +181,7 @@ public class CollisionChecker {
 
 
         }
-        return 1;
+        return index;
     }
 }
 
