@@ -47,6 +47,8 @@ private void getTileImages(){
         getTiles()[5].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/dirt.png")));
         getTiles()[5].setCollision(true);
 
+        System.out.println("tiles was loaded");
+
 
     }catch (Exception e){
         System.out.println("tile images not working");
@@ -82,6 +84,7 @@ private void loadmap(){
                 row++;
             }
         }
+        System.out.println("map was load");
         br.close();
 
 

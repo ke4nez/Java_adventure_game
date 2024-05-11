@@ -21,6 +21,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProblemsViewState">
+    <option name="autoscrollToSource" value="true" />
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
@@ -55,6 +56,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ke4Nez\Desktop\git_semestralka\lysenan1\lysenan1\game_2d\res\Font" />
       <recent name="C:\Users\Ke4Nez\Desktop\git_semestralka\lysenan1\lysenan1\game_2d\res\Objects" />
       <recent name="C:\Users\Ke4Nez\Desktop\git_semestralka\lysenan1\lysenan1\game_2d\res\Hero" />
       <recent name="C:\Users\Ke4Nez\Desktop\semestralka\game_2d\res\Tile" />
@@ -111,7 +113,7 @@
       <workItem from="1715358236487" duration="13259000" />
       <workItem from="1715425979662" duration="9986000" />
       <workItem from="1715436376617" duration="2030000" />
-      <workItem from="1715438582506" duration="1788000" />
+      <workItem from="1715438582506" duration="19831000" />
     </task>
     <servers />
   </component>

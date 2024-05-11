@@ -7,17 +7,22 @@ import javax.imageio.ImageIO;
 public class Door extends Game_Object{
 
 private boolean open;
+
+
+    private long lastChangeTime;
+    private static final long CHANGE_DELAY = 1000; // Задержка в миллисекундах
     public Door (Game_panel game_panel){
         this.setIndex(1);
         this.setGame_panel(game_panel);
         this.setName("door");
         this.setCollision(true);
-        this.setIsopen(false);
+        this.open = false;
+        this.setIsinteractable(true);
 
 
 
         try{
-            setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/doors.png")));
+            this.setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/doors.png")));
 
         }catch (Exception e) {
             System.out.println("cannot load door image");
@@ -27,24 +32,35 @@ private boolean open;
 
 
    public void open(){
-        try {
-            setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/doors/open.png")));
-        }catch (Exception e){
-            System.out.println("cannot load  opened door image");
-        }
+       long currentTime = System.currentTimeMillis();
+       if (currentTime - lastChangeTime >= CHANGE_DELAY) {
+           try {
+               this.setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/doors_open.png")));
+           } catch (Exception e) {
+               System.out.println("cannot load  opened door image");
+           }
 
-        this.setCollision(false);
+           this.setCollision(false);
+           this.open = true;
+           lastChangeTime = currentTime;
+           getGame_panel().getGui().addMessage("door now opened ", 300, 350);
+
+       }
    }
 
    public void close(){
-       try {
-           setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/doors.png")));
-       }catch (Exception e){
-           System.out.println("cannot load  door image");
+       long currentTime = System.currentTimeMillis();
+       if (currentTime - lastChangeTime >= CHANGE_DELAY) {
+           try {
+               this.setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/doors.png")));
+           } catch (Exception e) {
+               System.out.println("cannot load  door image");
+           }
+           this.open = false;
+           this.setCollision(true);
+           getGame_panel().getGui().addMessage("door now closed ", 300, 350);
+           lastChangeTime = currentTime;
        }
-
-       this.setCollision(true);
-
     }
 
 

@@ -71,30 +71,39 @@ public class Hero extends NPC {
     }
 
     public void updatehero(){
-        if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction) {
+        if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction || game_controls.logON) {
             int index = 99;
-           if(game_controls.interaction){
+
+           if(game_controls.interaction) {
 
                setDirection("interaction");
                setCollision(false);
 
-               index = collisionChecker.check_object(this,true);
+               index = collisionChecker.check_object(this, true);
+               if (index != 99) {
+                   String obj_name = game_panel.getObjFromObjects(index).getName();
 
-               if(index != 99) {
-                   System.out.println("you have interacted wiht" + index);
-                   if(game_panel.getObjFromObjects(index).isIspickeble()){
+                   switch (obj_name) {
+                       case "door": {
+                           if (game_panel.getObjFromObjects(index).isIsinteractable()) {
+                               if (game_panel.getObjFromObjects(index) instanceof Door) {
+                                   if (((Door) game_panel.getObjFromObjects(index)).isopen() == true) {
+                                       ((Door) game_panel.getObjFromObjects(index)).close();
+                                   }
+                                   if ((((Door) game_panel.getObjFromObjects(index)).isopen() == false)) {
+                                       ((Door) game_panel.getObjFromObjects(index)).open();
+                                   }
+                               }
+                           }
 
-                       game_panel.getObj()[index] = null;
-                   }
-
-                   if(game_panel.getObjFromObjects(index).isIsinteractable()){
-                       if(game_panel.getObjFromObjects(index).getName() == "door"){
-
+                           break;
                        }
+                       case "Lamp":
+                           break;
+
                    }
                }
            }
-
             if (game_controls.go_right) {
 
                 setDirection("right");

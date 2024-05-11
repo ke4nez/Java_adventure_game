@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import NPC.Hero;
 import Objects.Game_Object;
-import Objects.Lamp;
 import surroundings.TileManager;
 
 
@@ -16,6 +15,8 @@ public class Game_panel extends JPanel implements Runnable{
 
 
     //GAME SETTINGS
+
+    private boolean logON = false;
     private int tile_size_x = 48;
     private int tile_size_y = 48;
     private final int max_world_col = 64;
@@ -47,6 +48,8 @@ public class Game_panel extends JPanel implements Runnable{
 
     private TileManager tileManager = new TileManager(this);
     private CollisionChecker collisionChecker = new CollisionChecker(this);
+
+    private GUI gui = new GUI(this);
 
 
 
@@ -96,6 +99,7 @@ public class Game_panel extends JPanel implements Runnable{
 public void update()
 {
         hero.updatehero();
+        logON = game_controls.logON;
 }
 
     public void paintComponent(Graphics g){
@@ -109,7 +113,12 @@ public void update()
             }
         }
         hero.painthero(g2);
+        gui.draw(g2);
     }
+
+
+
+
 
     public int getMax_world_row() {
         return max_world_row;
@@ -200,5 +209,21 @@ public void update()
     }
     public void setObj(Game_Object[] obj) {
         this.obj = obj;
+    }
+
+    public GUI getGui() {
+        return gui;
+    }
+
+    public void setGui(GUI gui) {
+        this.gui = gui;
+    }
+
+    public boolean isLogON() {
+        return logON;
+    }
+
+    public void setLogON(boolean logON) {
+        this.logON = logON;
     }
 }
