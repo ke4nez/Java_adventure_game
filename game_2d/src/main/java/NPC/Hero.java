@@ -4,6 +4,8 @@ package NPC;
 import Main.CollisionChecker;
 import Main.Game_controls;
 import Main.Game_panel;
+import Objects.Door;
+import Objects.Game_Object;
 
 
 import javax.imageio.ImageIO;
@@ -79,7 +81,17 @@ public class Hero extends NPC {
                index = collisionChecker.check_object(this,true);
 
                if(index != 99) {
-                   System.out.println("something is around you" + index);
+                   System.out.println("you have interacted wiht" + index);
+                   if(game_panel.getObjFromObjects(index).isIspickeble()){
+
+                       game_panel.getObj()[index] = null;
+                   }
+
+                   if(game_panel.getObjFromObjects(index).isIsinteractable()){
+                       if(game_panel.getObjFromObjects(index).getName() == "door"){
+
+                       }
+                   }
                }
            }
 

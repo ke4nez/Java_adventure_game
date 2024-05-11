@@ -28,6 +28,9 @@ public class Game_Object {
 
     private Game_panel game_panel;
 
+    private boolean ispickeble = false;
+    private boolean isinteractable = false;
+
 
     public void paintObject(Graphics2D g2) {
             int screen_x = position_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
@@ -152,6 +155,22 @@ public class Game_Object {
 
     public void setObj_rectangle_height(int obj_rectangle_height) {
         Obj_rectangle_height = obj_rectangle_height;
+    }
+
+    public boolean isIspickeble() {
+        return ispickeble;
+    }
+
+    public void setIspickeble(boolean ispickeble) {
+        this.ispickeble = ispickeble;
+    }
+
+    public boolean isIsinteractable() {
+        return isinteractable;
+    }
+
+    public void setIsinteractable(boolean isinteractable) {
+        this.isinteractable = isinteractable;
     }
 }
 

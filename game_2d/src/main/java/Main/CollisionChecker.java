@@ -105,13 +105,13 @@ public class CollisionChecker {
                        // npc.getNPC_rectangle().x += npc.getSpeed();// right
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())){
                             npc.setCollision(true);
-                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                            return (index = i);
                         }
                         npc.getNPC_rectangle().y += npc.getSpeed()*2;// down
 
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
                             npc.setCollision(true);
-                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                            return (index = i);
                         }
 
                         npc.getNPC_rectangle().y -= npc.getSpeed();//up
@@ -119,13 +119,13 @@ public class CollisionChecker {
 
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
                             npc.setCollision(true);
-                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                            return (index = i);
                         }
                         npc.getNPC_rectangle().x += npc.getSpeed()*2;// right
 
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
                             npc.setCollision(true);
-                            return (index = game_panel.getObjFromObjects(i).getIndex());
+                            return (index = i);
                         }
                         break;
                     case "up":
