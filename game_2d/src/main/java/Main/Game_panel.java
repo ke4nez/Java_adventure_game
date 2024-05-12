@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
 import NPC.Hero;
+import NPC.NPC;
 import Objects.Game_Object;
 import surroundings.TileManager;
 
@@ -16,9 +17,9 @@ public class Game_panel extends JPanel implements Runnable{
 
     //GAME SETTINGS
 
-    private boolean logON = false;
-    private int tile_size_x = 48;
-    private int tile_size_y = 48;
+
+    private int tile_size_x = 50;
+    private int tile_size_y =50;
     private final int max_world_col = 126;
     private final int max_world_row = 126;
 
@@ -37,16 +38,14 @@ public class Game_panel extends JPanel implements Runnable{
 
     //CREATION OF THE GAME WINDOW AND THREAD
 
-    private int gameState;
-    private final int playState = 1;
-    private final int pauseState = 2;
     Game_controls game_controls = new Game_controls(this);
 
     Thread gameThread;
 
     private Hero hero = new Hero(this,game_controls);
 
-    private Game_Object[] obj = new Game_Object[10];
+    private Game_Object[] obj = new Game_Object[32];
+    private NPC[] npcs = new NPC[32];
 
     private AssetManager assetManager = new AssetManager(this);
 
@@ -57,8 +56,26 @@ public class Game_panel extends JPanel implements Runnable{
 
 
 
+    //LOGGING
+    private int gameState;
+    private final int playState = 1;
+    private final int pauseState = 2;
+    private boolean logON = false;
+
+    long draw_rime_start ;
+    long draw_time_end = System.nanoTime();
+    long passed;
+
+
+
+
+
+
+
+
     public void setGame(){
         assetManager.setObjects();
+        assetManager.setNPCS();
         setGameState(getPlayState());
 
 
@@ -114,9 +131,24 @@ public void update()
 }
 
     public void paintComponent(Graphics g){
+
+        long draw_rime_start = System.nanoTime();
+
+        long passed;
+
+
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         tileManager.draw(g2);
+
+
+
+
+        for(int i = 0 ; i < npcs.length; i++) {
+            if (npcs[i] != null) {
+                npcs[i].draw(g2,this);
+            }
+        }
 
         for(int i = 0 ; i < obj.length; i++) {
             if (obj[i] != null) {
@@ -125,6 +157,12 @@ public void update()
         }
         hero.painthero(g2);
         gui.draw(g2);
+
+       if(logON) {
+           long draw_time_end = System.nanoTime();
+           passed = draw_time_end - draw_rime_start;
+           gui.drawLogRenderTime(passed);
+       }
     }
 
 
@@ -252,5 +290,13 @@ public void update()
 
     public int getPauseState() {
         return pauseState;
+    }
+
+    public NPC[] getNpcs() {
+        return npcs;
+    }
+
+    public void setNpcs(NPC[] npcs) {
+        this.npcs = npcs;
     }
 }

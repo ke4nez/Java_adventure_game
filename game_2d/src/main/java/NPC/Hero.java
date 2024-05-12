@@ -4,8 +4,10 @@ package NPC;
 import Main.CollisionChecker;
 import Main.Game_controls;
 import Main.Game_panel;
+import Main.Toolbox;
 import Objects.Door;
 import Objects.Game_Object;
+import surroundings.Tile;
 
 
 import javax.imageio.ImageIO;
@@ -17,7 +19,7 @@ public class Hero extends NPC {
 
     Game_panel game_panel;
     Game_controls game_controls;
-    BufferedImage image = null;
+
 
     private  int screen_x;
     private  int screen_y;
@@ -27,6 +29,7 @@ public class Hero extends NPC {
 
 
     public Hero(Game_panel game_panel ,Game_controls game_controls){
+        super(game_panel);
         this.game_controls = game_controls;
         this.game_panel = game_panel;
         this.setNPC_rectangle_x(8);
@@ -39,36 +42,19 @@ public class Hero extends NPC {
 
         collisionChecker = new CollisionChecker(game_panel);
         setHero();
-        getHeroImages();
+        setupNPCimages("Hero");
+
     }
 
+
     public void setHero(){
-        setPosition_x(64 * game_panel.getTile_size_x());
-        setPosition_y(115 * game_panel.getTile_size_y());
+        setPosition_x(11 * game_panel.getTile_size_x());
+        setPosition_y(11 * game_panel.getTile_size_y());
         setSpeed(5);
-        setDirection("stands");
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
     }
 
-    private void getHeroImages(){
-       try{
-
-          setUp1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_up_1.png")));
-          setUp2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_up_2.png")));
-          setLeft1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_left_1.png")) );
-          setLeft2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_left_2.png")) );
-          setRight1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_right_1.png")) );
-          setRight2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_right_2.png")) );
-          setDown1(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/kvadratni.png")) );
-          setDown2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/boy_down_2.png")) );
-          setStands(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/stands.png")));
-          setStands2(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Hero/stands2.png")));
-
-        }catch (IOException e){
-            System.out.println("get hero images not working");
-        }
-    }
 
     public void updatehero(){
         if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction) {
@@ -256,7 +242,7 @@ public class Hero extends NPC {
             case"stands":
 
                 if(getSpriteNum()==1){
-                    image = getStands();
+                    image = getStands1();
                 }
                 if(getSpriteNum()==2){
                     image = getStands2();
@@ -265,7 +251,7 @@ public class Hero extends NPC {
 
         }
 
-        g2.drawImage(image, getScreen_x(), getScreen_y(), game_panel.getTile_size_x(), game_panel.getTile_size_y(), null);
+        g2.drawImage(image, getScreen_x(), getScreen_y(), null);
     }
 
 

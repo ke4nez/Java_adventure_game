@@ -103,6 +103,12 @@ public class GUI {
     }
 
 
+    public void drawLogRenderTime(long x) {
+        String renderTimeAsString = String.valueOf(x);
+        g2.drawString(renderTimeAsString,getXfortextincenter(renderTimeAsString)+400,400 );
+    }
+
+
 
     private static class Message {
         String text;

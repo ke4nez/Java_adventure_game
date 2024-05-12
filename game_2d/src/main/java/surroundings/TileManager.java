@@ -1,9 +1,11 @@
 package surroundings;
 import Main.Game_panel;
+import Main.Toolbox;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -25,38 +27,35 @@ public TileManager(Game_panel game_panel){
 
 private void getTileImages(){
     try{
-        getTiles()[0] = new Tile();
-        getTiles()[0].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/water.png")));
-        getTiles()[0].setCollision(true);
+        setup(0,"water",true);
+        setup(1,"water",false);
+        setup(11,"grass_2_test_2",false);
+        setup(2,"grass_2_test_2",false);
 
-        getTiles()[1] = new Tile();
-        getTiles()[1].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/water.png")));
 
-        getTiles()[11] = new Tile();
-        getTiles()[11].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test_2.png")));
-
-        getTiles()[2] = new Tile();
-        getTiles()[2].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test_2.png")));
-
-        getTiles()[3] = new Tile();
-        getTiles()[3].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("")));
-        getTiles()[3].setCollision(true);
-
-        getTiles()[4] = new Tile();
-        getTiles()[4].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/leaf_tree.png")));
-        getTiles()[4].setCollision(true);
-
-        getTiles()[5] = new Tile();
-        getTiles()[5].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("")));
-        getTiles()[5].setCollision(true);
+       // getTiles()[2] = new Tile();
+        //getTiles()[2].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test_2.png")));
 
         System.out.println("tiles was loaded");
-
 
     }catch (Exception e){
         System.out.println("tile images not working");
     }
 
+}
+
+
+public void  setup(int index, String imagePath, boolean collision){
+    Toolbox toolbox = new Toolbox();
+    try {
+        getTiles()[index] = new Tile();
+        getTiles()[index].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/"+ imagePath +".png")));
+        getTiles()[index].setImage(toolbox.scale_image(getTiles()[index].getImage(), game_panel.getTile_size_x(), game_panel.getTile_size_y()));
+        getTiles()[index].setCollision(collision);
+
+    }catch (IOException e){
+        System.out.println("Can not load tile image");
+    }
 }
 
 
@@ -101,23 +100,35 @@ public void draw(Graphics2D g2){
     int world_row = 0;
 
     //CAMERA FUNCTION
-    while(world_col < game_panel.getMax_world_col() && world_row < game_panel.getMax_world_row()){
-
-        //int index = map[world_col][world_row];
-        int world_x = world_col * game_panel.getTile_size_x();
-        int world_y = world_row * game_panel.getTile_size_y();
-        int screen_x = world_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
-        int screen_y = world_y - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
-        g2.drawImage(getTiles()[getMap()[world_col][world_row]].getImage(),screen_x,screen_y,game_panel.getTile_size_x(), game_panel.getTile_size_y(),null );
-        world_col++;
+    while(world_col < game_panel.getMax_world_col() && world_row < game_panel.getMax_world_row()) {
 
 
-        if(world_col == game_panel.getMax_world_col()){
-            world_col = 0;
-            world_row++;
+            int world_x = world_col * game_panel.getTile_size_x();
+            int world_y = world_row * game_panel.getTile_size_y();
+            int screen_x = world_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
+            int screen_y = world_y - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
+
+
+        if (      world_x + game_panel.getTile_size_x() * 2 > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
+               && world_x - game_panel.getTile_size_x() * 2 < game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x()
+               && world_y + game_panel.getTile_size_x() * 2 > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
+               && world_y - game_panel.getTile_size_x() * 2 < game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y()
+          ){
+            g2.drawImage(getTiles()[getMap()[world_col][world_row]].getImage(), screen_x, screen_y, null);
 
         }
-    }
+        world_col++;
+
+            if (world_col == game_panel.getMax_world_col()) {
+                world_col = 0;
+                world_row++;
+
+            }
+
+
+
+        }
+
 
 }
 

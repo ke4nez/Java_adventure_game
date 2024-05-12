@@ -35,7 +35,16 @@ public class Game_Object {
     public void paintObject(Graphics2D g2) {
             int screen_x = position_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
             int screen_y = position_y - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
-            g2.drawImage(image,screen_x,screen_y,game_panel.getTile_size_x(), game_panel.getTile_size_y(),null );
+
+        if(position_x + game_panel.getTile_size_x() > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
+                && position_x - game_panel.getTile_size_x() < game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
+                && position_y + game_panel.getTile_size_y() > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
+                && position_y - game_panel.getTile_size_y() > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
+        ) {
+
+
+            g2.drawImage(image, screen_x, screen_y, game_panel.getTile_size_x(), game_panel.getTile_size_y(), null);
+        }
     }
 
 
