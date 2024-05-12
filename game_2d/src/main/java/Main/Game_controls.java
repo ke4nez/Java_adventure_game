@@ -7,9 +7,14 @@ import java.util.TimerTask;
 
 public class Game_controls implements KeyListener {
 
-    public boolean go_right, go_left, go_up, go_down, interaction, jump, logON;
-    int logcounter = 1;
-    private Timer logTimer = new Timer();
+    Game_panel game_panel;
+
+    public boolean go_right, go_left, go_up, go_down, interaction, jump;
+    private int counter = 0;
+
+    public Game_controls (Game_panel game_panel){
+        this.game_panel = game_panel;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -17,6 +22,8 @@ public class Game_controls implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+
         if (e.getKeyCode() == 87) {
             go_up = true;
         }
@@ -36,18 +43,34 @@ public class Game_controls implements KeyListener {
             jump = true;
         }
         if (e.getKeyCode() == 76) {
-            if (logcounter == 1) {
-                System.out.println("LOG ON");
-            } else if (logcounter == 2) {
-                logON = false;
-                logcounter = 1;
-                System.out.println("LOG OFF");
+                if (game_panel.isLogON()) {
+                    game_panel.setLogON(false);
+                    System.out.println("LOG OFF");
+                    game_panel.getGui().addMessage("Log messages is OFF", 1400, 300);
+                }else if(game_panel.isLogON() == false) {
+                    game_panel.setLogON(true);
+                    System.out.println("LOG ON");
+                    game_panel.getGui().addMessage("Log messages is ON", 1400, 300);
+                }
+            }
+
+
+
+        if(e.getKeyCode() == 80){
+            if(game_panel.getGameState() == game_panel.getPlayState()){
+                game_panel.setGameState(game_panel.getPauseState());
+            }
+            else if(game_panel.getGameState() == game_panel.getPauseState()){
+                game_panel.setGameState(game_panel.getPlayState());
             }
         }
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+        counter++;
 
         if (e.getKeyCode() == 87) {
             go_up = false;
@@ -68,5 +91,7 @@ public class Game_controls implements KeyListener {
         if (e.getKeyCode() == 32) {
             jump = false;
         }
+        counter++;
+        if (counter >120){counter = 0;}
     }
 }

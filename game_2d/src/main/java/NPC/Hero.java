@@ -71,7 +71,7 @@ public class Hero extends NPC {
     }
 
     public void updatehero(){
-        if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction || game_controls.logON) {
+        if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction) {
             int index = 99;
 
            if(game_controls.interaction) {

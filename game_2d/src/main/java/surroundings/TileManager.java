@@ -30,17 +30,16 @@ private void getTileImages(){
         getTiles()[0].setCollision(true);
 
         getTiles()[1] = new Tile();
-        getTiles()[1].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass.png")));
+        getTiles()[1].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/water.png")));
 
         getTiles()[11] = new Tile();
-        getTiles()[11].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2.png")));
+        getTiles()[11].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test_2.png")));
 
         getTiles()[2] = new Tile();
-        getTiles()[2].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test.png")));
-
+        getTiles()[2].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test_2.png")));
 
         getTiles()[3] = new Tile();
-        getTiles()[3].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/tree.png")));
+        getTiles()[3].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("")));
         getTiles()[3].setCollision(true);
 
         getTiles()[4] = new Tile();
@@ -48,7 +47,7 @@ private void getTileImages(){
         getTiles()[4].setCollision(true);
 
         getTiles()[5] = new Tile();
-        getTiles()[5].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/dirt.png")));
+        getTiles()[5].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("")));
         getTiles()[5].setCollision(true);
 
         System.out.println("tiles was loaded");

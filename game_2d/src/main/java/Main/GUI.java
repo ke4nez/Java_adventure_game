@@ -10,37 +10,70 @@ import java.util.TimerTask;
 public class GUI {
 
     private Game_panel game_panel;
+    Graphics2D g2;
     private Font font;
+    private Font logFont;
     private ArrayList<Message> messages = new ArrayList<>();
     private Timer timer = new Timer();
 
     public GUI(Game_panel game_panel) {
         this.game_panel = game_panel;
         try {
-            // Загрузка шрифта из файла ttf
+
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/GUI/bigdonstarve.ttf"));
 
-            // Установка размера шрифта
-            this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 50);
+            this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 70);
+
+
+            Font customlogFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/GUI/bigdonstarve.ttf"));
+
+            this.logFont = customlogFont.deriveFont(Font.BOLD | Font.ITALIC, 40);
+
+
         } catch (FontFormatException | IOException e) {
             System.out.println("Fail to load custom font: " + e.getMessage());
         }
     }
 
     public void draw(Graphics2D g2) {
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        this.g2 = g2;
         g2.setFont(font);
-        drawWithOutline(g2, "test text", 100, 100, new Color(68, 64, 60), Color.black);
+        g2.setColor(Color.white);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Отрисовка сообщений и удаление прочитанных
-        Iterator<Message> iterator = messages.iterator();
-        while (iterator.hasNext()) {
-            Message message = iterator.next();
-            drawWithOutline(g2, message.text, message.position.x, message.position.y, Color.white, Color.black);
-            if (message.isReaded) {
-                iterator.remove(); // Удаление прочитанных сообщений из списка
+        if (game_panel.getGameState() == game_panel.getPlayState()) {
+
+            drawWithOutline(g2, "test text", 100, 100,  Color.white, Color.black);
+
+
+            // Отрисовка сообщений и удаление прочитанных
+            Iterator<Message> iterator = messages.iterator();
+            while (iterator.hasNext()) {
+                Message message = iterator.next();
+                drawWithOutline(g2, message.text, message.position.x, message.position.y, Color.white, Color.black);
+                if (message.isReaded) {
+                    iterator.remove(); // Удаление прочитанных сообщений из списка
+                }
             }
         }
+        if(game_panel.getGameState() == game_panel.getPauseState()){
+           drawPauseSreen();
+
+        }
+    }
+
+    public void drawPauseSreen(){
+        String text = "Pause";
+        int x = getXfortextincenter(text);
+        int y = game_panel.getWindow_height()/2;
+
+        g2.drawString(text,x,y);
+    }
+
+    public int getXfortextincenter(String text){
+        int lenght = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        int x = game_panel.getWindow_width()/2 - lenght;
+        return x;
     }
 
     // Метод для добавления нового сообщения
@@ -69,6 +102,33 @@ public class GUI {
         g2.drawString(text, x, y);
     }
 
+
+
+    private static class Message {
+        String text;
+        Point position;
+        boolean isReaded = false;
+
+        Message(String text, Point position) {
+            this.text = text;
+            this.position = position;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public Game_panel getGame_panel() {
         return game_panel;
     }
@@ -93,17 +153,8 @@ public class GUI {
         this.timer = timer;
     }
 
-    // Класс для представления сообщения
-    private static class Message {
-        String text;
-        Point position;
-        boolean isReaded = false;
 
-        Message(String text, Point position) {
-            this.text = text;
-            this.position = position;
-        }
-    }
+
 }
 
 

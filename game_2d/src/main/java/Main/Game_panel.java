@@ -19,8 +19,8 @@ public class Game_panel extends JPanel implements Runnable{
     private boolean logON = false;
     private int tile_size_x = 48;
     private int tile_size_y = 48;
-    private final int max_world_col = 128;
-    private final int max_world_row = 128;
+    private final int max_world_col = 126;
+    private final int max_world_row = 126;
 
     private final int max_world_width = getMax_world_col() * tile_size_x;
     private final int max_world_heigth = getMax_world_col() * tile_size_y;
@@ -36,7 +36,11 @@ public class Game_panel extends JPanel implements Runnable{
 
 
     //CREATION OF THE GAME WINDOW AND THREAD
-    Game_controls game_controls = new Game_controls();
+
+    private int gameState;
+    private final int playState = 1;
+    private final int pauseState = 2;
+    Game_controls game_controls = new Game_controls(this);
 
     Thread gameThread;
 
@@ -55,6 +59,8 @@ public class Game_panel extends JPanel implements Runnable{
 
     public void setGame(){
         assetManager.setObjects();
+        setGameState(getPlayState());
+
 
     }
 
@@ -98,8 +104,13 @@ public class Game_panel extends JPanel implements Runnable{
 
 public void update()
 {
+    if(getGameState() == getPlayState()) {
         hero.updatehero();
-        logON = game_controls.logON;
+
+    }
+    if (getGameState() == getPauseState()){
+        //
+    }
 }
 
     public void paintComponent(Graphics g){
@@ -225,5 +236,21 @@ public void update()
 
     public void setLogON(boolean logON) {
         this.logON = logON;
+    }
+
+    public int getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(int gameState) {
+        this.gameState = gameState;
+    }
+
+    public int getPlayState() {
+        return playState;
+    }
+
+    public int getPauseState() {
+        return pauseState;
     }
 }
