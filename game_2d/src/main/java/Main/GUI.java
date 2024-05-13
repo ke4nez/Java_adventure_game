@@ -1,5 +1,7 @@
 package Main;
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,8 +20,18 @@ public class GUI {
     private ArrayList<Message> messages = new ArrayList<>();
     private Timer timer = new Timer();
 
+    private BufferedImage Main_menu_image;
+
+    private int command_number = 1;
+
+
+
+
     public GUI(Game_panel game_panel) {
         this.game_panel = game_panel;
+
+        setMain_menu_image();
+
         try {
 
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/GUI/bigdonstarve.ttf"));
@@ -37,6 +49,17 @@ public class GUI {
         }
     }
 
+
+    public void setMain_menu_image(){
+        Toolbox toolbox = new Toolbox();
+        try {
+
+             Main_menu_image = toolbox.scale_image((ImageIO.read(getClass().getClassLoader().getResourceAsStream("GUI/Main_menu/main.png"))), game_panel.getWindow_width(),game_panel.getWindow_height());
+        }catch (Exception e){
+            System.out.print("can not load main menu image");
+        }
+    }
+
     public void draw(Graphics2D g2) {
         this.g2 = g2;
         g2.setFont(font);
@@ -45,12 +68,18 @@ public class GUI {
 
 
         //GAME MENU
-        if(game_panel.getGameState()==game_panel.getMainMenuState()){
+        if(game_panel.getGameState() == game_panel.getMainMenuState()){
+            drawMenu();
+        }
 
+        //PAUSE MENU STATE
+        if(game_panel.getGameState() == game_panel.getPause_menu()){
+            drawPauseMenu();
         }
 
         //GAME RUNNING
         if (game_panel.getGameState() == game_panel.getPlayState()) {
+
 
             drawWithOutline(g2, "test text", 100, 100,  Color.white, Color.black);
 
@@ -86,6 +115,47 @@ public class GUI {
         g2.drawString(text,x,y);
     }
 
+   public void drawPauseMenu(){
+       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+       g2.drawImage(Main_menu_image,0,0,null);
+       //GAME TITLE
+       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
+       String text ="Survival island adventure";
+       int x = getXfortextincenter(text);
+       int y = game_panel.getTile_size_y() * 4;
+       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+
+
+       //GAME MENU
+       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+       text = "Resume game";
+       x = getXfortextincenter(text);
+       y += game_panel.getTile_size_y()*5;
+       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+       if(getCommand_number() == 1){
+           drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+       }
+
+       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+       text = "Load game";
+       x = getXfortextincenter(text);
+       y += game_panel.getTile_size_y()*2;
+       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+       if(getCommand_number() == 2){
+           drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+       }
+
+       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+       text = "Quit";
+       x = getXfortextincenter(text);
+       y += game_panel.getTile_size_y()*2;
+       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+       if(getCommand_number() == 3){
+           drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+       }
+
+   }
+
     public void drawDialogscreen(){
         //WINDOW
         int x = game_panel.getWindow_width()/4;
@@ -104,6 +174,47 @@ public class GUI {
 
     }
 
+    public void drawMenu(){
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.drawImage(Main_menu_image,0,0,null);
+        //GAME TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
+        String text ="Survival island adventure";
+        int x = getXfortextincenter(text);
+        int y = game_panel.getTile_size_y() * 4;
+        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+
+
+        //GAME MENU
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+        text = "Start new game";
+        x = getXfortextincenter(text);
+        y += game_panel.getTile_size_y()*5;
+        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+        if(getCommand_number() == 1){
+            drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+        text = "Load game";
+        x = getXfortextincenter(text);
+        y += game_panel.getTile_size_y()*2;
+        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+        if(getCommand_number() == 2){
+            drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+        text = "Quit";
+        x = getXfortextincenter(text);
+        y += game_panel.getTile_size_y()*2;
+        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+        if(getCommand_number() == 3){
+            drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+        }
+
+    }
+
     public void drawWindow(int x, int y, int width, int heigth){
         g2.setColor(new Color(0,0,0,200));
         g2.fillRoundRect(x,y,width,heigth,35,35);
@@ -117,7 +228,7 @@ public class GUI {
 
     public int getXfortextincenter(String text){
         int lenght = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-        int x = game_panel.getWindow_width()/2 - lenght;
+        int x = game_panel.getWindow_width()/2 - lenght/2;
         return x;
     }
 
@@ -138,10 +249,10 @@ public class GUI {
     // Метод для отрисовки текста с черной рамкой
     public void drawWithOutline(Graphics2D g2, String text, int x, int y, Color textColor, Color outlineColor) {
         g2.setColor(outlineColor);
-        g2.drawString(text, x - 1, y - 1);
-        g2.drawString(text, x + 1, y - 1);
-        g2.drawString(text, x - 1, y + 1);
-        g2.drawString(text, x + 1, y + 1);
+        g2.drawString(text, x - 5, y - 5);
+        g2.drawString(text, x + 5, y - 5);
+        g2.drawString(text, x - 5, y + 5);
+        g2.drawString(text, x + 5, y + 5);
 
         g2.setColor(textColor);
         g2.drawString(text, x, y);
@@ -159,6 +270,14 @@ public class GUI {
 
     public void setCurrentDialogue(String currentDialogue) {
         this.currentDialogue = currentDialogue;
+    }
+
+    public int getCommand_number() {
+        return command_number;
+    }
+
+    public void setCommand_number(int command_number) {
+        this.command_number = command_number;
     }
 
 

@@ -62,7 +62,9 @@ public class Game_panel extends JPanel implements Runnable{
     private final int playState = 1;
     private final int pauseState = 2;
     private final int dialogState = 3;
-    private int gameState = getMainMenuState();
+    private final int pause_menu = 4;
+
+    private int gameState;
     private boolean logON = false;
 
     long draw_rime_start ;
@@ -79,7 +81,7 @@ public class Game_panel extends JPanel implements Runnable{
     public void setGame(){
         assetManager.setObjects();
         assetManager.setNPCS();
-        setGameState(getPlayState());
+        setGameState(getMainMenuState());
 
 
     }
@@ -124,6 +126,8 @@ public class Game_panel extends JPanel implements Runnable{
 
 public void update()
 {
+
+    //PLAY STATE
     if(getGameState() == getPlayState()) {
 
 
@@ -135,6 +139,8 @@ public void update()
         }
 
     }
+
+    //PAUSE STATE
     if (getGameState() == getPauseState()){
         //
     }
@@ -149,6 +155,7 @@ public void update()
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        //MAIN MENU OR PAUSE MENU
         if(gameState == getMainMenuState()){
         gui.draw(g2);
         }
@@ -324,5 +331,9 @@ public void update()
 
     public int getMainMenuState() {
         return MainMenuState;
+    }
+
+    public int getPause_menu() {
+        return pause_menu;
     }
 }

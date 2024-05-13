@@ -23,6 +23,78 @@ public class Game_controls implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
+
+        //MENU STATE
+        if (game_panel.getGameState() == game_panel.getMainMenuState()) {
+
+
+
+
+
+            if(e.getKeyCode() == 87){
+                game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() - 1);
+            }
+
+            if(e.getKeyCode() == 83){
+                game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() + 1);
+            }
+
+            if (game_panel.getGui().getCommand_number() > 3) {
+                game_panel.getGui().setCommand_number(1);
+            }
+            if (game_panel.getGui().getCommand_number() < 1) {
+                game_panel.getGui().setCommand_number(3);
+            }
+
+
+            if(e.getKeyCode() == 69){
+                if(game_panel.getGui().getCommand_number() == 1){
+                    game_panel.setGameState(game_panel.getPlayState());
+                }
+                if(game_panel.getGui().getCommand_number() == 2){
+                    //
+                }
+                if(game_panel.getGui().getCommand_number()==3){
+                    System.exit(0);
+                }
+            }
+        }
+
+
+        //PAUSE MENU STATE
+        //MENU STATE
+        if (game_panel.getGameState() == game_panel.getPause_menu()) {
+
+
+            if(e.getKeyCode() == 87){
+                game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() - 1);
+            }
+
+            if(e.getKeyCode() == 83){
+                game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() + 1);
+            }
+
+            if (game_panel.getGui().getCommand_number() > 3) {
+                game_panel.getGui().setCommand_number(1);
+            }
+            if (game_panel.getGui().getCommand_number() < 1) {
+                game_panel.getGui().setCommand_number(3);
+            }
+
+
+            if(e.getKeyCode() == 69){
+                if(game_panel.getGui().getCommand_number() == 1){
+                    game_panel.setGameState(game_panel.getPlayState());
+                }
+                if(game_panel.getGui().getCommand_number() == 2){
+                    //
+                }
+                if(game_panel.getGui().getCommand_number()==3){
+                    System.exit(0);
+                }
+            }
+        }
+
         //PLAY STATE
         if (game_panel.getGameState() == game_panel.getPlayState()) {
             if (e.getKeyCode() == 87) {
@@ -60,6 +132,10 @@ public class Game_controls implements KeyListener {
                 game_panel.setGameState(game_panel.getPauseState());
             }
 
+            if(e.getKeyCode() == 27){
+                game_panel.setGameState(game_panel.getPause_menu());
+            }
+
         }
 
 
@@ -72,9 +148,10 @@ public class Game_controls implements KeyListener {
 
         //DIALOGUE STATE
         else if(game_panel.getGameState()== game_panel.getDialogState()){
-            if(e.getKeyCode() == 80){
+            if(e.getKeyCode() == 69){
                 game_panel.setGameState(game_panel.getPlayState());
             }
+
 
         }
     }
