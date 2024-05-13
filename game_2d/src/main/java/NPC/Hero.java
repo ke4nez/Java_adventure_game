@@ -48,8 +48,8 @@ public class Hero extends NPC {
 
 
     public void setHero(){
-        setPosition_x(11 * game_panel.getTile_size_x());
-        setPosition_y(11 * game_panel.getTile_size_y());
+        setPosition_x(10 * game_panel.getTile_size_x());
+        setPosition_y(4 * game_panel.getTile_size_y());
         setSpeed(5);
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
@@ -59,13 +59,15 @@ public class Hero extends NPC {
     public void updatehero(){
         if(game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction) {
             int index = 99;
+            int npc_collision_index = 99;
 
-           if(game_controls.interaction) {
+            if(game_controls.interaction) {
 
                setDirection("interaction");
                setCollision(false);
 
                index = collisionChecker.check_object(this, true);
+               npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
                if (index != 99) {
                    String obj_name = game_panel.getObjFromObjects(index).getName();
 
@@ -95,8 +97,9 @@ public class Hero extends NPC {
                 setDirection("right");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                System.out.print(collisionChecker.check_object(this, true));
-                if(getCollision() != true){
+                //  collisionChecker.check_object(this, true);
+                collisionChecker.checknpc(this,game_panel.getNpcs());
+                if(isCollision() != true){
                     setPosition_x(getPosition_x() + getSpeed());
                 }
             }
@@ -106,8 +109,9 @@ public class Hero extends NPC {
                 setDirection("left");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                System.out.print(collisionChecker.check_object(this, true));
-                if(getCollision() != true){
+              //  collisionChecker.check_object(this, true);
+                 npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
+                if(isCollision() != true){
                     setPosition_x(getPosition_x() - getSpeed());
                 }
             }
@@ -116,8 +120,9 @@ public class Hero extends NPC {
                 setDirection("up");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                System.out.print(collisionChecker.check_object(this, true));
-                if(getCollision() != true){
+              //  collisionChecker.check_object(this, true);
+                 npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
+                if(isCollision() != true){
                     setPosition_y(getPosition_y() - getSpeed());
                 }
             }
@@ -126,8 +131,9 @@ public class Hero extends NPC {
                 setDirection("down");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-               System.out.print(collisionChecker.check_object(this, true));
-                if(getCollision() != true){
+              //  collisionChecker.check_object(this, true);
+                 npc_collision_index =  collisionChecker.checknpc(this,game_panel.getNpcs());
+                if(isCollision() != true){
                     setPosition_y(getPosition_y() + getSpeed());
                 }
 
@@ -183,7 +189,7 @@ public class Hero extends NPC {
 
         if(!game_controls.go_right  && !game_controls.go_down && !game_controls.go_up && !game_controls.go_left){
             setDirection("stands");
-
+            setCollision(false);
             setSpriteCounter(getSpriteCounter() + 1);
             if (getSpriteCounter() > 90) {
                 if (getSpriteNum() == 1) {
@@ -195,13 +201,6 @@ public class Hero extends NPC {
             }
 
         }
-
-        //setDirection("stands");
-
-
-
-
-
 
 
     }

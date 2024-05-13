@@ -22,11 +22,11 @@ public class NPC {
     private int NPC_rectangle_height = 48;
     private int NPC_rectangle_width = 48;
 
-    private Rectangle NPC_rectangle  = new Rectangle(NPC_rectangle_x, NPC_rectangle_y, NPC_rectangle_width, NPC_rectangle_height);;
+    private Rectangle NPC_rectangle  = new Rectangle(NPC_rectangle_x, NPC_rectangle_y, NPC_rectangle_width, NPC_rectangle_height);
 
-    private int NPC_rectangle_default_x;
-    private int NPC_rectangle_default_y;
-    private boolean collision = false;
+    private int NPC_rectangle_default_x = 0;
+    private int NPC_rectangle_default_y = 0;
+    private boolean collision = true;
 
 
 
@@ -54,39 +54,99 @@ public class NPC {
 
 
 
+
+    public void setAction(){
+    }
+    public void update(){
+        setCollision(false);
+        //System.out.println("npc is now updaiting");
+        setAction();
+    game_panel.getCollisionChecker().check_tile(this);
+    game_panel.getCollisionChecker().check_object(this,false);
+    game_panel.getCollisionChecker().checkhero(this,game_panel.getHero());
+
+
+         if(isCollision() == false){
+
+             switch (getDirection()){
+                 case "up":
+                     if(isCollision() == false) {
+                         this.position_y -= speed;
+                     }
+                     break;
+
+                 case "down":
+                     if(isCollision() == false) {
+                        this.position_y += speed;
+
+                     }
+                     break;
+
+                 case "left":
+                     if(isCollision() == false) {
+                         this.position_x -= speed;
+
+                     }
+                     break;
+
+
+                 case "right":
+                     if(isCollision() == false) {
+                     this.position_x +=speed;
+
+                     }
+                     break;
+
+                 case "stands":
+                     break;
+             }
+
+            }
+
+
+            setSpriteCounter(getSpriteCounter() + 1);
+            if (getSpriteCounter() > 30) {
+                if (getSpriteNum() == 1) {
+                    setSpriteNum(2);
+                } else if (getSpriteNum() == 2) {
+                    setSpriteNum(1);
+                }
+                setSpriteCounter(0);
+            }
+    }
+
     public void setupNPCimages(String npc_name){
+        int scale = -60;
 
         Toolbox toolbox = new Toolbox();
         try {
-            this.setUp1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/up_1.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setUp2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/up_2.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setDown1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/down_1.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setDown2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/down_2.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setLeft1((toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/left_1.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y())));
-            this.setLeft2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/left_2.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setRight1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/right_1.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setRight2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/right_2.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setStands1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/stands_1.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
-            this.setStands2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/stands_2.png")),game_panel.getTile_size_x(),game_panel.getTile_size_y()));
+            this.setUp1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/up_1.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+ scale));
+            this.setUp2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/up_2.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+ scale));
+            this.setDown1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/down_1.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale));
+            this.setDown2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/down_2.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale));
+            this.setLeft1((toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/left_1.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale)));
+            this.setLeft2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/left_2.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale));
+            this.setRight1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/right_1.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale));
+            this.setRight2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/right_2.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale));
+            this.setStands1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/stands_1.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale));
+            this.setStands2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/"+ npc_name+ "/stands_2.png")),game_panel.getTile_size_x() + scale,game_panel.getTile_size_y()+scale));
         }catch (IOException e){
             System.out.println("Can not load tile image");
         }
 
     }
 
-
-
-
-
-
     public void draw(Graphics2D g2, Game_panel game_panel){
+
+        BufferedImage image = null;
+
         int screen_x = position_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
         int screen_y = position_y - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
 
-        if(position_x + game_panel.getTile_size_x() * 2 > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
-        && position_x - game_panel.getTile_size_x() * 2 < game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
-        && position_y + game_panel.getTile_size_y() * 2 > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
-        && position_y - game_panel.getTile_size_y() * 2  > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
+        if(position_x + game_panel.getTile_size_x()  > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
+        && position_x - game_panel.getTile_size_x()  < game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x()
+        && position_y + game_panel.getTile_size_y()  > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
+        && position_y - game_panel.getTile_size_y()  < game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y()
         ){
             switch(this.getDirection()){
                 case "up":
@@ -273,7 +333,7 @@ public class NPC {
     }
 
     public boolean getCollision() {
-        return collision;
+        return isCollision();
     }
 
     public void setCollision(boolean collision) {
@@ -335,6 +395,11 @@ public class NPC {
     public void setNPC_rectangle_width(int NPC_rectangle_width) {
         this.NPC_rectangle_width = NPC_rectangle_width;
     }
+
+    public boolean isCollision() {
+        return collision;
+    }
+
 }
 
 

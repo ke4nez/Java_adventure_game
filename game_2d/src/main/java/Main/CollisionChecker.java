@@ -1,6 +1,7 @@
 package Main;
 
 import NPC.NPC;
+import NPC.Hero;
 
 import java.awt.*;
 
@@ -46,7 +47,7 @@ public class CollisionChecker {
             if (game_panel.getTileManager().getTileByNumber(tile_1_number).getIfNotPasseble() == true ||
                     game_panel.getTileManager().getTileByNumber(tile_2_number).getIfNotPasseble() == true) {
                 npc.setCollision(true);
-                    System.out.println("Player hitting solid block up");
+              //  System.out.println("Player hitting solid block up");
 
             }
 
@@ -62,7 +63,7 @@ public class CollisionChecker {
                 npc.setCollision(true);
 
 
-                System.out.println("Player hitting solid block down");
+                //System.out.println("Player hitting solid block down");
             }
         }
 
@@ -75,7 +76,7 @@ public class CollisionChecker {
                     game_panel.getTileManager().getTileByNumber(tile_2_number).getIfNotPasseble() == true) {
                 npc.setCollision(true);
 
-                System.out.println("Player hitting solid block right");
+               // System.out.println("Player hitting solid block right");
             }
         }
 
@@ -87,7 +88,7 @@ public class CollisionChecker {
             if (game_panel.getTileManager().getTileByNumber(tile_1_number).getIfNotPasseble() == true ||
                     game_panel.getTileManager().getTileByNumber(tile_2_number).getIfNotPasseble() == true) {
                 npc.setCollision(true);
-                System.out.println("Player hitting solid block left");
+                //System.out.println("Player hitting solid block left");
             }
 
         }
@@ -111,22 +112,20 @@ public class CollisionChecker {
                     case "interaction":
                         npc.getNPC_rectangle().y -= npc.getSpeed();//up
 
-                       // npc.getNPC_rectangle().x -= npc.getSpeed();// left
-                       // npc.getNPC_rectangle().x += npc.getSpeed();// right
+                        // npc.getNPC_rectangle().x -= npc.getSpeed();// left
+                        // npc.getNPC_rectangle().x += npc.getSpeed();// right
 
-
-
-
-                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())){
-                            npc.setCollision(true);
-                            game_panel.getGui().addMessage("you  interacted with object infront of you",600,100);
-                            return (index = i);
-                        }
-                        npc.getNPC_rectangle().y += npc.getSpeed()*2;// down
 
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
                             npc.setCollision(true);
-                            game_panel.getGui().addMessage("you  interacted with object behind of you",600,100);
+                            game_panel.getGui().addMessage("you  interacted with object infront of you", 600, 100);
+                            return (index = i);
+                        }
+                        npc.getNPC_rectangle().y += npc.getSpeed() * 2;// down
+
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            npc.setCollision(true);
+                            game_panel.getGui().addMessage("you  interacted with object behind of you", 600, 100);
                             return (index = i);
                         }
 
@@ -135,14 +134,14 @@ public class CollisionChecker {
 
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
                             npc.setCollision(true);
-                            game_panel.getGui().addMessage("you  interacted with object to  you left",600,100);
+                            game_panel.getGui().addMessage("you  interacted with object to  you left", 600, 100);
                             return (index = i);
                         }
-                        npc.getNPC_rectangle().x += npc.getSpeed()*2;// right
+                        npc.getNPC_rectangle().x += npc.getSpeed() * 2;// right
 
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
                             npc.setCollision(true);
-                            game_panel.getGui().addMessage("you can interacted with object to  you right",600,100);
+                            game_panel.getGui().addMessage("you can interacted with object to  you right", 600, 100);
                             return (index = i);
                         }
                         break;
@@ -151,8 +150,8 @@ public class CollisionChecker {
                     case "up":
                         npc.getNPC_rectangle().y -= npc.getSpeed();
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
-                           // System.out.println("up collision");
-                            if(game_panel.getObjFromObjects(i).isCollision() == true){
+                            // System.out.println("up collision");
+                            if (game_panel.getObjFromObjects(i).isCollision() == true) {
                                 npc.setCollision(true);
                             }
                             index = i;
@@ -163,28 +162,28 @@ public class CollisionChecker {
                     case "down":
                         npc.getNPC_rectangle().y += npc.getSpeed();
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
-                           // System.out.println("down collision");
-                            if(game_panel.getObjFromObjects(i).isCollision() == true){
+                            // System.out.println("down collision");
+                            if (game_panel.getObjFromObjects(i).isCollision() == true) {
                                 npc.setCollision(true);
                             }
                             index = i;
                         }
                         break;
                     case "left":
-                    npc.getNPC_rectangle().x -= npc.getSpeed();
-                    if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
-                       // System.out.println("left collision");
-                        if(game_panel.getObjFromObjects(i).isCollision() == true){
-                            npc.setCollision(true);
+                        npc.getNPC_rectangle().x -= npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
+                            // System.out.println("left collision");
+                            if (game_panel.getObjFromObjects(i).isCollision() == true) {
+                                npc.setCollision(true);
+                            }
+                            index = i;
                         }
-                        index = i;
-                    }
-                    break;
+                        break;
                     case "right":
                         npc.getNPC_rectangle().x += npc.getSpeed();
                         if (npc.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
-                           // System.out.println("right collision");
-                            if(game_panel.getObjFromObjects(i).isCollision() == true){
+                            // System.out.println("right collision");
+                            if (game_panel.getObjFromObjects(i).isCollision() == true) {
                                 npc.setCollision(true);
                             }
                         }
@@ -203,7 +202,244 @@ public class CollisionChecker {
         }
         return index;
     }
-}
+
+
+    public int checknpc(NPC npc, NPC[] target) {
+
+        int index = 99;
+
+
+        for (int i = 0; i < target.length; i++) {
+            if (target[i] != null) {
+
+                npc.getNPC_rectangle().x = npc.getPosition_x() + npc.getNPC_rectangle().x;
+                npc.getNPC_rectangle().y = npc.getPosition_y() + npc.getNPC_rectangle().y;
+
+               target[i].getNPC_rectangle().x = target[i].getPosition_x() + target[i].getNPC_rectangle().x;
+               target[i].getNPC_rectangle().y = target[i].getPosition_y() + target[i].getNPC_rectangle().y;
+
+
+                switch (npc.getDirection()) {
+
+                    case "interaction":
+                        npc.getNPC_rectangle().y -= npc.getSpeed();//up
+
+                        // npc.getNPC_rectangle().x -= npc.getSpeed();// left
+                        // npc.getNPC_rectangle().x += npc.getSpeed();// right
+
+
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+
+                            npc.setCollision(true);
+                            game_panel.getGui().addMessage("you  interacted with npc infront of you", 600, 100);
+                            index = i;
+                        }
+                        npc.getNPC_rectangle().y += npc.getSpeed() * 2;// down
+
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+                            npc.setCollision(true);
+
+                            game_panel.getGui().addMessage("you  interacted with npc behind of you", 600, 100);
+                            index = i;
+
+                        }
+
+                        npc.getNPC_rectangle().y -= npc.getSpeed();//up
+                        npc.getNPC_rectangle().x -= npc.getSpeed();// left
+
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+                            npc.setCollision(true);
+                            game_panel.getGui().addMessage("you  interacted with npc to  you left", 600, 100);
+                            index = i;
+
+                        }
+                        npc.getNPC_rectangle().x += npc.getSpeed() * 2;// right
+
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+                            npc.setCollision(true);
+                            game_panel.getGui().addMessage("you can interacted with npc to  you right", 600, 100);
+                            index = i;
+
+                        }
+                        break;
+
+
+                    case "up":
+                        npc.getNPC_rectangle().y -= npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+                            System.out.println("up collision");
+                            npc.setCollision(true);
+                            index = i;
+
+
+                        }
+
+                        break;
+
+                    case "down":
+                        npc.getNPC_rectangle().y += npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+                            System.out.println("down collision");
+                            npc.setCollision(true);
+                            index = i;
+
+
+                        }
+                        break;
+                    case "left":
+                        npc.getNPC_rectangle().x -= npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+                            System.out.println("left collision");
+                            System.out.print(target[i].getCollision());
+                            npc.setCollision(true);
+                            index = i;
+
+
+                        }
+                        break;
+                    case "right":
+                        npc.getNPC_rectangle().x += npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects(target[i].getNPC_rectangle())) {
+                            System.out.println("right collision");
+                            npc.setCollision(true);
+                            index = i;
+
+                        }
+
+                        break;
+                }
+                npc.getNPC_rectangle().x = npc.getNPC_rectangle_default_x();
+                npc.getNPC_rectangle().y = npc.getNPC_rectangle_default_y();
+                target[i].getNPC_rectangle().x = target[i].getNPC_rectangle_default_x();
+                target[i].getNPC_rectangle().y = target[i].getNPC_rectangle_default_y();
+
+
+
+            }
+
+
+
+
+        }
+        return  index;
+    }
+
+    public void checkhero (NPC npc, Hero hero){
+
+
+
+
+                npc.getNPC_rectangle().x = npc.getPosition_x() + npc.getNPC_rectangle().x;
+                npc.getNPC_rectangle().y = npc.getPosition_y() + npc.getNPC_rectangle().y;
+
+                hero.getNPC_rectangle().x =  hero.getPosition_x() +  hero.getNPC_rectangle().x;
+        hero.getNPC_rectangle().y =  hero.getPosition_y() +  hero.getNPC_rectangle().y;
+
+
+                switch (npc.getDirection()) {
+
+                    case "interaction":
+                        npc.getNPC_rectangle().y -= npc.getSpeed();//up
+
+                        // npc.getNPC_rectangle().x -= npc.getSpeed();// left
+                        // npc.getNPC_rectangle().x += npc.getSpeed();// right
+
+
+                        if (npc.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
+
+                            npc.setCollision(true);
+                          //  game_panel.getGui().addMessage("you  interacted with npc player of you", 600, 100);
+
+                        }
+                        npc.getNPC_rectangle().y += npc.getSpeed() * 2;// down
+
+                        if (npc.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                            npc.setCollision(true);
+
+                          //  game_panel.getGui().addMessage("you  interacted with npc behind of you", 600, 100);
+
+
+                        }
+
+                        npc.getNPC_rectangle().y -= npc.getSpeed();//up
+                        npc.getNPC_rectangle().x -= npc.getSpeed();// left
+
+                        if (npc.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
+                            npc.setCollision(true);
+                          //  game_panel.getGui().addMessage("you  interacted with npc to  you left", 600, 100);
+
+
+                        }
+                        npc.getNPC_rectangle().x += npc.getSpeed() * 2;// right
+
+                        if (npc.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
+                            npc.setCollision(true);
+                         //   game_panel.getGui().addMessage("you can interacted with npc to  you right", 600, 100);
+
+
+                        }
+                        break;
+
+
+                    case "up":
+                        npc.getNPC_rectangle().y -= npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
+                         //   System.out.println("up collision");
+                            npc.setCollision(true);
+
+
+
+                        }
+
+                        break;
+
+                    case "down":
+                        npc.getNPC_rectangle().y += npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
+                          //  System.out.println("down collision");
+                            npc.setCollision(true);
+
+
+
+                        }
+                        break;
+                    case "left":
+                        npc.getNPC_rectangle().x -= npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
+                          //  System.out.println("left collision");
+                            npc.setCollision(true);
+
+
+
+                        }
+                        break;
+                    case "right":
+                        npc.getNPC_rectangle().x += npc.getSpeed();
+                        if (npc.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
+                           // System.out.println("right collision");
+                            npc.setCollision(true);
+
+
+                        }
+
+                        break;
+                }
+                npc.getNPC_rectangle().x = npc.getNPC_rectangle_default_x();
+                npc.getNPC_rectangle().y = npc.getNPC_rectangle_default_y();
+                hero.getNPC_rectangle().x =  hero.getNPC_rectangle_default_x();
+                hero.getNPC_rectangle().y =  hero.getNPC_rectangle_default_y();
+
+
+
+            }
+
+
+        }
+
+
+
+
+
 
 
 

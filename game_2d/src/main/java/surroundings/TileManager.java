@@ -29,7 +29,7 @@ private void getTileImages(){
     try{
         setup(0,"water",true);
         setup(1,"water",false);
-        setup(11,"grass_2_test_2",false);
+        setup(3,"trees_2_tets",true);
         setup(2,"grass_2_test_2",false);
 
 
@@ -45,7 +45,7 @@ private void getTileImages(){
 }
 
 
-public void  setup(int index, String imagePath, boolean collision){
+public void  setup (int index, String imagePath, boolean collision){
     Toolbox toolbox = new Toolbox();
     try {
         getTiles()[index] = new Tile();
