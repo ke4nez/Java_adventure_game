@@ -13,6 +13,8 @@ public class GUI {
     Graphics2D g2;
     private Font font;
     private Font logFont;
+
+    private String currentDialogue = "";
     private ArrayList<Message> messages = new ArrayList<>();
     private Timer timer = new Timer();
 
@@ -41,6 +43,13 @@ public class GUI {
         g2.setColor(Color.white);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+
+        //GAME MENU
+        if(game_panel.getGameState()==game_panel.getMainMenuState()){
+
+        }
+
+        //GAME RUNNING
         if (game_panel.getGameState() == game_panel.getPlayState()) {
 
             drawWithOutline(g2, "test text", 100, 100,  Color.white, Color.black);
@@ -56,9 +65,16 @@ public class GUI {
                 }
             }
         }
+
+        //PAUSE
         if(game_panel.getGameState() == game_panel.getPauseState()){
            drawPauseSreen();
 
+        }
+
+        //DIALOG
+        if(game_panel.getGameState() == game_panel.getDialogState()){
+            drawDialogscreen();
         }
     }
 
@@ -69,6 +85,35 @@ public class GUI {
 
         g2.drawString(text,x,y);
     }
+
+    public void drawDialogscreen(){
+        //WINDOW
+        int x = game_panel.getWindow_width()/4;
+        int y = game_panel.getWindow_height()/6;
+        int width = game_panel.getWindow_width()/2;
+        int heigth = game_panel.getTile_size_y() * 5;
+        drawWindow(x,y,width,heigth);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,30));
+        x += game_panel.getTile_size_x();
+        y += game_panel.getTile_size_y();
+        for(String line: currentDialogue.split("\n")){
+            g2.drawString(line,x,y);
+            y += 40;
+        }
+
+    }
+
+    public void drawWindow(int x, int y, int width, int heigth){
+        g2.setColor(new Color(0,0,0,200));
+        g2.fillRoundRect(x,y,width,heigth,35,35);
+
+        g2.setColor(new Color(255,255,255));
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5,y+5,width-10,heigth-10,25,25);
+    }
+
+
 
     public int getXfortextincenter(String text){
         int lenght = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
@@ -108,6 +153,13 @@ public class GUI {
         g2.drawString(renderTimeAsString,getXfortextincenter(renderTimeAsString)+400,400 );
     }
 
+    public String getCurrentDialogue() {
+        return currentDialogue;
+    }
+
+    public void setCurrentDialogue(String currentDialogue) {
+        this.currentDialogue = currentDialogue;
+    }
 
 
     private static class Message {

@@ -22,7 +22,7 @@ public class AssetManager {
 
     public void setNPCS(){
         game_panel.getNpcs()[0] = new NPC.NPC_stranger(game_panel);
-        game_panel.getNpcs()[0].setPosition_x(3 * game_panel.getTile_size_x());
-        game_panel.getNpcs()[0].setPosition_y(3 * game_panel.getTile_size_y());
+        game_panel.getNpcs()[0].setPosition_x(15 * game_panel.getTile_size_x());
+        game_panel.getNpcs()[0].setPosition_y(15 * game_panel.getTile_size_y());
     }
 }

@@ -6,16 +6,41 @@ import java.util.Random;
 
 
 
+
+
 public class NPC_stranger extends  NPC {
     public  NPC_stranger(Game_panel game_panel){
 
         super(game_panel);
-      this.setupNPCimages("Stranger");
-      this.setSpeed(1);
+        this.setSpeed(1);
+        this.setupNPCimages("Stranger");
+        setDialogue();
 
     }
 
 int counter = 1;
+
+
+    public void setDialogue(){
+        dialogues[0] = "Hello, stranger";
+        dialogues[1] = "ye, i see";
+        dialogues[2] = "you hunting for treasure";
+        dialogues[3] = "la-la-la-la-la-la-la-la-la-la-la-la-la-la-la-la-la-la-\n la-la-la-la-la -la-la-la-la\n-la-la-la-la-la a-la-la-la-la-la-la-la-la-la-la-la-la-la-la-la";
+    }
+
+
+
+
+    public void speak(){
+        super.speak();
+    }
+
+
+
+
+
+
+
     public void setAction() {
         if (counter == 1) {
             Random i = new Random();

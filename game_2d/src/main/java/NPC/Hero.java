@@ -48,8 +48,8 @@ public class Hero extends NPC {
 
 
     public void setHero(){
-        setPosition_x(10 * game_panel.getTile_size_x());
-        setPosition_y(4 * game_panel.getTile_size_y());
+        setPosition_x(16 * game_panel.getTile_size_x());
+        setPosition_y(16 * game_panel.getTile_size_y());
         setSpeed(5);
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
@@ -65,12 +65,12 @@ public class Hero extends NPC {
 
                setDirection("interaction");
                setCollision(false);
-
                index = collisionChecker.check_object(this, true);
                npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
-               if (index != 99) {
-                   String obj_name = game_panel.getObjFromObjects(index).getName();
 
+               if (index != 99) {
+
+                   String obj_name = game_panel.getObjFromObjects(index).getName();
                    switch (obj_name) {
                        case "door": {
                            if (game_panel.getObjFromObjects(index).isIsinteractable()) {
@@ -91,7 +91,15 @@ public class Hero extends NPC {
 
                    }
                }
+
+               if(npc_collision_index != 99){
+                   interactNPC(npc_collision_index);
+
+               }
+
            }
+
+
             if (game_controls.go_right) {
 
                 setDirection("right");
@@ -104,6 +112,7 @@ public class Hero extends NPC {
                 }
             }
 
+
             if (game_controls.go_left) {
 
                 setDirection("left");
@@ -115,6 +124,8 @@ public class Hero extends NPC {
                     setPosition_x(getPosition_x() - getSpeed());
                 }
             }
+
+
             if (game_controls.go_up) {
 
                 setDirection("up");
@@ -126,6 +137,8 @@ public class Hero extends NPC {
                     setPosition_y(getPosition_y() - getSpeed());
                 }
             }
+
+
             if (game_controls.go_down) {
 
                 setDirection("down");
@@ -148,41 +161,6 @@ public class Hero extends NPC {
                 }
                 setSpriteCounter(0);
             }
-
-
-          /// WITH THIS CODE CHARACTER CANT WALK IN 2 WAYS AT THE SAME TIME
-
-
-            //setCollision(false);
-           // collisionChecker.check_tile(this);
-
-
-           // if(getDirection() == "up"){
-            //    if(getCollision() != true){
-              //      setPosition_y(getPosition_y() - getSpeed());
-             //   }
-           // }
-
-           // if(getDirection() == "right"){
-           //     if(getCollision() != true){
-           //         setPosition_x(getPosition_x() + getSpeed());
-           //     }
-           // }
-
-           // if(getDirection() == "left"){
-           //     if(getCollision() != true){
-           //         setPosition_x(getPosition_x() - getSpeed());
-           //     }
-           // }
-
-
-           // if(getDirection() == "down"){
-            //    if(getCollision() != true){
-            //        setPosition_y(getPosition_y() + getSpeed());
-            //    }
-           // }
-
-
 
         }
 
@@ -248,9 +226,21 @@ public class Hero extends NPC {
                 }
                 break;
 
+            case "inderaction":
+                image = getDialogue_image();
+
         }
 
         g2.drawImage(image, getScreen_x(), getScreen_y(), null);
+    }
+
+
+
+
+
+    public void  interactNPC(int index){
+        game_panel.setGameState(game_panel.getDialogState());
+        game_panel.getNPCfromNPCs(index).speak();
     }
 
 

@@ -18,8 +18,8 @@ public class Game_panel extends JPanel implements Runnable{
     //GAME SETTINGS
 
 
-    private int tile_size_x = 120;
-    private int tile_size_y =120;
+    private int tile_size_x = 50;
+    private int tile_size_y =50;
     private final int max_world_col = 126;
     private final int max_world_row = 126;
 
@@ -57,9 +57,12 @@ public class Game_panel extends JPanel implements Runnable{
 
 
     //LOGGING
-    private int gameState;
+
+    private  final int MainMenuState = 0;
     private final int playState = 1;
     private final int pauseState = 2;
+    private final int dialogState = 3;
+    private int gameState = getMainMenuState();
     private boolean logON = false;
 
     long draw_rime_start ;
@@ -138,36 +141,42 @@ public void update()
 }
 
     public void paintComponent(Graphics g){
-
+        //LOGS
         long draw_rime_start = System.nanoTime();
-
         long passed;
 
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        tileManager.draw(g2);
-
-        for(int i = 0 ; i < obj.length; i++) {
-            if (obj[i] != null) {
-                obj[i].paintObject(g2);
-            }
-        }
-
-        for(int i = 0 ; i < npcs.length; i++) {
-            if (npcs[i] != null) {
-                npcs[i].draw(g2,this);
-            }
-        }
-        hero.painthero(g2);
+        if(gameState == getMainMenuState()){
         gui.draw(g2);
+        }
+        else {
+            //Tiles
+            tileManager.draw(g2);
+            //objects
+            for(int i = 0 ; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].paintObject(g2);
+                }
+            }
+            //NPCs
+            for(int i = 0 ; i < npcs.length; i++) {
+                if (npcs[i] != null) {
+                    npcs[i].draw(g2,this);
+                }
+            }
+            hero.painthero(g2);
+            gui.draw(g2);
 
-       if(logON) {
-           long draw_time_end = System.nanoTime();
-           passed = draw_time_end - draw_rime_start;
-           gui.drawLogRenderTime(passed);
-       }
+            if(logON) {
+                long draw_time_end = System.nanoTime();
+                passed = draw_time_end - draw_rime_start;
+                gui.drawLogRenderTime(passed);
+            }
+        }
+
     }
 
 
@@ -307,5 +316,13 @@ public void update()
 
     public void setNpcs(NPC[] npcs) {
         this.npcs = npcs;
+    }
+
+    public int getDialogState() {
+        return dialogState;
+    }
+
+    public int getMainMenuState() {
+        return MainMenuState;
     }
 }
