@@ -4,16 +4,11 @@ package NPC;
 import Main.CollisionChecker;
 import Main.Game_controls;
 import Main.Game_panel;
-import Main.Toolbox;
 import Objects.Door;
-import Objects.Game_Object;
-import surroundings.Tile;
 
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class Hero extends NPC {
 
@@ -24,6 +19,9 @@ public class Hero extends NPC {
     private  int screen_x;
     private  int screen_y;
     CollisionChecker collisionChecker;
+
+    public ArrayList<NPC> inventory = new ArrayList<>();
+    private final int inventory_size = 25;
 
 
 
@@ -41,18 +39,37 @@ public class Hero extends NPC {
         this.setNPC_rectangle(new Rectangle(8,16,getNPC_rectangle_width()/2,getNPC_rectangle_height()/2));
 
         collisionChecker = new CollisionChecker(game_panel);
+        setDefaultStats();
         setHero();
         setupNPCimages("Hero");
+
 
     }
 
 
     public void setHero(){
-        setPosition_x(16 * game_panel.getTile_size_x());
-        setPosition_y(16 * game_panel.getTile_size_y());
+        setPosition_x(9 * game_panel.getTile_size_x());
+        setPosition_y(9 * game_panel.getTile_size_y());
         setSpeed(5);
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
+        set_items();
+    }
+
+
+    public void set_items(){
+       getInventory().add(getItemInHeands());
+       getInventory().add(new Lamp_inventory(game_panel));
+    }
+
+
+    public void setDefaultStats(){
+       // setMaxHealth(6);
+      //  setHealth(6);
+        setLevel(1);
+        setExp(1);
+        setNextlevelexp(10);
+        setItemInHeands(new Lamp_inventory(game_panel));
     }
 
 
@@ -70,31 +87,18 @@ public class Hero extends NPC {
 
                if (index != 99) {
 
-                   String obj_name = game_panel.getObjFromObjects(index).getName();
-                   switch (obj_name) {
-                       case "door": {
-                           if (game_panel.getObjFromObjects(index).isIsinteractable()) {
-                               if (game_panel.getObjFromObjects(index) instanceof Door) {
-                                   if (((Door) game_panel.getObjFromObjects(index)).isopen() == true) {
-                                       ((Door) game_panel.getObjFromObjects(index)).close();
-                                   }
-                                   if ((((Door) game_panel.getObjFromObjects(index)).isopen() == false)) {
-                                       ((Door) game_panel.getObjFromObjects(index)).open();
-                                   }
-                               }
-                           }
 
-                           break;
-                       }
-                       case "Lamp":
-                           break;
-
+                   if(game_panel.getObjFromObjects(index).isIsinteractable()){
+                       interactObject(index);
+                   }
+                   if(game_panel.getObjFromObjects(index).isIspickeble()){
+                       pickup(index);
                    }
                }
 
+
                if(npc_collision_index != 99){
                    interactNPC(npc_collision_index);
-
                }
 
            }
@@ -105,7 +109,7 @@ public class Hero extends NPC {
                 setDirection("right");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                //  collisionChecker.check_object(this, true);
+                collisionChecker.check_object(this, true);
                 collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_x(getPosition_x() + getSpeed());
@@ -118,7 +122,7 @@ public class Hero extends NPC {
                 setDirection("left");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-              //  collisionChecker.check_object(this, true);
+              collisionChecker.check_object(this, true);
                  npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_x(getPosition_x() - getSpeed());
@@ -131,7 +135,7 @@ public class Hero extends NPC {
                 setDirection("up");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-              //  collisionChecker.check_object(this, true);
+                collisionChecker.check_object(this, true);
                  npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_y(getPosition_y() - getSpeed());
@@ -144,7 +148,7 @@ public class Hero extends NPC {
                 setDirection("down");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-              //  collisionChecker.check_object(this, true);
+                collisionChecker.check_object(this, true);
                  npc_collision_index =  collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_y(getPosition_y() + getSpeed());
@@ -236,11 +240,69 @@ public class Hero extends NPC {
 
 
 
+    public void pickup( int i){
+        String name;
+        if(i != 99){
+            if(inventory.size()!= inventory_size) {
+                name = game_panel.getObj()[i].getName();
+                switch (name) {
+                    case "Lamp":
+                        game_panel.getHero().getInventory().add(new Lamp_inventory(getGame_panel()));
+                        game_panel.getObj()[i] = null;
+                        break;
+                    case "Door":
+                        game_panel.getHero().getInventory().add(new Lamp_2(getGame_panel()));
+                        game_panel.getObj()[i] = null;
+
+
+            }
+            }
+        }
+
+    }
+
+
+    public void interactObject(int index){
+        String name;
+        if(index != 99) {
+            name = game_panel.getObj()[index].getName();
+            switch (name) {
+                case "Door":
+                        if (game_panel.getObjFromObjects(index) instanceof Door) {
+                            if (((Door) game_panel.getObjFromObjects(index)).isopen() == true) {
+                                ((Door) game_panel.getObjFromObjects(index)).close();
+                            }
+                            if ((((Door) game_panel.getObjFromObjects(index)).isopen() == false)) {
+                                ((Door) game_panel.getObjFromObjects(index)).open();
+                            }
+                    }
+                    break;
+
+
+                case "Pond":
+                    break;
+            }
+        }
+
+    }
+
+
+
 
 
     public void  interactNPC(int index){
         game_panel.setGameState(game_panel.getDialogState());
         game_panel.getNPCfromNPCs(index).speak();
+    }
+
+
+    public void selectitem(){
+
+        int itemindex = game_panel.getGui().getindexofitem();
+        if(itemindex < inventory.size()) {
+            setItemInHeands(inventory.get(itemindex));
+        }
+
     }
 
 
@@ -258,5 +320,19 @@ public class Hero extends NPC {
 
     public void setScreen_y(int screen_y) {
         this.screen_y = screen_y;
+    }
+
+    public ArrayList<NPC> getInventory() {
+        return inventory;
+    }
+
+
+
+    public void setInventory(ArrayList<NPC> inventory) {
+        this.inventory = inventory;
+    }
+
+    public int getInventory_size() {
+        return inventory_size;
     }
 }

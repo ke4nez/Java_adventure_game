@@ -14,10 +14,11 @@ private boolean open;
     public Door (Game_panel game_panel){
         this.setIndex(1);
         this.setGame_panel(game_panel);
-        this.setName("door");
+        this.setName("Door");
         this.setCollision(true);
         this.open = false;
-        this.setIsinteractable(true);
+       // this.setIsinteractable(true);
+        this.setIspickeble(true);
 
 
 

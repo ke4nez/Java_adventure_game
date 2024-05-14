@@ -27,13 +27,28 @@ public TileManager(Game_panel game_panel){
 
 private void getTileImages(){
     try{
+      //  setup(0,"water",true);
+      //  setup(1,"water",false);
+      //  setup(3,"trees_2_tets",true);
+      //  setup(2,"grass_2_test_2",false);
+      //  setup(33,"trees_2_tets",false);
         setup(0,"water",true);
-        setup(1,"water",false);
-        setup(3,"trees_2_tets",true);
-        setup(2,"grass_2_test_2",false);
+        setup(1,"asset_1",false);
+        setup(2,"grass",false);
+        setup(3,"asset_2",false);
+        setup(4,"asset_3",false);
+        setup(5,"asset_4",false);
+        setup(6,"asset_5",false);
+        setup(7,"asset_6",false);
+        setup(8,"asset_7",false);
+        setup(9,"asset_8",false);
+        setup(10,"trees_2_final",true);
 
 
-       // getTiles()[2] = new Tile();
+
+
+
+        // getTiles()[2] = new Tile();
         //getTiles()[2].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test_2.png")));
 
         System.out.println("tiles was loaded");
@@ -60,7 +75,7 @@ public void  setup (int index, String imagePath, boolean collision){
 
 
 private void loadmap(){
-    try{
+    try {
         InputStream is = getClass().getClassLoader().getResourceAsStream("Maps/map_1.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
@@ -69,25 +84,27 @@ private void loadmap(){
         int row = 0;
 
 
-        while(col < game_panel.getMax_world_col() && row < game_panel.getMax_world_row()){
+        while (col < game_panel.getMax_world_col() && row < game_panel.getMax_world_row()) {
 
-            String line = br.readLine();
+               String line = br.readLine();
 
-            while(col< game_panel.getMax_world_col()){
+            while (col < game_panel.getMax_world_col()) {
                 String numbers[] = line.split(" ");
-                 int number = Integer.parseInt(numbers[col]);
+                int number = Integer.parseInt(numbers[col]);
 
-                 getMap()[col][row] = number;
-                 col++;
+                getMap()[col][row] = number;
+                col++;
 
             }
-            if(col == game_panel.getMax_world_col()) {
+            if (col == game_panel.getMax_world_col()) {
                 col = 0;
                 row++;
             }
         }
+
         System.out.println("map was load");
         br.close();
+
 
 
     }catch (Exception e){

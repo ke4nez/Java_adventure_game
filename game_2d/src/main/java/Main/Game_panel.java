@@ -18,8 +18,8 @@ public class Game_panel extends JPanel implements Runnable{
     //GAME SETTINGS
 
 
-    private int tile_size_x = 50;
-    private int tile_size_y =50;
+    private int tile_size_x = 64;
+    private int tile_size_y =64;
     private final int max_world_col = 126;
     private final int max_world_row = 126;
 
@@ -64,6 +64,8 @@ public class Game_panel extends JPanel implements Runnable{
     private final int dialogState = 3;
     private final int pause_menu = 4;
 
+    private final int inventoryState = 5;
+
     private int gameState;
     private boolean logON = false;
 
@@ -82,8 +84,6 @@ public class Game_panel extends JPanel implements Runnable{
         assetManager.setObjects();
         assetManager.setNPCS();
         setGameState(getMainMenuState());
-
-
     }
 
 
@@ -132,6 +132,8 @@ public void update()
 
 
         hero.updatehero();
+
+
         for(int i = 0 ; i < npcs.length; i++) {
             if (npcs[i] != null) {
                 npcs[i].update();
@@ -163,6 +165,7 @@ public void update()
             //Tiles
             tileManager.draw(g2);
             //objects
+
             for(int i = 0 ; i < obj.length; i++) {
                 if (obj[i] != null) {
                     obj[i].paintObject(g2);
@@ -277,7 +280,7 @@ public void update()
     public Game_Object getObjFromObjects(int x) {
         return obj[x];
     }
-    public void setObj(Game_Object[] obj) {
+    public void setObj(Game_Object [] obj) {
         this.obj = obj;
     }
 
@@ -335,5 +338,13 @@ public void update()
 
     public int getPause_menu() {
         return pause_menu;
+    }
+
+    public int getInventoryState() {
+        return inventoryState;
+    }
+
+    public Game_panel getGamePanel(){
+        return this;
     }
 }

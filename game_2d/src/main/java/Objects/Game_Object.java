@@ -1,15 +1,17 @@
 package Objects;
 
 import Main.Game_panel;
+import NPC.NPC;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Game_Object {
 
+    private Game_panel game_panel;
     private BufferedImage image;
     private String name;
-    private boolean collision = false;
+    private boolean collision = true;
     private int position_x;
     private int position_y;
 
@@ -26,7 +28,7 @@ public class Game_Object {
     private int object_rectangle_default_y = 0;
 
 
-    private Game_panel game_panel;
+
 
     private boolean ispickeble = false;
     private boolean isinteractable = false;
