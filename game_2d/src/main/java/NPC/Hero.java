@@ -295,15 +295,28 @@ public class Hero extends NPC {
         game_panel.getNPCfromNPCs(index).speak();
     }
 
-
+    //pick item from inventory
     public void selectitem(){
 
         int itemindex = game_panel.getGui().getindexofitem();
         if(itemindex < inventory.size()) {
+
+
             setItemInHeands(inventory.get(itemindex));
+
+            //change lightning
+            if( inventory.get(itemindex) instanceof Lamp_2){
+              game_panel.changelightning(game_panel.getWindow_width()/2);
+            }
+            else {
+                game_panel.changelightning(game_panel.getWindow_width()/4);
+            }
         }
 
     }
+
+
+    public void craftItem
 
 
     public int getScreen_x() {

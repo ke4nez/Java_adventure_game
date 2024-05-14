@@ -7,6 +7,8 @@ import java.awt.*;
 import NPC.Hero;
 import NPC.NPC;
 import Objects.Game_Object;
+import enviroment.EnviromentManager;
+import enviroment.Lightning;
 import surroundings.TileManager;
 
 
@@ -52,6 +54,8 @@ public class Game_panel extends JPanel implements Runnable{
     private TileManager tileManager = new TileManager(this);
     private CollisionChecker collisionChecker = new CollisionChecker(this);
 
+    private EnviromentManager enviromentManager = new EnviromentManager(this);
+
     private GUI gui = new GUI(this);
 
 
@@ -94,6 +98,7 @@ public class Game_panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(game_controls);
         this.setFocusable(true);
+        getEnviromentManager().setup();
 
 
     }
@@ -163,9 +168,11 @@ public void update()
         }
         else {
             //Tiles
-            tileManager.draw(g2);
-            //objects
 
+            tileManager.draw(g2);
+
+
+            //objects
             for(int i = 0 ; i < obj.length; i++) {
                 if (obj[i] != null) {
                     obj[i].paintObject(g2);
@@ -178,19 +185,31 @@ public void update()
                 }
             }
             hero.painthero(g2);
-            gui.draw(g2);
+
+
+            //enviroment
+
+            getEnviromentManager().draw(g2);
 
             if(logON) {
                 long draw_time_end = System.nanoTime();
                 passed = draw_time_end - draw_rime_start;
                 gui.drawLogRenderTime(passed);
             }
+
+
+            //GUI
+            gui.draw(g2);
+
+
         }
 
     }
 
 
-
+public void changelightning(int x){
+        getEnviromentManager().setLightning(new Lightning(this,x));
+}
 
 
     public int getMax_world_row() {
@@ -346,5 +365,13 @@ public void update()
 
     public Game_panel getGamePanel(){
         return this;
+    }
+
+    public EnviromentManager getEnviromentManager() {
+        return enviromentManager;
+    }
+
+    public void setEnviromentManager(EnviromentManager enviromentManager) {
+        this.enviromentManager = enviromentManager;
     }
 }
