@@ -11,6 +11,10 @@ public class Game_controls implements KeyListener {
 
     public boolean go_right, go_left, go_up, go_down, interaction, jump;
     private int counter = 0;
+    // CRAFT
+    private int craft_counter = 0;
+    int index_1 = 0;
+    int index_2 = 0;
 
     public Game_controls(Game_panel game_panel) {
         this.game_panel = game_panel;
@@ -172,6 +176,30 @@ public class Game_controls implements KeyListener {
                     if(game_panel.getGui().getSlot_row() != 4) {
                         game_panel.getGui().setSlot_row(game_panel.getGui().getSlot_row() + 1);
                     }
+                }
+
+                //c CRAFT ITEMS
+                if(e.getKeyCode() == 67){
+
+
+                    if (craft_counter == 0) {
+                        index_1 = game_panel.getGui().getindexofitem();
+                        craft_counter++;
+                        System.out.println("you pick first item");
+                    }
+                   else if(craft_counter == 1){
+                        index_2 = game_panel.getGui().getindexofitem();
+                        craft_counter++;
+                        System.out.println("you pick second item");
+                    }
+                    else if(craft_counter == 2){
+                        System.out.println("crafting...");
+                        game_panel.getHero().craftItem(index_1,index_2);
+                        index_1 = 0;
+                        index_2 = 0;
+                        craft_counter = 0;
+                    }
+
                 }
 
             if(e.getKeyCode() == 69){

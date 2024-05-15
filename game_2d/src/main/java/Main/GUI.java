@@ -318,7 +318,7 @@ public class GUI {
     }
 
     public int getindexofitem(){
-        return  itemindex =slot_row * 5 + slot_col;
+        return  itemindex = slot_row * 5 + slot_col;
     }
 
 

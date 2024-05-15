@@ -33,6 +33,10 @@ public class Game_Object {
     private boolean ispickeble = false;
     private boolean isinteractable = false;
 
+    //loading
+
+    int object_type_number;
+
 
     public void paintObject(Graphics2D g2) {
             int screen_x = position_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();

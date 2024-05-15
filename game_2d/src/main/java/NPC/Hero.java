@@ -5,6 +5,7 @@ import Main.CollisionChecker;
 import Main.Game_controls;
 import Main.Game_panel;
 import Objects.Door;
+import Objects.Pond;
 
 
 import java.awt.*;
@@ -22,6 +23,16 @@ public class Hero extends NPC {
 
     public ArrayList<NPC> inventory = new ArrayList<>();
     private final int inventory_size = 25;
+
+
+
+
+
+    //CRAFT
+
+    private int index_1;
+    private int index_2;
+    boolean craft = false;
 
 
 
@@ -48,8 +59,8 @@ public class Hero extends NPC {
 
 
     public void setHero(){
-        setPosition_x(9 * game_panel.getTile_size_x());
-        setPosition_y(9 * game_panel.getTile_size_y());
+        setPosition_x(28 * game_panel.getTile_size_x());
+        setPosition_y(39 * game_panel.getTile_size_y());
         setSpeed(5);
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
@@ -59,7 +70,7 @@ public class Hero extends NPC {
 
     public void set_items(){
        getInventory().add(getItemInHeands());
-       getInventory().add(new Lamp_inventory(game_panel));
+       getInventory().add(new Lamp_of(game_panel));
     }
 
 
@@ -69,7 +80,7 @@ public class Hero extends NPC {
         setLevel(1);
         setExp(1);
         setNextlevelexp(10);
-        setItemInHeands(new Lamp_inventory(game_panel));
+        setItemInHeands(new Lamp_of(game_panel));
     }
 
 
@@ -246,13 +257,16 @@ public class Hero extends NPC {
             if(inventory.size()!= inventory_size) {
                 name = game_panel.getObj()[i].getName();
                 switch (name) {
-                    case "Lamp":
-                        game_panel.getHero().getInventory().add(new Lamp_inventory(getGame_panel()));
+                    case "Lamp_of":
+                        game_panel.getHero().getInventory().add(new Lamp_of(getGame_panel()));
                         game_panel.getObj()[i] = null;
                         break;
-                    case "Door":
-                        game_panel.getHero().getInventory().add(new Lamp_2(getGame_panel()));
+
+                    case "Axe":
+                        inventory.add(new Axe(game_panel));
                         game_panel.getObj()[i] = null;
+                        break;
+
 
 
             }
@@ -269,18 +283,40 @@ public class Hero extends NPC {
             switch (name) {
                 case "Door":
                         if (game_panel.getObjFromObjects(index) instanceof Door) {
-                            if (((Door) game_panel.getObjFromObjects(index)).isopen() == true) {
-                                ((Door) game_panel.getObjFromObjects(index)).close();
+
+                                if (((Door) game_panel.getObjFromObjects(index)).isopen() == true) {
+                                    ((Door) game_panel.getObjFromObjects(index)).close();
+                                }
+
+                                //cant open without axe
+                            if(getItemInHeands().getName() == "Axe") {
+                                if ((((Door) game_panel.getObjFromObjects(index)).isopen() == false)) {
+                                    ((Door) game_panel.getObjFromObjects(index)).open();
+                                }
                             }
-                            if ((((Door) game_panel.getObjFromObjects(index)).isopen() == false)) {
-                                ((Door) game_panel.getObjFromObjects(index)).open();
+                            else if(!((Door) game_panel.getObjFromObjects(index)).isopen()){
+                                game_panel.getGui().addMessage("you cant open door wihtout axe", 500,500);
                             }
                     }
                     break;
 
 
                 case "Pond":
+                    if(game_panel.getObj()[index] instanceof Pond){
+                        if(((Pond) game_panel.getObj()[index]).isHasBulp()){
+                            inventory.add(new Blup(game_panel));
+                            ((Pond) game_panel.getObj()[index]).setHasBulp(false);
+                            setExp(getExp() + 5);
+                            checkLevelUp();
+                        }
+
+                    }
                     break;
+
+                case "Hole":
+                    //
+                    break;
+
             }
         }
 
@@ -301,22 +337,51 @@ public class Hero extends NPC {
         int itemindex = game_panel.getGui().getindexofitem();
         if(itemindex < inventory.size()) {
 
-
+            //take item in hands
             setItemInHeands(inventory.get(itemindex));
 
             //change lightning
-            if( inventory.get(itemindex) instanceof Lamp_2){
-              game_panel.changelightning(game_panel.getWindow_width()/2);
+            if( inventory.get(itemindex) instanceof Lamp_on){
+              game_panel.changelightning(game_panel.getWindow_width());
             }
             else {
-                game_panel.changelightning(game_panel.getWindow_width()/4);
+                game_panel.changelightning(game_panel.getWindow_width()/2);
             }
         }
 
     }
 
+    public void craftItem(int index_1, int index_2){
+        if (index_1 != index_2 && (inventory.get(index_1).getName().equals("Lamp_of") || inventory.get(index_2).getName().equals("Lamp_of")) && (inventory.get(index_2).getName().equals("Bulp")) || inventory.get(index_1).getName().equals("Bulp")) {
+            inventory.remove(index_1);
+            System.out.println("removed first item");
+            inventory.remove(index_2 > index_1 ? index_2 - 1 : index_2);
+            System.out.println("removed second item");
+            inventory.add(new Lamp_on(game_panel));
+            setItemInHeands(inventory.get(inventory.size()-1));
+            if( inventory.get(inventory.size()-1) instanceof Lamp_on){
+                game_panel.changelightning(game_panel.getWindow_width()/2);
+            }
+            else {
+                game_panel.changelightning(game_panel.getWindow_width()/4);
+            }
 
-    public void craftItem
+            System.out.println("you crafted lamp");
+        }
+
+    }
+
+    public void checkLevelUp(){
+        if(getExp() < getNextlevelexp()){
+            //
+        }
+        if(getExp() > getNextlevelexp()){
+            setLevel(getLevel() + 1);
+            setNextlevelexp(getNextlevelexp() * 2);
+            game_panel.getGui().addMessage("Level up! \n you stronger now", game_panel.getGui().getXfortextincenter("Level up! \n you stronger now"), game_panel.getTile_size_y() * 5);
+        }
+
+    }
 
 
     public int getScreen_x() {
@@ -347,5 +412,21 @@ public class Hero extends NPC {
 
     public int getInventory_size() {
         return inventory_size;
+    }
+
+    public int getIndex_1() {
+        return index_1;
+    }
+
+    public void setIndex_1(int index_1) {
+        this.index_1 = index_1;
+    }
+
+    public int getIndex_2() {
+        return index_2;
+    }
+
+    public void setIndex_2(int index_2) {
+        this.index_2 = index_2;
     }
 }

@@ -17,8 +17,8 @@ private boolean open;
         this.setName("Door");
         this.setCollision(true);
         this.open = false;
-       // this.setIsinteractable(true);
-        this.setIspickeble(true);
+        this.setIsinteractable(true);
+        //this.setIspickeble(true);
 
 
 

@@ -13,7 +13,7 @@ public class EnviromentManager {
                 this.game_panel = game_panel;
             }
             public void setup(){
-                setLightning(new Lightning(game_panel,350));
+                setLightning(new Lightning(game_panel,game_panel.getWindow_width()));
             }
 
 

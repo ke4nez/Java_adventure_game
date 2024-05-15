@@ -15,22 +15,24 @@ public class NPC {
     private int position_y;
     private int speed = 3;
 
+
+    //collision
     private int NPC_rectangle_x = 0;
     private int NPC_rectangle_y = 0;
     private int NPC_rectangle_height = 48;
     private int NPC_rectangle_width = 48;
-
     private Rectangle NPC_rectangle = new Rectangle(NPC_rectangle_x, NPC_rectangle_y, NPC_rectangle_width, NPC_rectangle_height);
-
     private int NPC_rectangle_default_x = 0;
     private int NPC_rectangle_default_y = 0;
     private boolean collision = true;
 
+    //dialogue
     private boolean isinteracteble;
 
     String dialogues[] = new String[32];
     int dialogueIndex = 0;
 
+    // stats
     private int maxHealth;
     private int health;
     private int level;
@@ -38,19 +40,17 @@ public class NPC {
 
     private String name;
     private int nextlevelexp;
-
     private NPC itemInHeands;
 
-// objects
+
+    //loading
+
+    int NPC_type_number;
 
 
 
 
-
-
-
-
-
+    //images
     BufferedImage image = null;
     private BufferedImage up1;
     private BufferedImage up2;
@@ -137,44 +137,44 @@ public class NPC {
     }
 
     public void setupNPCimages(String npc_name) {
-        int scale = -10;
+        int scale = 0;
 
         Toolbox toolbox = new Toolbox();
         try {
 
                 this.setUp1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/up_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+System.out.println("succses");
                 this.setUp2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/up_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setDown1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/down_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setDown2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/down_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setLeft1((toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/left_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale)));
-
+            System.out.println("succses");
                 this.setLeft2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/left_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setRight1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/right_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setRight2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/right_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setStands1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/stands_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setStands2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/stands_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-
+            System.out.println("succses");
                 this.setDialogue_image((toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/dialogue_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale)));
-
+            System.out.println("succses");
         } catch (IOException e) {
             System.out.println("Can not load tile image");
         }

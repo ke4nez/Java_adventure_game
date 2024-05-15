@@ -40,9 +40,9 @@ private void getTileImages(){
         setup(5,"asset_4",false);
         setup(6,"asset_5",false);
         setup(7,"asset_6",false);
-        setup(8,"asset_7",false);
+        // setup(8,"asset_7",false);
         setup(9,"asset_8",false);
-        setup(10,"trees_2_final",true);
+        setup(8,"trees_2_final",true);
 
 
 
