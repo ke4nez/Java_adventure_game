@@ -1,4 +1,4 @@
-package enviroment;
+package Enviroment;
 
 import Main.Game_panel;
 

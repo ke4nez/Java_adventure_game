@@ -30,21 +30,25 @@ public class GUI {
     int itemindex;
 
 
+    private int YForCenterinGameMessage;
+
+
 
 
     public GUI(Game_panel game_panel) {
         this.game_panel = game_panel;
+        YForCenterinGameMessage = game_panel.getTile_size_y()*2;
 
         setMain_menu_image();
 
         try {
 
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/GUI/bigdonstarve.ttf"));
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/GUI/bigdonstarve.ttf"));
 
             this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 70);
 
 
-            Font customlogFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/GUI/bigdonstarve.ttf"));
+            Font customlogFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/GUI/bigdonstarve.ttf"));
 
             this.logFont = customlogFont.deriveFont(Font.BOLD | Font.ITALIC, 40);
 
@@ -83,22 +87,10 @@ public class GUI {
         }
 
         //GAME RUNNING
-        if (game_panel.getGameState() == game_panel.getPlayState()) {
-
-
-            drawWithOutline(g2, "test text", 100, 100,  Color.white, Color.black);
-
-
-            // Отрисовка сообщений и удаление прочитанных
-            Iterator<Message> iterator = messages.iterator();
-            while (iterator.hasNext()) {
-                Message message = iterator.next();
-                drawWithOutline(g2, message.text, message.position.x, message.position.y, Color.white, Color.black);
-                if (message.isReaded) {
-                    iterator.remove(); // Удаление прочитанных сообщений из списка
-                }
-            }
+        if (game_panel.getGameState() == game_panel.getPlayState() || game_panel.getGameState() == game_panel.getInventoryState() ) {
+            Drawmessageonscreen();
         }
+
 
         //PAUSE
         if(game_panel.getGameState() == game_panel.getPauseState()){
@@ -151,7 +143,7 @@ public class GUI {
        }
 
        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
-       text = "Load game";
+       text = "Save game";
        x = getXfortextincenter(text);
        y += game_panel.getTile_size_y()*2;
        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
@@ -237,10 +229,14 @@ public class GUI {
         g2.drawString(value,text_x,text_y);
         text_y += lineHeight * 2 + game_panel.getTile_size_y();
 
+
+        //ITEM IN HANDS
         text_x = x + 20;
         value = "Item in hands:";
         g2.drawString(value,text_x,text_y);
-        g2.drawImage(game_panel.getHero().getItemInHeands().getStands1(), x + game_panel.getTile_size_x() , text_y,null);
+        if(game_panel.getHero().getItemInHeands() != null) {
+            g2.drawImage(game_panel.getHero().getItemInHeands().getStands1(), x + game_panel.getTile_size_x(), text_y, null);
+        }
 
 
 
@@ -265,7 +261,7 @@ public class GUI {
 
         int y = game_panel.getTile_size_y() * 3;
         int width = game_panel.getTile_size_x()*6;
-        int x = game_panel.getWindow_width() - width *2;
+        int x = game_panel.getWindow_width() - width *2+300;
         int height = game_panel.getTile_size_y() * 6;
 
         g2.drawString("INVENTORY:",x,y);
@@ -304,12 +300,14 @@ public class GUI {
                 g2.fillRoundRect(slot_x,slot_y,game_panel.getTile_size_x(),game_panel.getTile_size_y(), 10, 10);
             }
 
-           g2.drawImage(game_panel.getHero().inventory.get(i).getStands1(),slot_x,slot_y,null);
-           slot_x += game_panel.getTile_size_x();
-           if(i == 4 || i == 9 || i ==14){
-               slot_x = slotxstart;
-               slot_y += game_panel.getTile_size_y();
-           }
+
+                g2.drawImage(game_panel.getHero().inventory.get(i).getStands1(), slot_x, slot_y, null);
+                slot_x += game_panel.getTile_size_x();
+                if (i == 4 || i == 9 || i == 14 || i ==19) {
+                    slot_x = slotxstart;
+                    slot_y += game_panel.getTile_size_y();
+                }
+
 
         }
 
@@ -365,6 +363,22 @@ public class GUI {
     }
 
 
+    public void Drawmessageonscreen(){
+            int verticalOffset = 0; // Инициализируем вертикальное смещение
+            // Отрисовка сообщений и удаление прочитанных
+            Iterator<Message> iterator = messages.iterator();
+            while (iterator.hasNext()) {
+                Message message = iterator.next();
+                drawWithOutline(g2, message.text, message.position.x, message.position.y + verticalOffset, Color.white, Color.black); // Учитываем вертикальное смещение
+                verticalOffset += 40; // Добавляем высоту сообщения и некоторый отступ
+                if (message.isReaded) {
+                    iterator.remove(); // Удаление прочитанных сообщений из списка
+                }
+            }
+        }
+
+
+
 
 
 
@@ -396,6 +410,7 @@ public class GUI {
         int x = tailx - length;
         return x;
     }
+
 
     // Метод для добавления нового сообщения
     public void addMessage(String text, int x, int y) {
@@ -461,6 +476,14 @@ public class GUI {
 
     public void setSlot_row(int slot_row) {
         this.slot_row = slot_row;
+    }
+
+    public int getYForCenterinGameMessage() {
+        return YForCenterinGameMessage;
+    }
+
+    public void setYForCenterinGameMessage(int YForCenterinGameMessage) {
+        this.YForCenterinGameMessage = YForCenterinGameMessage;
     }
 
 

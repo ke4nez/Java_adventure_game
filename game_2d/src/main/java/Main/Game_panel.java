@@ -4,12 +4,15 @@ import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
-import NPC.Hero;
-import NPC.NPC;
+import java.util.ArrayList;
+
+import Data.SaveLoad;
+import Entity.Entity;
+import Entity.Hero;
 import Objects.Game_Object;
-import enviroment.EnviromentManager;
-import enviroment.Lightning;
-import surroundings.TileManager;
+import Enviroment.EnviromentManager;
+import Enviroment.Lightning;
+import Surroundings.TileManager;
 
 
 public class Game_panel extends JPanel implements Runnable{
@@ -22,8 +25,8 @@ public class Game_panel extends JPanel implements Runnable{
 
     private int tile_size_x = 64;
     private int tile_size_y =64;
-    private final int max_world_col = 64;
-    private final int max_world_row = 64;
+    private final int max_world_col = 32;
+    private final int max_world_row = 32;
 
     private final int max_world_width = getMax_world_col() * tile_size_x;
     private final int max_world_heigth = getMax_world_col() * tile_size_y;
@@ -46,22 +49,23 @@ public class Game_panel extends JPanel implements Runnable{
 
     private Hero hero = new Hero(this,game_controls);
 
-    private Game_Object[] obj = new Game_Object[32];
-    private NPC[] npcs = new NPC[32];
-
-    private AssetManager assetManager = new AssetManager(this);
-
+    private ArrayList <Game_Object>  obj = new ArrayList<>();
+    private ArrayList<Entity> npcs = new ArrayList<>();
     private TileManager tileManager = new TileManager(this);
+    private AssetManager assetManager = new AssetManager(this);
     private CollisionChecker collisionChecker = new CollisionChecker(this);
 
     private EnviromentManager enviromentManager = new EnviromentManager(this);
 
     private GUI gui = new GUI(this);
 
+    SaveLoad saveLoad = new SaveLoad(this);
+
 
 
     //LOGGING
 
+private int gameState;
     private  final int MainMenuState = 0;
     private final int playState = 1;
     private final int pauseState = 2;
@@ -70,7 +74,7 @@ public class Game_panel extends JPanel implements Runnable{
 
     private final int inventoryState = 5;
 
-    private int gameState;
+    //private int gameState;
     private boolean logON = false;
 
     long draw_rime_start ;
@@ -85,8 +89,7 @@ public class Game_panel extends JPanel implements Runnable{
 
 
     public void setGame(){
-        assetManager.setObjects();
-        assetManager.setNPCS();
+        hero.setOn_level_number(1);
         setGameState(getMainMenuState());
     }
 
@@ -98,9 +101,6 @@ public class Game_panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(game_controls);
         this.setFocusable(true);
-        getEnviromentManager().setup();
-
-
     }
 
 
@@ -139,9 +139,9 @@ public void update()
         hero.updatehero();
 
 
-        for(int i = 0 ; i < npcs.length; i++) {
-            if (npcs[i] != null) {
-                npcs[i].update();
+        for(int i = 0 ; i < npcs.size(); i++) {
+            if (npcs.get(i) != null) {
+                npcs.get(i).update();
             }
         }
 
@@ -173,21 +173,21 @@ public void update()
 
 
             //objects
-            for(int i = 0 ; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].paintObject(g2);
+            for(int i = 0 ; i < obj.size(); i++) {
+                if (obj.get(i) != null) {
+                    obj.get(i).paintObject(g2);
                 }
             }
             //NPCs
-            for(int i = 0 ; i < npcs.length; i++) {
-                if (npcs[i] != null) {
-                    npcs[i].draw(g2,this);
+            for(int i = 0 ; i < npcs.size(); i++) {
+                if (npcs.get(i) != null) {
+                    npcs.get(i).draw(g2,this);
                 }
             }
             hero.painthero(g2);
 
 
-            //enviroment
+            //Enviroment
 
             getEnviromentManager().draw(g2);
 
@@ -292,14 +292,14 @@ public void changelightning(int x){
         this.collisionChecker = collisionChecker;
     }
 
-    public Game_Object[] getObj() {
+    public ArrayList<Game_Object> getObj() {
         return obj;
     }
 
     public Game_Object getObjFromObjects(int x) {
-        return obj[x];
+        return obj.get(x);
     }
-    public void setObj(Game_Object [] obj) {
+    public void setObj(ArrayList<Game_Object> obj) {
         this.obj = obj;
     }
 
@@ -335,16 +335,16 @@ public void changelightning(int x){
         return pauseState;
     }
 
-    public NPC[] getNpcs() {
+    public ArrayList<Entity> getNpcs() {
         return npcs;
     }
 
-    public NPC getNPCfromNPCs(int x){
-        return npcs[x];
+    public Entity getNPCfromNPCs(int x){
+        return npcs.get(x);
     }
 
-    public void setNpcs(NPC[] npcs) {
-        this.npcs = npcs;
+    public void setNpcs(ArrayList<Entity> entities) {
+        this.npcs = entities;
     }
 
     public int getDialogState() {
@@ -373,5 +373,13 @@ public void changelightning(int x){
 
     public void setEnviromentManager(EnviromentManager enviromentManager) {
         this.enviromentManager = enviromentManager;
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public void setAssetManager(AssetManager assetManager) {
+        this.assetManager = assetManager;
     }
 }

@@ -1,4 +1,4 @@
-package surroundings;
+package Surroundings;
 
 import java.awt.image.BufferedImage;
 

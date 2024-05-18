@@ -12,9 +12,6 @@ public class Main {
         window.setResizable(false);
 
         Game_panel game_panel = new Game_panel();
-
-
-
         game_panel.set_game_panel();
         game_panel.setGame();
 

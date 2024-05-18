@@ -1,0 +1,5 @@
+Door 24 26
+Door 25 26
+Door 26 26
+Door 26 27
+Hole_to_previous_level 23 26

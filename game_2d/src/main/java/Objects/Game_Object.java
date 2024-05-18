@@ -1,19 +1,20 @@
 package Objects;
 
 import Main.Game_panel;
-import NPC.NPC;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Game_Object {
 
-    private Game_panel game_panel;
+    protected Game_panel game_panel;
     private BufferedImage image;
     private String name;
+
+    protected String text;
     private boolean collision = true;
-    private int position_x;
-    private int position_y;
+    private int position_x = 0;
+    private int position_y = 0;
 
     private int index;
 
@@ -33,9 +34,9 @@ public class Game_Object {
     private boolean ispickeble = false;
     private boolean isinteractable = false;
 
-    //loading
-
-    int object_type_number;
+    public Game_Object(Game_panel gamePanel){
+        this.game_panel = gamePanel;
+    }
 
 
     public void paintObject(Graphics2D g2) {
@@ -51,6 +52,15 @@ public class Game_Object {
 
             g2.drawImage(image, screen_x, screen_y, game_panel.getTile_size_x(), game_panel.getTile_size_y(), null);
         }
+    }
+
+
+
+    public void interactObject(){
+        //
+    }
+    public void pickup(int i){
+        //
     }
 
 
@@ -186,6 +196,14 @@ public class Game_Object {
 
     public void setIsinteractable(boolean isinteractable) {
         this.isinteractable = isinteractable;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
 

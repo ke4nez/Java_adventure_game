@@ -8,17 +8,21 @@ public class Door extends Game_Object{
 
 private boolean open;
 
+//String for messages;
+String text = "";
+
 
     private long lastChangeTime;
     private static final long CHANGE_DELAY = 1000; // Задержка в миллисекундах
     public Door (Game_panel game_panel){
-        this.setIndex(1);
+        super(game_panel);
         this.setGame_panel(game_panel);
+        this.setIndex(1);
         this.setName("Door");
         this.setCollision(true);
+        this.getObject_rectangle().setRect(8,10,getObj_rectangle_width()-10,getObj_rectangle_height()-10);
         this.open = false;
         this.setIsinteractable(true);
-        //this.setIspickeble(true);
 
 
 
@@ -44,7 +48,11 @@ private boolean open;
            this.setCollision(false);
            this.open = true;
            lastChangeTime = currentTime;
-           getGame_panel().getGui().addMessage("door now opened ", 300, 350);
+           text = "Door now opened";
+           getGame_panel().getGui().addMessage(text,getGame_panel().getGui().getXfortextincenter(text),
+                   getGame_panel().getGui().getYForCenterinGameMessage());
+
+
 
        }
    }
@@ -59,9 +67,36 @@ private boolean open;
            }
            this.open = false;
            this.setCollision(true);
-           getGame_panel().getGui().addMessage("door now closed ", 300, 350);
+           text = "Door now closed";
+           getGame_panel().getGui().addMessage(text,getGame_panel().getGui().getXfortextincenter(text),
+                   getGame_panel().getGui().getYForCenterinGameMessage());
+
            lastChangeTime = currentTime;
        }
+    }
+
+
+
+    public void interactObject() {
+
+        if (getGame_panel().getHero().getItemInHeands() != null) {
+            if (isopen()) {
+                close();
+            }
+            else if (!isopen() && getGame_panel().getHero().getItemInHeands().getName() == "Axe") {
+                open();
+            } else {
+                text = "You need axe to open doors";
+                getGame_panel().getGui().addMessage(text, getGame_panel().getGui().getXfortextincenter(text),
+                        getGame_panel().getGui().getYForCenterinGameMessage());
+            }
+        }
+        else {
+            text = "You need axe to open doors";
+            getGame_panel().getGui().addMessage(text, getGame_panel().getGui().getXfortextincenter(text),
+                    getGame_panel().getGui().getYForCenterinGameMessage());
+        }
+
     }
 
 

@@ -1,0 +1,5 @@
+Pond 24 26
+Axe 25 26
+Lamp_of 26 26
+Door 26 27
+Hole_to_next_level 24 20

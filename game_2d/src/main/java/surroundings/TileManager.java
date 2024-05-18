@@ -1,4 +1,4 @@
-package surroundings;
+package Surroundings;
 import Main.Game_panel;
 import Main.Toolbox;
 
@@ -21,7 +21,7 @@ public TileManager(Game_panel game_panel){
     setMap(new int[game_panel.getMax_world_col()][game_panel.getMax_world_row()]);
     setTiles(new Tile[64]);
     getTileImages();
-    loadmap();
+    loadmap(1);
 
 }
 
@@ -43,11 +43,6 @@ private void getTileImages(){
         // setup(8,"asset_7",false);
         setup(9,"asset_8",false);
         setup(8,"trees_2_final",true);
-
-
-
-
-
         // getTiles()[2] = new Tile();
         //getTiles()[2].setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Tile/grass_2_test_2.png")));
 
@@ -74,9 +69,9 @@ public void  setup (int index, String imagePath, boolean collision){
 }
 
 
-private void loadmap(){
+public void loadmap(int level_number){
     try {
-        InputStream is = getClass().getClassLoader().getResourceAsStream("Maps/map_1.txt");
+        InputStream is = getClass().getClassLoader().getResourceAsStream("Levels/Level_" + level_number + "/map_1.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
 

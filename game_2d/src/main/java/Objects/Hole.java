@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 public class Hole extends Game_Object{
 
     public Hole (Game_panel game_panel){
-        super();
+        super(game_panel);
         this.setGame_panel(game_panel);
         this.setName("Hole");
         this.setIsinteractable(true);
