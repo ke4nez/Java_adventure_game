@@ -4,33 +4,28 @@ package Entity;
 import Main.CollisionChecker;
 import Main.Game_controls;
 import Main.Game_panel;
+import Objects.Game_Object;
 
 import java.io.*;
-
-import Objects.Door;
-import Objects.Pond;
-
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Hero extends Entity {
-
     Game_panel game_panel;
     Game_controls game_controls;
 
-
+    //X Y ON SCREEN
     private  int screen_x;
     private  int screen_y;
     CollisionChecker collisionChecker;
-
+    //INVENTORY
     public ArrayList<Entity> inventory = new ArrayList<>();
     private final int inventory_size = 25;
-
+    // LEVEL STATUS
     private int on_level_number = 1;
 
 
-
+    //INTERACTION_COOLDOWN TIMER
     private long lastInteractionTime = 0;
     private static final long INTERACTION_COOLDOWN = 1000;
 
@@ -41,7 +36,6 @@ public class Hero extends Entity {
     String text = "";
 
     //CRAFT
-
     private int index_1;
     private int index_2;
     boolean craft = false;
@@ -53,6 +47,7 @@ public class Hero extends Entity {
         super(game_panel);
         this.game_controls = game_controls;
         this.game_panel = game_panel;
+        //RECTANGLE FOR COLLISION
         this.setNPC_rectangle_x(8);
         this.setNPC_rectangle_y(16);
         this.setNPC_rectangle_default_x(8);
@@ -65,14 +60,12 @@ public class Hero extends Entity {
         setDefaultStats();
         setHero();
         setupNPCimages("Hero");
-
-
     }
 
 
     public void setHero(){
-        setPosition_x(28 * game_panel.getTile_size_x());
-        setPosition_y(26 * game_panel.getTile_size_y());
+        setPosition_x(36 * game_panel.getTile_size_x());
+        setPosition_y(53 * game_panel.getTile_size_y());
         setSpeed(5);
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
@@ -84,95 +77,94 @@ public class Hero extends Entity {
         LoadStartItems();
     }
 
-
+    //UPDATING IN GAME LOOP
     public void updatehero() {
         if (game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction) {
+            //INDEXES FOR INTERACTIONS AND DIALOGUES
             int index = 99;
             int npc_collision_index = 99;
-
-
             if (game_controls.interaction) {
+                //INTERACTION COOLDOWN;
                 long currentTime = System.currentTimeMillis();
-
                 if (currentTime - lastInteractionTime > INTERACTION_COOLDOWN) {
+
                     setDirection("interaction");
                     setCollision(false);
-                    index = collisionChecker.check_object(this, true);
+                    index = collisionChecker.check_object(this);
                     npc_collision_index = collisionChecker.checknpc(this, game_panel.getNpcs());
-
-                    if (index != 99) {
-                        if (game_panel.getObjFromObjects(index).isIsinteractable()) {
-                            interactObject(index);
-                        }
+                    //INTERACT OR PICKUP
+                    if (index != 99){
                         if (game_panel.getObjFromObjects(index).isIspickeble()) {
                             pickup(index);
                         }
+                        else if (game_panel.getObjFromObjects(index).isIsinteractable()) {
+                            interactObject(index);
+                        }
                     }
-
+                    //SPEAK
                     if (npc_collision_index != 99) {
                         interactNPC(npc_collision_index);
                     }
 
-                    // Сбрасываем флаг интеракции и запоминаем время последней интеракции
+                    //INTERACTION COOLDOWN;
                     game_controls.interaction = false;
                     lastInteractionTime = currentTime;
                 }
             }
 
 
-
+            //MOVEMENT
             if (game_controls.go_right) {
-
                 setDirection("right");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                collisionChecker.check_object(this, true);
+                collisionChecker.check_object(this);
                 collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_x(getPosition_x() + getSpeed());
                 }
             }
 
-
+            //MOVEMENT
             if (game_controls.go_left) {
 
                 setDirection("left");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-              collisionChecker.check_object(this, true);
+              collisionChecker.check_object(this);
                  npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_x(getPosition_x() - getSpeed());
                 }
             }
 
-
+            //MOVEMENT
             if (game_controls.go_up) {
 
                 setDirection("up");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                collisionChecker.check_object(this, true);
+                collisionChecker.check_object(this);
                  npc_collision_index = collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_y(getPosition_y() - getSpeed());
                 }
             }
 
-
+            //MOVEMENT
             if (game_controls.go_down) {
 
                 setDirection("down");
                 setCollision(false);
                 collisionChecker.check_tile(this);
-                collisionChecker.check_object(this, true);
+                collisionChecker.check_object(this);
                  npc_collision_index =  collisionChecker.checknpc(this,game_panel.getNpcs());
                 if(isCollision() != true){
                     setPosition_y(getPosition_y() + getSpeed());
                 }
 
             }
-
+            //WALK ANIMATION
             setSpriteCounter(getSpriteCounter() + 1);
             if (getSpriteCounter() > 30) {
                 if (getSpriteNum() == 1) {
@@ -182,10 +174,9 @@ public class Hero extends Entity {
                 }
                 setSpriteCounter(0);
             }
-
         }
 
-
+        //STANDING ANIMATION
         if(!game_controls.go_right  && !game_controls.go_down && !game_controls.go_up && !game_controls.go_left){
             setDirection("stands");
             setCollision(false);
@@ -203,6 +194,8 @@ public class Hero extends Entity {
 
 
     }
+
+    //DRAWING METHOD AND ANIMATION
     public void painthero(Graphics2D g2) {
         switch(getDirection()){
             case "up":
@@ -238,7 +231,6 @@ public class Hero extends Entity {
                 }
                 break;
             case"stands":
-
                 if(getSpriteNum()==1){
                     image = getStands1();
                 }
@@ -246,30 +238,27 @@ public class Hero extends Entity {
                     image = getStands2();
                 }
                 break;
-
             case "inderaction":
                 image = getDialogue_image();
-
         }
-
         g2.drawImage(image, getScreen_x(), getScreen_y(), null);
     }
 
 
-
+    //PICK UP SOMETHING
     public void pickup( int i){
         if(i != 99 && !checkIfInventoryisFull()){
-            game_panel.getObjFromObjects(i).pickup(i);
+            game_panel.getObj().get(i).pickup(i);
             }
     }
 
-
+    //INTERACTION WITH OBJECTS
     public void interactObject(int index){
             if (index != 99) {
                 game_panel.getObj().get(index).interactObject();
                 }
     }
-
+    //LOAD ITEMS FROM HERO FOLDER
     public void LoadStartItems(){
         try{
             InputStream is = getClass().getClassLoader().getResourceAsStream("NPC/Hero/Start_items.txt");
@@ -297,7 +286,7 @@ public class Hero extends Entity {
         }
     }
 
-
+    //FULL INVENTORY CHECK
     public boolean checkIfInventoryisFull(){
         if(inventory.size()<inventory_size){return false;}
         else {
@@ -308,13 +297,13 @@ public class Hero extends Entity {
         }
     }
 
-
+    //SPEAK
     public void  interactNPC(int index){
         game_panel.setGameState(game_panel.getDialogState());
         game_panel.getNPCfromNPCs(index).speak();
     }
 
-    //pick item from inventory
+    //TAKE ITEM IN HANDS
     public void selectitem(){
 
         int itemindex = game_panel.getGui().getindexofitem();
@@ -333,7 +322,7 @@ public class Hero extends Entity {
         }
 
     }
-
+    //CRAFT
     public void craftItem(int index_1, int index_2) {
         if (index_1 != index_2 && index_1 < inventory.size() && index_2 < inventory.size()) {
             if ((inventory.get(index_1).getName().equals("Lamp_of") && inventory.get(index_2).getName().equals("Bulp")) ||
@@ -356,24 +345,17 @@ public class Hero extends Entity {
         }
         }
     }
-
+    //CHECK LEVEL UP
     public void checkLevelUp(){
-        if(getExp() < getNextlevelexp()){
-            //
-        }
         if(getExp() > getNextlevelexp()){
             setLevel(getLevel() + 1);
             setNextlevelexp(getNextlevelexp() * 2);
-
             text = "Level up!";
             game_panel.getGui().addMessage(text,game_panel.getGui().getXfortextincenter(text),
                     game_panel.getGui().getYForCenterinGameMessage());
 
         }
-
     }
-
-
     public int getScreen_x() {
         return screen_x;
     }

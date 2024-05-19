@@ -2,13 +2,10 @@ package Main;
 
 import Entity.Entity;
 import Entity.Hero;
-
 import java.util.ArrayList;
 
 public class CollisionChecker {
     Game_panel game_panel;
-
-
     public CollisionChecker(Game_panel game_panel) {
         this.game_panel = game_panel;
     }
@@ -72,6 +69,7 @@ public class CollisionChecker {
         }
     }
 
+    //ENTITY TO TILES COLLISION
     public void checktiles(int tile_1_number, int tile_2_number, Entity entity){
         if (game_panel.getTileManager().getTileByNumber(tile_1_number).getIfNotPasseble() == true ||
                 game_panel.getTileManager().getTileByNumber(tile_2_number).getIfNotPasseble() == true) {
@@ -79,7 +77,8 @@ public class CollisionChecker {
         }
     }
 
-    public int check_object(Entity entity, boolean isplayer) {
+    //ENTITY TO OBJECTS COLLISION
+    public int check_object(Entity entity) {
 
         int index = 99;
 
@@ -107,7 +106,6 @@ public class CollisionChecker {
                             entity.setCollision(true);
                             return (index = i);
                         }
-
                         entity.getNPC_rectangle().y -= entity.getSpeed();//up
                         entity.getNPC_rectangle().x -= entity.getSpeed();// left
 
@@ -133,9 +131,7 @@ public class CollisionChecker {
                             }
                             index = i;
                         }
-
                         break;
-
                     case "down":
                         entity.getNPC_rectangle().y += entity.getSpeed();
                         if (entity.getNPC_rectangle().intersects(game_panel.getObjFromObjects(i).getObject_rectangle())) {
@@ -164,8 +160,6 @@ public class CollisionChecker {
                         index = i;
                         break;
                 }
-
-
                 entity.getNPC_rectangle().x = entity.getNPC_rectangle_default_x();
                 entity.getNPC_rectangle().y = entity.getNPC_rectangle_default_y();
                 game_panel.getObjFromObjects(i).getObject_rectangle().x = game_panel.getObjFromObjects(i).getObject_rectangle_default_x();
@@ -177,9 +171,7 @@ public class CollisionChecker {
         return index;
     }
 
-
-
-
+    //HERO TO NPS COLLISION
     public int checknpc(Entity entity, ArrayList<Entity> target) {
 
         int index = 99;
@@ -196,10 +188,9 @@ public class CollisionChecker {
 
 
                 switch (entity.getDirection()) {
-
                     case "interaction":
-                        entity.getNPC_rectangle().y -= entity.getSpeed();//up
 
+                        entity.getNPC_rectangle().y -= entity.getSpeed();//up
 
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
 
@@ -207,6 +198,7 @@ public class CollisionChecker {
                             game_panel.getGui().addMessage("you  interacted with entity infront of you", 600, 100);
                             index = i;
                         }
+
                         entity.getNPC_rectangle().y += entity.getSpeed() * 2;// down
 
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
@@ -224,39 +216,31 @@ public class CollisionChecker {
                             entity.setCollision(true);
                             game_panel.getGui().addMessage("you  interacted with entity to  you left", 600, 100);
                             index = i;
-
                         }
+
                         entity.getNPC_rectangle().x += entity.getSpeed() * 2;// right
 
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
                             entity.setCollision(true);
                             game_panel.getGui().addMessage("you can interacted with entity to  you right", 600, 100);
                             index = i;
-
                         }
                         break;
-
-
                     case "up":
                         entity.getNPC_rectangle().y -= entity.getSpeed();
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
                             System.out.println("up collision");
                             entity.setCollision(true);
                             index = i;
-
-
                         }
 
                         break;
-
                     case "down":
                         entity.getNPC_rectangle().y += entity.getSpeed();
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
                             System.out.println("down collision");
                             entity.setCollision(true);
                             index = i;
-
-
                         }
                         break;
                     case "left":
@@ -266,8 +250,6 @@ public class CollisionChecker {
                             System.out.print(target.get(i).getCollision());
                             entity.setCollision(true);
                             index = i;
-
-
                         }
                         break;
                     case "right":
@@ -276,117 +258,89 @@ public class CollisionChecker {
                             System.out.println("right collision");
                             entity.setCollision(true);
                             index = i;
-
                         }
-
                         break;
                 }
                 entity.getNPC_rectangle().x = entity.getNPC_rectangle_default_x();
                 entity.getNPC_rectangle().y = entity.getNPC_rectangle_default_y();
                 target.get(i).getNPC_rectangle().x = target.get(i).getNPC_rectangle_default_x();
                 target.get(i).getNPC_rectangle().y = target.get(i).getNPC_rectangle_default_y();
-
-
-
             }
-
-
-
-
         }
         return  index;
     }
 
-    public void checkhero (Entity entity, Hero hero){
-                entity.getNPC_rectangle().x = entity.getPosition_x() + entity.getNPC_rectangle().x;
-                entity.getNPC_rectangle().y = entity.getPosition_y() + entity.getNPC_rectangle().y;
+    //NPC TO HERO COLLISION
+    public void checkhero (Entity entity, Hero hero) {
+        entity.getNPC_rectangle().x = entity.getPosition_x() + entity.getNPC_rectangle().x;
+        entity.getNPC_rectangle().y = entity.getPosition_y() + entity.getNPC_rectangle().y;
 
-                hero.getNPC_rectangle().x =  hero.getPosition_x() +  hero.getNPC_rectangle().x;
-        hero.getNPC_rectangle().y =  hero.getPosition_y() +  hero.getNPC_rectangle().y;
-
-
-                switch (entity.getDirection()) {
-
-                    case "interaction":
-                        entity.getNPC_rectangle().y -= entity.getSpeed();//up
+        hero.getNPC_rectangle().x = hero.getPosition_x() + hero.getNPC_rectangle().x;
+        hero.getNPC_rectangle().y = hero.getPosition_y() + hero.getNPC_rectangle().y;
 
 
+        switch (entity.getDirection()) {
+
+            case "interaction":
+                entity.getNPC_rectangle().y -= entity.getSpeed();//up
 
 
-                        if (entity.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
-
-                            entity.setCollision(true);
-                        }
-                        entity.getNPC_rectangle().y += entity.getSpeed() * 2;// down
-
-                        if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
-                            entity.setCollision(true);
-                        }
-
-                        entity.getNPC_rectangle().y -= entity.getSpeed();//up
-                        entity.getNPC_rectangle().x -= entity.getSpeed();// left
-
-                        if (entity.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
-                            entity.setCollision(true);
-                        }
-                        entity.getNPC_rectangle().x += entity.getSpeed() * 2;// right
-
-                        if (entity.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
-                            entity.setCollision(true);
-                        }
-                        break;
-
-
-                    case "up":
-                        entity.getNPC_rectangle().y -= entity.getSpeed();
-                        if (entity.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
-                            entity.setCollision(true);
-
-
-
-                        }
-
-                        break;
-
-                    case "down":
-                        entity.getNPC_rectangle().y += entity.getSpeed();
-                        if (entity.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
-                            entity.setCollision(true);
-
-
-
-                        }
-                        break;
-                    case "left":
-                        entity.getNPC_rectangle().x -= entity.getSpeed();
-                        if (entity.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
-                            entity.setCollision(true);
-
-
-
-                        }
-                        break;
-                    case "right":
-                        entity.getNPC_rectangle().x += entity.getSpeed();
-                        if (entity.getNPC_rectangle().intersects( hero.getNPC_rectangle())) {
-                            entity.setCollision(true);
-
-
-                        }
-
-                        break;
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
                 }
-                entity.getNPC_rectangle().x = entity.getNPC_rectangle_default_x();
-                entity.getNPC_rectangle().y = entity.getNPC_rectangle_default_y();
-                hero.getNPC_rectangle().x =  hero.getNPC_rectangle_default_x();
-                hero.getNPC_rectangle().y =  hero.getNPC_rectangle_default_y();
+                entity.getNPC_rectangle().y += entity.getSpeed() * 2;// down
+
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
+                }
+
+                entity.getNPC_rectangle().y -= entity.getSpeed();//up
+                entity.getNPC_rectangle().x -= entity.getSpeed();// left
+
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
+                }
+                entity.getNPC_rectangle().x += entity.getSpeed() * 2;// right
+
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
+                }
+                break;
 
 
-
-            }
-
-
+            case "up":
+                entity.getNPC_rectangle().y -= entity.getSpeed();
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
+                }
+                break;
+            case "down":
+                entity.getNPC_rectangle().y += entity.getSpeed();
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
+                }
+                break;
+            case "left":
+                entity.getNPC_rectangle().x -= entity.getSpeed();
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
+                }
+                break;
+            case "right":
+                entity.getNPC_rectangle().x += entity.getSpeed();
+                if (entity.getNPC_rectangle().intersects(hero.getNPC_rectangle())) {
+                    entity.setCollision(true);
+                }
+                break;
         }
+        entity.getNPC_rectangle().x = entity.getNPC_rectangle_default_x();
+        entity.getNPC_rectangle().y = entity.getNPC_rectangle_default_y();
+        hero.getNPC_rectangle().x = hero.getNPC_rectangle_default_x();
+        hero.getNPC_rectangle().y = hero.getNPC_rectangle_default_y();
+
+    }
+
+}
 
 
 

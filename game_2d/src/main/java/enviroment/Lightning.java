@@ -11,8 +11,7 @@ public class Lightning {
 
     private int circleSize;
 
-
-
+    //SET RING OF DARKNESS AROUND PLAYER
     public Lightning(Game_panel game_panel, int circleSize) {
         this.setCircleSize(circleSize);
 

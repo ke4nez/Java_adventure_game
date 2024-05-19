@@ -51,9 +51,6 @@ String text = "";
            text = "Door now opened";
            getGame_panel().getGui().addMessage(text,getGame_panel().getGui().getXfortextincenter(text),
                    getGame_panel().getGui().getYForCenterinGameMessage());
-
-
-
        }
    }
 

@@ -8,29 +8,29 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GUI {
 
     private Game_panel game_panel;
+    private static final Logger logger = Logger.getLogger(GUI.class.getName());
     Graphics2D g2;
     private Font font;
-    private Font logFont;
-
     private String currentDialogue = "";
+    //INGAME MESSAGES
     private ArrayList<Message> messages = new ArrayList<>();
     private Timer timer = new Timer();
-
+    //MAIN MENU
     private BufferedImage Main_menu_image;
-
     private int command_number = 1;
-
+    //INVENTORY CURSOR
     private int slot_col;
     private int slot_row;
-
-    int itemindex;
-
-
+    //Y FOR CENTER
     private int YForCenterinGameMessage;
+    //CRAFT
+    int itemindex;
 
 
 
@@ -42,33 +42,24 @@ public class GUI {
         setMain_menu_image();
 
         try {
-
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/GUI/bigdonstarve.ttf"));
-
             this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 70);
-
-
-            Font customlogFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/GUI/bigdonstarve.ttf"));
-
-            this.logFont = customlogFont.deriveFont(Font.BOLD | Font.ITALIC, 40);
+            logger.log(Level.INFO, "Custom font loaded");
 
 
         } catch (FontFormatException | IOException e) {
-            System.out.println("Fail to load custom font: " + e.getMessage());
+            logger.log(Level.SEVERE, "Failed to load custom font", e);
         }
     }
-
-
     public void setMain_menu_image(){
         Toolbox toolbox = new Toolbox();
         try {
-
              Main_menu_image = toolbox.scale_image((ImageIO.read(getClass().getClassLoader().getResourceAsStream("GUI/Main_menu/main.png"))), game_panel.getWindow_width(),game_panel.getWindow_height());
+            logger.log(Level.INFO, "Main menu image loaded");
         }catch (Exception e){
-            System.out.print("can not load main menu image");
+            logger.log(Level.SEVERE, "Failed to load main menu image", e);
         }
     }
-
     public void draw(Graphics2D g2) {
         this.g2 = g2;
         g2.setFont(font);
@@ -88,6 +79,7 @@ public class GUI {
 
         //GAME RUNNING
         if (game_panel.getGameState() == game_panel.getPlayState() || game_panel.getGameState() == game_panel.getInventoryState() ) {
+            Drawinstractions();
             Drawmessageonscreen();
         }
 
@@ -95,7 +87,6 @@ public class GUI {
         //PAUSE
         if(game_panel.getGameState() == game_panel.getPauseState()){
            drawPauseSreen();
-
         }
 
         //DIALOG
@@ -108,18 +99,19 @@ public class GUI {
           drawherostatus();
           drawinventory();
         }
+
+        //END GAME
+        if(game_panel.getGameState() == game_panel.getGameEndState()){
+            drawWinScreen();
+        }
     }
-
-
     //pause
     public void drawPauseSreen(){
         String text = "Pause";
         int x = getXfortextincenter(text);
         int y = game_panel.getWindow_height()/2;
-
         g2.drawString(text,x,y);
     }
-
     //pause menu
    public void drawPauseMenu(){
        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -132,7 +124,7 @@ public class GUI {
        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
 
 
-       //GAME MENU
+       //GAME PAUSE MENU
        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
        text = "Resume game";
        x = getXfortextincenter(text);
@@ -167,7 +159,7 @@ public class GUI {
         int x = game_panel.getWindow_width()/4;
         int y = game_panel.getWindow_height()/6;
         int width = game_panel.getWindow_width()/2;
-        int heigth = game_panel.getTile_size_y() * 5;
+        int heigth = game_panel.getTile_size_y() * 3;
         drawWindow(x,y,width,heigth);
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,30));
@@ -179,7 +171,6 @@ public class GUI {
         }
 
     }
-
     //INVENTORY
     public void drawherostatus(){
         //window
@@ -237,89 +228,61 @@ public class GUI {
         if(game_panel.getHero().getItemInHeands() != null) {
             g2.drawImage(game_panel.getHero().getItemInHeands().getStands1(), x + game_panel.getTile_size_x(), text_y, null);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
     public void drawinventory(){
 
         //window
-
-
         int y = game_panel.getTile_size_y() * 3;
         int width = game_panel.getTile_size_x()*6;
-        int x = game_panel.getWindow_width() - width *2+300;
+        int x = game_panel.getWindow_width() - width - game_panel.getTile_size_x();
         int height = game_panel.getTile_size_y() * 6;
 
         g2.drawString("INVENTORY:",x,y);
         y += 26;
-
-
         drawWindow(x,y,width,height);
-
+        //inventory controls
+        g2.drawString("To exit press 'I'",x,y+height+ game_panel.getTile_size_y());
+        g2.drawString("To craft press pick first item with 'C'",x,y+height+game_panel.getTile_size_x()+32);
+        g2.drawString("then pick second item wiht 'C'",x,y+height+game_panel.getTile_size_x()+31*2);
+        g2.drawString( "and finally press 'C' again to craft",x,y+height+game_panel.getTile_size_x()+31*3);
+        g2.drawString("Press 'E' to equip item",x,y+height+game_panel.getTile_size_x()+31*4);
         //slot
         final int slotxstart = x +20;
         final int slotystart = y +20;
         int slot_x = slotxstart;
         int slot_y = slotystart;
 
-        //cursor
+        //CURSOR SETUP
         int cursor_x = slotxstart + (game_panel.getTile_size_x() * getSlot_col());
         int cursor_y = slotystart + (game_panel.getTile_size_y() * getSlot_row());;
         int cursor_width = game_panel.getTile_size_x();
         int cursor_height = game_panel.getTile_size_y();
 
-        //draw cursor
+        //DRAW CURSOR
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(3));
         g2.drawRoundRect(cursor_x,cursor_y,cursor_width,cursor_height, 10,10);
 
-
-
-        //draw items
+        //DRAW ITEMS
         int index;
-
         for (int i = 0; i < game_panel.getHero().getInventory().size(); i++){
-
-            //equip cursor
+            // DRAW EQUIP CURSOR
             if(game_panel.getHero().inventory.get(i) == game_panel.getHero().getItemInHeands()){
                 g2.setColor(Color.ORANGE);
                 g2.fillRoundRect(slot_x,slot_y,game_panel.getTile_size_x(),game_panel.getTile_size_y(), 10, 10);
             }
-
-
                 g2.drawImage(game_panel.getHero().inventory.get(i).getStands1(), slot_x, slot_y, null);
                 slot_x += game_panel.getTile_size_x();
                 if (i == 4 || i == 9 || i == 14 || i ==19) {
                     slot_x = slotxstart;
                     slot_y += game_panel.getTile_size_y();
                 }
-
-
         }
-
-
-
     }
-
+    //GET INDEX IN INVENTORY ARRAY OF ITEM WITH CURSOR ON
     public int getindexofitem(){
         return  itemindex = slot_row * 5 + slot_col;
     }
-
-
     //MAIN MENU
     public void drawMenu(){
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -330,7 +293,6 @@ public class GUI {
         int x = getXfortextincenter(text);
         int y = game_panel.getTile_size_y() * 4;
         drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
-
 
         //GAME MENU
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
@@ -361,33 +323,42 @@ public class GUI {
         }
 
     }
-
-
+    //WIN SCREEN
+    public void drawWinScreen(){
+        String text = "YOU WON!!!";
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        drawWithOutline(g2,text,getXfortextincenter(text),getYForCenterinGameMessage(),new Color(68,64,60),new Color(0,0,0));
+        text = "To exit press 'E'";
+        g2.drawString("To exit press 'E'",getXfortextincenter(text), game_panel.getWindow_height() - game_panel.getTile_size_x()*2);
+    }
+    //GAME RUNNING (INGAME MESSAGES AND INSTRUCTIONS)
+        //DRAW INGAME MESSAGES
     public void Drawmessageonscreen(){
-            int verticalOffset = 0; // Инициализируем вертикальное смещение
-            // Отрисовка сообщений и удаление прочитанных
+            int verticalOffset = 0;
             Iterator<Message> iterator = messages.iterator();
             while (iterator.hasNext()) {
                 Message message = iterator.next();
-                drawWithOutline(g2, message.text, message.position.x, message.position.y + verticalOffset, Color.white, Color.black); // Учитываем вертикальное смещение
-                verticalOffset += 40; // Добавляем высоту сообщения и некоторый отступ
+                drawWithOutline(g2, message.text, message.position.x, message.position.y + verticalOffset, Color.white, Color.black);
+                verticalOffset += 40;
                 if (message.isReaded) {
-                    iterator.remove(); // Удаление прочитанных сообщений из списка
+                    iterator.remove();
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
+        //DRAW INSTRUCTIONS
+        public void Drawinstractions(){
+        int x = game_panel.getTile_size_x();
+        int y = game_panel.getWindow_height() - game_panel.getTile_size_x()*2;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,32));
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.drawString("To open/close inventory press 'I'",x,y);
+        y+=28;
+        g2.drawString("To interact or speak press 'E'",x,y);
+        y+=28;
+        g2.drawString("Use WASD to move",x,y);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,50));
+        }
+    //SUB FUNCTION TO DRAW SMALL WINDOWS
     public void drawWindow(int x, int y, int width, int heigth){
         g2.setColor(new Color(0,0,0,200));
         g2.fillRoundRect(x,y,width,heigth,35,35);
@@ -398,21 +369,19 @@ public class GUI {
     }
 
 
-
+    //SUB FUNCTION TO GET X FOR CENTERED TEXT
     public int getXfortextincenter(String text){
         int lenght = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
         int x = game_panel.getWindow_width()/2 - lenght/2;
         return x;
     }
-
+    //SUB FUNCTION TO GET X FOR RIGHT TEXT
     public int getXfotrightText(String text, int tailx){
         int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
         int x = tailx - length;
         return x;
     }
-
-
-    // Метод для добавления нового сообщения
+    //ADD MASSAGE TO MESSAGES ARRAY
     public void addMessage(String text, int x, int y) {
         Message message = new Message(text, new Point(x, y));
         messages.add(message);
@@ -425,92 +394,61 @@ public class GUI {
             }
         }, 2000); // 2000 миллисекунд (2 секунды)
     }
-
-    // Метод для отрисовки текста с черной рамкой
+    //DRAW TEXT WITH SHADOW
     public void drawWithOutline(Graphics2D g2, String text, int x, int y, Color textColor, Color outlineColor) {
         g2.setColor(outlineColor);
         g2.drawString(text, x - 5, y - 5);
         g2.drawString(text, x + 5, y - 5);
         g2.drawString(text, x - 5, y + 5);
         g2.drawString(text, x + 5, y + 5);
-
         g2.setColor(textColor);
         g2.drawString(text, x, y);
     }
 
 
 
-
+    //DRAW RENDER TIME
     public void drawLogRenderTime(long x) {
         String renderTimeAsString = String.valueOf(x);
         g2.drawString(renderTimeAsString,getXfortextincenter(renderTimeAsString)+400,400 );
     }
-
-    public String getCurrentDialogue() {
-        return currentDialogue;
-    }
-
-    public void setCurrentDialogue(String currentDialogue) {
-        this.currentDialogue = currentDialogue;
-    }
-
-    public int getCommand_number() {
-        return command_number;
-    }
-
-    public void setCommand_number(int command_number) {
-        this.command_number = command_number;
-    }
-
-    public int getSlot_col() {
-        return slot_col;
-    }
-
-    public void setSlot_col(int slot_col) {
-        this.slot_col = slot_col;
-    }
-
-    public int getSlot_row() {
-        return slot_row;
-    }
-
-    public void setSlot_row(int slot_row) {
-        this.slot_row = slot_row;
-    }
-
-    public int getYForCenterinGameMessage() {
-        return YForCenterinGameMessage;
-    }
-
-    public void setYForCenterinGameMessage(int YForCenterinGameMessage) {
-        this.YForCenterinGameMessage = YForCenterinGameMessage;
-    }
-
-
+    //INGAME MESSAGES
     private static class Message {
         String text;
         Point position;
         boolean isReaded = false;
-
         Message(String text, Point position) {
             this.text = text;
             this.position = position;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public String getCurrentDialogue() {
+        return currentDialogue;
+    }
+    public void setCurrentDialogue(String currentDialogue) {
+        this.currentDialogue = currentDialogue;
+    }
+    public int getCommand_number() {
+        return command_number;
+    }
+    public void setCommand_number(int command_number) {
+        this.command_number = command_number;
+    }
+    public int getSlot_col() {
+        return slot_col;
+    }
+    public void setSlot_col(int slot_col) {
+        this.slot_col = slot_col;
+    }
+    public int getSlot_row() {
+        return slot_row;
+    }
+    public void setSlot_row(int slot_row) {
+        this.slot_row = slot_row;
+    }
+    public int getYForCenterinGameMessage() {
+        return YForCenterinGameMessage;
+    }
 
     public Game_panel getGame_panel() {
         return game_panel;
@@ -519,19 +457,15 @@ public class GUI {
     public void setGame_panel(Game_panel game_panel) {
         this.game_panel = game_panel;
     }
-
     public ArrayList<Message> getMessages() {
         return messages;
     }
-
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
-
     public Timer getTimer() {
         return timer;
     }
-
     public void setTimer(Timer timer) {
         this.timer = timer;
     }

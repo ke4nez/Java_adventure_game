@@ -9,6 +9,5 @@ public class Lamp_on extends Entity {
         setName("Lamp_on");
         this.setupNPCimages("Lamp_on");
         this.setIslightsource(true);
-
     }
 }

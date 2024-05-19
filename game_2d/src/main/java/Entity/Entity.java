@@ -22,7 +22,7 @@ public class Entity implements Serializable {
     private boolean islightsource = false;
 
 
-    //collision
+    //COLLISION
     private int NPC_rectangle_x = 0;
     private int NPC_rectangle_y = 0;
     private int NPC_rectangle_height = 48;
@@ -32,13 +32,12 @@ public class Entity implements Serializable {
     private int NPC_rectangle_default_y = 0;
     private boolean collision = true;
 
-    //dialogue
+    //DIALOGUE
     private boolean isinteracteble;
-
     ArrayList<String> dialogues = new ArrayList<>();
     int dialogueIndex = 0;
 
-    // stats
+    //STATS
     private int maxHealth;
     private int health;
     private int level;
@@ -51,7 +50,7 @@ public class Entity implements Serializable {
 
 
 
-    //images
+    //IMAGES
     BufferedImage image = null;
     private BufferedImage up1;
     private BufferedImage up2;
@@ -65,8 +64,8 @@ public class Entity implements Serializable {
     private BufferedImage stands2;
    private BufferedImage dialogue_image;
    private BufferedImage interaction;
-    private String direction = "stands";
-
+   private String direction = "stands";
+   //SPRITE ANIMATION
     private int spriteCounter = 0;
     private int spriteNum = 1;
 
@@ -78,54 +77,42 @@ public class Entity implements Serializable {
 
     public void setAction() {
     }
-
+    //UPDATE NPC STATUS IN GAME LOOP
     public void update() {
         setCollision(false);
-        //System.out.println("npc is now updaiting");
         setAction();
         game_panel.getCollisionChecker().check_tile(this);
-        game_panel.getCollisionChecker().check_object(this, false);
+        game_panel.getCollisionChecker().check_object(this);
         game_panel.getCollisionChecker().checkhero(this, game_panel.getHero());
 
-
-        if (isCollision() == false) {
+        //WALKING AROUND
+        if (!isCollision()){
 
             switch (getDirection()) {
                 case "up":
-                    if (isCollision() == false) {
+                    if (!isCollision()) {
                         this.position_y -= speed;
                     }
                     break;
-
                 case "down":
-                    if (isCollision() == false) {
+                    if (!isCollision()) {
                         this.position_y += speed;
-
                     }
                     break;
-
                 case "left":
-                    if (isCollision() == false) {
+                    if (!isCollision()) {
                         this.position_x -= speed;
-
                     }
                     break;
-
-
                 case "right":
-                    if (isCollision() == false) {
+                    if (!isCollision()) {
                         this.position_x += speed;
-
                     }
-                    break;
-
-                case "stands":
                     break;
             }
 
         }
-
-
+        //ANIMATION
         setSpriteCounter(getSpriteCounter() + 1);
         if (getSpriteCounter() > 30) {
             if (getSpriteNum() == 1) {
@@ -136,64 +123,63 @@ public class Entity implements Serializable {
             setSpriteCounter(0);
         }
     }
-
+    //LOAD IMAGES FROM NPS FOLDER
     public void setupNPCimages(String npc_name) {
         int scale = 0;
-
         Toolbox toolbox = new Toolbox();
         try {
 
                 this.setUp1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/up_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-System.out.println("succses");
+
                 this.setUp2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/up_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setDown1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/down_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setDown2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/down_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setLeft1((toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/left_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale)));
-            System.out.println("succses");
+
                 this.setLeft2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/left_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setRight1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/right_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setRight2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/right_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setStands1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/stands_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setStands2(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/stands_2.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
-            System.out.println("succses");
+
                 this.setDialogue_image((toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/dialogue_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale)));
-            System.out.println("succses");
+
         } catch (IOException e) {
             System.out.println("Can not load tile image");
         }
 
     }
-
     public void draw(Graphics2D g2, Game_panel game_panel) {
-
         BufferedImage image = null;
-
+        // SET SCREEN POSITION
         int screen_x = position_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
         int screen_y = position_y - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
 
+        //NOT DRAWING IF OUT OF SCREEN
         if (position_x + game_panel.getTile_size_x() > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
                 && position_x - game_panel.getTile_size_x() < game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x()
                 && position_y + game_panel.getTile_size_y() > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
                 && position_y - game_panel.getTile_size_y() < game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y()
         ) {
+            //CHANGE SPRITE
             switch (this.getDirection()) {
                 case "up":
                     if (getSpriteNum() == 1) {
@@ -228,7 +214,6 @@ System.out.println("succses");
                     }
                     break;
                 case "stands":
-
                     if (getSpriteNum() == 1) {
                         image = getStands1();
                     }
@@ -236,26 +221,25 @@ System.out.println("succses");
                         image = getStands2();
                     }
                     break;
-
                 case "interaction":
                     image = getDialogue_image();
                     break;
-
             }
-
-
+            //DRAW HERO
             g2.drawImage(image, screen_x, screen_y, null);
         }
     }
 
-
+    //DIALOGUE
     public void speak() {
+        //START FROM BEGINNING
         if (dialogueIndex >= dialogues.size()) {
             dialogueIndex = 0;
         }
+        //NEXT LINE
         getGame_panel().getGui().setCurrentDialogue(dialogues.get(dialogueIndex));
         dialogueIndex++;
-
+        //SET NPC SPRITE TO DIALOGUE
         switch (getGame_panel().getHero().getDirection()) {
             case "interaction":
                 setDirection("interaction");
@@ -266,11 +250,6 @@ System.out.println("succses");
     public void setDialogue(int level_number){
         //
     }
-
-
-
-
-
 public Game_panel getGame_panel(){
         return game_panel;
 }

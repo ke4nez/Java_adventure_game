@@ -3,8 +3,6 @@ package Entity;
 import Main.Game_panel;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 
@@ -12,6 +10,7 @@ import java.util.Random;
 
 
 public class NPC_stranger extends Entity {
+    int counter = 1; //COUNTER TO SET RANDOM DIRECTION TO NPS
     public  NPC_stranger(Game_panel game_panel){
         super(game_panel);
         this.setSpeed(1);
@@ -19,10 +18,7 @@ public class NPC_stranger extends Entity {
         this.setupNPCimages("Stranger");
         setDialogue(game_panel.getHero().getOn_level_number());
     }
-
-int counter = 1;
-
-
+    //LOAD DIALOGUES FROM NPC FOLDER FROM LEVEL FOLDER
     public void setDialogue(int level_number) {
         try{
             InputStream is = getClass().getClassLoader().getResourceAsStream("Levels/Level_" + level_number+ "/Stranger/Dialogue.txt");
@@ -48,7 +44,7 @@ int counter = 1;
 
 
 
-
+    //AI WALKING
     public void setAction() {
         if (counter == 1) {
             Random i = new Random();
@@ -75,5 +71,4 @@ int counter = 1;
             counter = 1;
         }
     }
-
 }

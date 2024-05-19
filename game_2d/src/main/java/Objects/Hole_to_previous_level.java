@@ -3,7 +3,9 @@ package Objects;
 import Main.Game_panel;
 
 import javax.imageio.ImageIO;
-    public class Hole_to_previous_level extends Game_Object {
+import java.awt.*;
+
+public class Hole_to_previous_level extends Game_Object {
 
         public Hole_to_previous_level(Game_panel game_panel) {
             super(game_panel);
@@ -12,9 +14,9 @@ import javax.imageio.ImageIO;
             this.setName("Hole_to_previous_level");
             this.setCollision(true);
             this.setIsinteractable(true);
-
+            this.setIspickeble(false);
             try {
-                this.setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/hole.png")));
+                this.setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/hole_to_previous_level.png")));
             } catch (Exception e) {
                 System.out.println("cannot load hole image");
             }
@@ -40,5 +42,20 @@ import javax.imageio.ImageIO;
                 }
             }
         }
+    //DRAW BIG OBJECT
+    public void paintObject(Graphics2D g2) {
+        int screen_x = getPosition_x() - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
+        int screen_y = getPosition_y() - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
+
+        if(        getPosition_x() + game_panel.getTile_size_x() > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
+                && getPosition_x() - game_panel.getTile_size_x() < game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x()
+                && getPosition_y() + game_panel.getTile_size_y() > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
+                && getPosition_y() - game_panel.getTile_size_y() < game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y()
+        ) {
+
+
+            g2.drawImage(getImage(), screen_x, screen_y - game_panel.getTile_size_y()*2, game_panel.getTile_size_x(), game_panel.getTile_size_y()*3, null);
+        }
+    }
 
     }

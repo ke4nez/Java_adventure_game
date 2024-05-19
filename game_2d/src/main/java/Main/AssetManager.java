@@ -4,13 +4,15 @@ import Entity.Entity;
 import Entity.NPC_stranger;
 import Objects.*;
 import Surroundings.TileManager;
-
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AssetManager {
 
     Game_panel game_panel;
+    private static final Logger logger = Logger.getLogger(AssetManager.class.getName());
     TileManager tileManager;
 
     public AssetManager(Game_panel game_panel) {
@@ -19,10 +21,14 @@ public class AssetManager {
         loadLevel(1);
     }
 public void loadLevel(int level_number){
+    logger.log(Level.INFO, "Loading new level");
         clearLevel();
+    ArrayList<Game_Object> tempobj = new ArrayList<>();
+    ArrayList<Entity> temnpcs = new ArrayList<>();
         loadObjects(level_number);
         loadNPCs(level_number);
         tileManager.loadmap(level_number);
+    logger.log(Level.INFO, "Level loaded");
 }
 public void loadObjects(int level_number) {
         game_panel.getObj().clear();
@@ -75,13 +81,20 @@ public void loadObjects(int level_number) {
                                 new_object.setPosition_y(y * game_panel.getTile_size_y());
                                 game_panel.getObj().add(new_object);
                                 break;
+                            case "End_chest":
+                                new_object = new End_chest(game_panel);
+                                new_object.setPosition_x(x * game_panel.getTile_size_x());
+                                new_object.setPosition_y(y * game_panel.getTile_size_y());
+                                game_panel.getObj().add(new_object);
+                                break;
                         }
                     } else {
-                        System.err.println("Ошибка: Неверный формат строки в файле объектов: " + line);
+                        logger.log(Level.SEVERE, "Invalid line format in Objects.txt file: " + line);
                     }
                 }
+            logger.log(Level.INFO, "Objects were loaded" + line);
             } catch(IOException e){
-                System.err.println("Ошибка при чтении файла: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error reading file: " + e.getMessage(), e);
             }
 
     }
@@ -112,13 +125,14 @@ public void loadObjects(int level_number) {
                             break;
                     }
                 } else {
-                    System.err.println("Неверный формат строки: " + line);
+                    logger.log(Level.SEVERE, "Invalid line format: " + line);
                 }
             }
+            logger.log(Level.INFO, "NPCs were loaded" + line);
         } catch (IOException e) {
-            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error reading file: " + e.getMessage(), e);
         } catch (NumberFormatException e) {
-            System.err.println("Ошибка преобразования числа: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error converting number: " + e.getMessage(), e);
         }
     }
     public void clearLevel(){

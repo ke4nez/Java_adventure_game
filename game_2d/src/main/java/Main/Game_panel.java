@@ -12,6 +12,7 @@ import Entity.Hero;
 import Objects.Game_Object;
 import Enviroment.EnviromentManager;
 import Enviroment.Lightning;
+import Objects.Lamp_of;
 import Surroundings.TileManager;
 
 
@@ -20,21 +21,19 @@ public class Game_panel extends JPanel implements Runnable{
 
 
 
-    //GAME SETTINGS
-
-
+    //WORLD SETTINGS
     private int tile_size_x = 64;
     private int tile_size_y =64;
-    private final int max_world_col = 32;
-    private final int max_world_row = 32;
+    private final int max_world_col = 64;
+    private final int max_world_row = 64;
 
     private final int max_world_width = getMax_world_col() * tile_size_x;
     private final int max_world_heigth = getMax_world_col() * tile_size_y;
 
     //SCREEN SETTINGS
 
-    private final int window_width = 1920;
-    private final int window_height = 1080;
+    private final int window_width = 1600;
+    private final int window_height =900;
     private int max_screen_col = window_width/tile_size_x;
     private int max_screen_row = window_height/tile_size_y;
 
@@ -71,8 +70,8 @@ private int gameState;
     private final int pauseState = 2;
     private final int dialogState = 3;
     private final int pause_menu = 4;
-
     private final int inventoryState = 5;
+    private final int GameEndState = 6;
 
     //private int gameState;
     private boolean logON = false;
@@ -167,30 +166,32 @@ public void update()
         gui.draw(g2);
         }
         else {
-            //Tiles
-
+            //TILES
             tileManager.draw(g2);
 
+            //OBJECTS
+            if (obj.size() > 0) {
+                for (int i = 0; i < obj.size(); i++) {
+                    if (obj.get(i) != null) {
+                        obj.get(i).paintObject(g2);
+                    }
+                }
+            }
 
-            //objects
-            for(int i = 0 ; i < obj.size(); i++) {
-                if (obj.get(i) != null) {
-                    obj.get(i).paintObject(g2);
-                }
-            }
             //NPCs
-            for(int i = 0 ; i < npcs.size(); i++) {
-                if (npcs.get(i) != null) {
-                    npcs.get(i).draw(g2,this);
+            if(npcs.size()> 0) {
+                for (int i = 0; i < npcs.size(); i++) {
+                    if (npcs.get(i) != null) {
+                        npcs.get(i).draw(g2, this);
+                    }
                 }
             }
+
+            //HERO
             hero.painthero(g2);
 
-
             //Enviroment
-
             getEnviromentManager().draw(g2);
-
             if(logON) {
                 long draw_time_end = System.nanoTime();
                 passed = draw_time_end - draw_rime_start;
@@ -208,7 +209,7 @@ public void update()
 
 
 public void changelightning(int x){
-        getEnviromentManager().setLightning(new Lightning(this,x));
+        getEnviromentManager().setLightning(new Lightning(this, x));
 }
 
 
@@ -297,8 +298,12 @@ public void changelightning(int x){
     }
 
     public Game_Object getObjFromObjects(int x) {
-        return obj.get(x);
+        if (x < obj.size()) {
+            return obj.get(x);
+        }
+        return new Lamp_of(this);
     }
+
     public void setObj(ArrayList<Game_Object> obj) {
         this.obj = obj;
     }
@@ -381,5 +386,9 @@ public void changelightning(int x){
 
     public void setAssetManager(AssetManager assetManager) {
         this.assetManager = assetManager;
+    }
+
+    public int getGameEndState() {
+        return GameEndState;
     }
 }

@@ -10,7 +10,5 @@ public class Lamp_of extends Entity {
         super(game_panel);
         setName("Lamp_of");
         setupNPCimages("Lamp_of");
-
-
     }
 }

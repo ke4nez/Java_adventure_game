@@ -9,7 +9,7 @@ public class Game_controls implements KeyListener {
 
     Game_panel game_panel;
 
-    public boolean go_right, go_left, go_up, go_down, interaction, jump;
+    public boolean go_right, go_left, go_up, go_down, interaction;
     private int counter = 0;
     // CRAFT
     private int craft_counter = 0;
@@ -41,11 +41,11 @@ public class Game_controls implements KeyListener {
         if (game_panel.getGameState() == game_panel.getMainMenuState()) {
 
 
-            if (e.getKeyCode() == 87) {
+            if (e.getKeyCode() == KeyEvent.VK_W) {
                 game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() - 1);
             }
 
-            if (e.getKeyCode() == 83) {
+            if (e.getKeyCode() == KeyEvent.VK_S) {
                 game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() + 1);
             }
 
@@ -57,7 +57,7 @@ public class Game_controls implements KeyListener {
             }
 
 
-            if (e.getKeyCode() == 69) {
+            if (e.getKeyCode() == KeyEvent.VK_E) {
                 if (game_panel.getGui().getCommand_number() == 1) {
                     game_panel.setGameState(game_panel.getPlayState());
                 }
@@ -76,11 +76,11 @@ public class Game_controls implements KeyListener {
         if (game_panel.getGameState() == game_panel.getPause_menu()) {
 
 
-            if (e.getKeyCode() == 87) {
+            if (e.getKeyCode() == KeyEvent.VK_W) {
                 game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() - 1);
             }
 
-            if (e.getKeyCode() == 83) {
+            if (e.getKeyCode() == KeyEvent.VK_S) {
                 game_panel.getGui().setCommand_number(game_panel.getGui().getCommand_number() + 1);
             }
 
@@ -91,8 +91,7 @@ public class Game_controls implements KeyListener {
                 game_panel.getGui().setCommand_number(3);
             }
 
-
-            if (e.getKeyCode() == 69) {
+            if (e.getKeyCode() == KeyEvent.VK_E) {
                 if (game_panel.getGui().getCommand_number() == 1) {
                     game_panel.setGameState(game_panel.getPlayState());
                 }
@@ -108,36 +107,34 @@ public class Game_controls implements KeyListener {
                 }
             }
         }
-
+        //END GAME STATE
+        if(game_panel.getGameState() == game_panel.getGameEndState()){
+            if(e.getKeyCode() == KeyEvent.VK_E){
+                game_panel.setGameState(game_panel.getMainMenuState());
+            }
+        }
         //PLAY STATE
         if (game_panel.getGameState() == game_panel.getPlayState()) {
-            if (e.getKeyCode() == 87) {
+            if (e.getKeyCode() == KeyEvent.VK_W) {
                 go_up = true;
             }
-            if (e.getKeyCode() == 83) {
+            if (e.getKeyCode() == KeyEvent.VK_S) {
                 go_down = true;
             }
-            if (e.getKeyCode() == 65) {
+            if (e.getKeyCode() == KeyEvent.VK_A) {
                 go_left = true;
             }
-            if (e.getKeyCode() == 68) {
+            if (e.getKeyCode() == KeyEvent.VK_D) {
                 go_right = true;
             }
-            if (e.getKeyCode() == 69) {
-                    long currentTime = System.currentTimeMillis();
-                    if (currentTime - lastInteractionTime >= interactionCooldown) {
-                        interaction = true;
-                        lastInteractionTime = currentTime;
-                     }
+            if (e.getKeyCode() == KeyEvent.VK_E) {
+                interaction = true;
+
             }
 
 
                 //interaction = true;
-
-            if (e.getKeyCode() == 32) {
-                jump = true;
-            }
-            if (e.getKeyCode() == 76) {
+            if (e.getKeyCode() == KeyEvent.VK_L) {
                 if (game_panel.isLogON()) {
                     game_panel.setLogON(false);
                     //  System.out.println("LOG OFF");
@@ -156,15 +153,15 @@ public class Game_controls implements KeyListener {
             }
 
 
-            if (e.getKeyCode() == 80) {
+            if (e.getKeyCode() == KeyEvent.VK_P) {
                 game_panel.setGameState(game_panel.getPauseState());
             }
 
-            if (e.getKeyCode() == 27) {
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 game_panel.setGameState(game_panel.getPause_menu());
             }
 
-            if (e.getKeyCode() == 73) {
+            if (e.getKeyCode() == KeyEvent.VK_I) {
                 game_panel.setGameState(game_panel.getInventoryState());
             }
 
@@ -172,12 +169,12 @@ public class Game_controls implements KeyListener {
         //INVENTORY STATE
         else if (game_panel.getGameState() == game_panel.getInventoryState()) {
 
-            if (e.getKeyCode() == 73) {
+            if (e.getKeyCode() == KeyEvent.VK_I) {
                 game_panel.setGameState(game_panel.getPlayState());
             }
 
             //d
-            if (e.getKeyCode() == 68) {
+            if (e.getKeyCode() == KeyEvent.VK_D) {
                 if (game_panel.getGui().getSlot_col() != 4) {
                     game_panel.getGui().setSlot_col(game_panel.getGui().getSlot_col() + 1);
                 }
@@ -185,28 +182,28 @@ public class Game_controls implements KeyListener {
 
             //a
 
-            if (e.getKeyCode() == 65) {
+            if (e.getKeyCode() == KeyEvent.VK_A) {
                 if (game_panel.getGui().getSlot_col() != 0) {
                     game_panel.getGui().setSlot_col(game_panel.getGui().getSlot_col() - 1);
                 }
             }
             //w
 
-            if (e.getKeyCode() == 87) {
+            if (e.getKeyCode() == KeyEvent.VK_W) {
                 if (game_panel.getGui().getSlot_row() != 0) {
                     game_panel.getGui().setSlot_row(game_panel.getGui().getSlot_row() - 1);
                 }
             }
             //s
 
-            if (e.getKeyCode() == 83) {
+            if (e.getKeyCode() == KeyEvent.VK_S) {
                 if (game_panel.getGui().getSlot_row() != 4) {
                     game_panel.getGui().setSlot_row(game_panel.getGui().getSlot_row() + 1);
                 }
             }
 
             //c CRAFT ITEMS
-            if (e.getKeyCode() == 67) {
+            if (e.getKeyCode() == KeyEvent.VK_C) {
 
 
                 if (craft_counter == 0) {
@@ -247,7 +244,7 @@ public class Game_controls implements KeyListener {
                 }
             }
 
-                if (e.getKeyCode() == 69) {
+                if (e.getKeyCode() == KeyEvent.VK_E) {
                     game_panel.getHero().selectitem();
                 }
 
@@ -257,14 +254,14 @@ public class Game_controls implements KeyListener {
 
             //PAUSE STATE
             else if (game_panel.getGameState() == game_panel.getPauseState()) {
-                if (e.getKeyCode() == 80) {
+                if (e.getKeyCode() == KeyEvent.VK_P) {
                     game_panel.setGameState(game_panel.getPlayState());
                 }
             }
 
             //DIALOGUE STATE
             else if (game_panel.getGameState() == game_panel.getDialogState()) {
-                if (e.getKeyCode() == 69) {
+                if (e.getKeyCode() == KeyEvent.VK_E) {
                     game_panel.setGameState(game_panel.getPlayState());
                 }
 
@@ -281,24 +278,20 @@ public class Game_controls implements KeyListener {
 
             counter++;
 
-            if (e.getKeyCode() == 87) {
+            if (e.getKeyCode() == KeyEvent.VK_W) {
                 go_up = false;
             }
-            if (e.getKeyCode() == 83) {
+            if (e.getKeyCode() == KeyEvent.VK_S) {
                 go_down = false;
             }
-            if (e.getKeyCode() == 65) {
+            if (e.getKeyCode() == KeyEvent.VK_A) {
                 go_left = false;
             }
-            if (e.getKeyCode() == 68) {
+            if (e.getKeyCode() == KeyEvent.VK_D) {
                 go_right = false;
             }
-            if (e.getKeyCode() == 69) {
+            if (e.getKeyCode() == KeyEvent.VK_E) {
                 interaction = false;
-            }
-
-            if (e.getKeyCode() == 32) {
-                jump = false;
             }
             counter++;
             if (counter > 120) {

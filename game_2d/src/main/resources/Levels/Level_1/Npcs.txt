@@ -1,2 +1,1 @@
-Stranger 20 25
-Stranger 20 24
+Stranger 24 27

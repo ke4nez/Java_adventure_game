@@ -8,26 +8,22 @@ public class EnviromentManager {
 
     Game_panel game_panel;
     private Lightning lightning;
+    private int base_vision_distance;
+    private int vision_distance_with_light_source;
 
-     private int base_vision_distance;
-     private int vision_distance_with_light_source;
+    public EnviromentManager(Game_panel game_panel){
+        this.game_panel = game_panel;
+        this.base_vision_distance = game_panel.getWindow_width() / 2;
+        this.vision_distance_with_light_source = game_panel.getWindow_width();
+        setup();
+    }
 
-     public EnviromentManager(Game_panel game_panel){
-                this.game_panel = game_panel;
-                this.setBase_vision_distance(game_panel.getWindow_width()/2);
-                this.setVision_distance_with_light_source(game_panel.getWindow_width());
-                setup();
-            }
-
-            public void setup(){
-         setLightning(new Lightning(game_panel, getBase_vision_distance()));
-            }
-
-
-
+    public void setup(){
+        this.lightning = new Lightning(game_panel, base_vision_distance);
+    }
 
     public void draw(Graphics2D g2){
-        getLightning().draw(g2);
+        lightning.draw(g2);
     }
 
     public Lightning getLightning() {

@@ -12,6 +12,7 @@ public class Axe extends Game_Object{
         this.setGame_panel(game_panel);
         this.setName("Axe");
         this.setIspickeble(true);
+        this.setIsinteractable(false);
 
         try{
             this.setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/axe.png")));

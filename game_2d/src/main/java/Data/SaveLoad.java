@@ -8,15 +8,19 @@ import Entity.Entity;
 import Objects.*;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SaveLoad {
     private Game_panel game_panel;
+    private static final Logger logger = Logger.getLogger(SaveLoad.class.getName());
 
     public SaveLoad(Game_panel game_panel) {
         this.game_panel = game_panel;
     }
-
+    //SAVE CURRENT LEVEL
     public void save() {
+        logger.info("Starting save process...");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("Save.dat")))) {
             Datastorage ds = new Datastorage();
 
@@ -27,7 +31,7 @@ public class SaveLoad {
             ds.exp = game_panel.getHero().getExp();
             ds.exp_to_next_level = game_panel.getHero().getNextlevelexp();
             ds.on_level = game_panel.getHero().getOn_level_number();
-
+            logger.info("Player stats were saved");
 
             //INVENTORY NAMES
             for(int i = 0; i < game_panel.getHero().inventory.size(); i++){
@@ -36,6 +40,7 @@ public class SaveLoad {
 
             //ITEM IN HANDS INDEX
             ds.item_in_hands = game_panel.getHero().get_item_in_hands_inventory_index_slot();
+            logger.info("Player inventory was saved");
 
             //OBJECTS
             for(int i =0;i <game_panel.getObj().size(); i++){
@@ -45,6 +50,7 @@ public class SaveLoad {
                     ds.obj_position_y.add(game_panel.getObj().get(i).getPosition_y());
                 }
             }
+            logger.info("Level objects were saved");
 
             //NPCs
             for (int i = 0; i < game_panel.getNpcs().size(); i++) {
@@ -54,18 +60,21 @@ public class SaveLoad {
                     ds.npc_position_y.add(game_panel.getNpcs().get(i).getPosition_y());
                 }
             }
-            //Map
+            logger.info("Level NPCs were saved");
+
+            //MAP
             ds.map = game_panel.getTileManager().getMap();
+            logger.info("Level map was saved");
 
             oos.writeObject(ds);
 
         } catch (Exception e) {
-            System.out.println("Save failed");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Save failed", e);
         }
     }
-
+    //LOAD CURRENT LEVEL
     public void load() {
+        logger.info("Starting load process...");
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("Save.dat")))) {
             Datastorage ds = (Datastorage) ois.readObject();
 
@@ -76,6 +85,7 @@ public class SaveLoad {
             game_panel.getHero().setNextlevelexp(ds.exp_to_next_level);
             game_panel.getHero().setLevel(ds.level);
             game_panel.getHero().setOn_level_number(ds.on_level);
+            logger.info("Player stats were loaded");
 
             //INVENTORY
             if(!ds.inventory_item_names.isEmpty()) {
@@ -87,6 +97,7 @@ public class SaveLoad {
                 }
                 //ITEM IN HANDS
                 game_panel.getHero().setItemInHeands(game_panel.getHero().inventory.get(ds.item_in_hands));
+                logger.info("Payer inventory was loaded");
             }
 
             //OBJECTS
@@ -94,26 +105,24 @@ public class SaveLoad {
             for (int i = 0; i < ds.obj_names.size(); i++) {
                     game_panel.getObj().add(make_object(ds.obj_names.get(i), ds.obj_position_x.get(i), ds.obj_position_y.get(i)));
             }
+            logger.info("Objects were loaded");
 
             //NPC
             game_panel.getNpcs().clear();
             for (int i = 0; i < ds.npc_names.size(); i++) {
                     game_panel.getNpcs().add(make_NPC(ds.npc_names.get(i), ds.npc_position_x.get(i),ds.npc_position_y.get(i)));
             }
+            logger.info("NPCs were loaded");
 
 
-            //Map
+            //MAP
             game_panel.getTileManager().setMap(ds.map);
+            logger.info("Map was loaded");
 
         } catch (Exception e) {
-            System.out.println("Can't load player progress");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "load failed");
         }
     }
-
-
-
-
     public Entity make_item(String item_name){
         Entity item = null;
 

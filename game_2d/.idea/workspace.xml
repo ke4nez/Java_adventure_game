@@ -36,12 +36,12 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "Application.Unnamed.executor": "Run",
     "JUnit.HeroTest.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Ke4Nez/Desktop/all versions/game_2d",
+    "last_opened_file_path": "C:/Users/Ke4Nez/Desktop/pjv-lab05",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -67,7 +67,15 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Unnamed">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
+      <module name="game_2d" />
+      <option name="PROGRAM_PARAMETERS" value="--enable-logging" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HeroTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="game_2d" />
       <option name="PACKAGE_NAME" value="" />
@@ -77,6 +85,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="JUnit.HeroTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.HeroTest" />
@@ -143,6 +155,10 @@
       <workItem from="1715986038164" duration="4547000" />
       <workItem from="1716034008954" duration="24186000" />
       <workItem from="1716063826554" duration="38000" />
+      <workItem from="1716064572693" duration="14767000" />
+      <workItem from="1716118329871" duration="8991000" />
+      <workItem from="1716130745437" duration="7384000" />
+      <workItem from="1716150970326" duration="4248000" />
     </task>
     <servers />
   </component>
