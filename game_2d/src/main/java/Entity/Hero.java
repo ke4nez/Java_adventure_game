@@ -299,8 +299,10 @@ public class Hero extends Entity {
 
     //SPEAK
     public void  interactNPC(int index){
-        game_panel.setGameState(game_panel.getDialogState());
-        game_panel.getNPCfromNPCs(index).speak();
+        if(game_panel.getNpcs().get(index).isIspeakble()) {
+            game_panel.setGameState(game_panel.getDialogState());
+            game_panel.getNPCfromNPCs(index).speak();
+        }
     }
 
     //TAKE ITEM IN HANDS

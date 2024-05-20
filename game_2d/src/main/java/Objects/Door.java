@@ -23,9 +23,6 @@ String text = "";
         this.getObject_rectangle().setRect(8,10,getObj_rectangle_width()-10,getObj_rectangle_height()-10);
         this.open = false;
         this.setIsinteractable(true);
-
-
-
         try{
             this.setImage(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Objects/doors.png")));
 

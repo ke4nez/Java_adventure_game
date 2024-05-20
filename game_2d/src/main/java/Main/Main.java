@@ -7,34 +7,8 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        boolean loggingEnabled = isLoggingEnabled(args);
-
-        // Konfigurace logování
-        configureLogging(loggingEnabled);
-
-        // Vytvoření okna pro hru
         JFrame window = createGameWindow();
-
-        // Spuštění hry
         startGame(window);
-    }
-
-    private static boolean isLoggingEnabled(String[] args) {
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("--enable-logging")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static void configureLogging(boolean loggingEnabled) {
-        Logger rootLogger = Logger.getLogger("");
-        if (loggingEnabled) {
-            rootLogger.setLevel(Level.ALL);
-        } else {
-            rootLogger.setLevel(Level.OFF);
-        }
     }
 
     private static JFrame createGameWindow() {
@@ -51,7 +25,6 @@ public class Main {
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
         return window;
     }
     private static void startGame(JFrame window) {

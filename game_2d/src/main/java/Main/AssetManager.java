@@ -2,6 +2,7 @@ package Main;
 
 import Entity.Entity;
 import Entity.NPC_stranger;
+import Entity.Snail;
 import Objects.*;
 import Surroundings.TileManager;
 import java.io.*;
@@ -23,8 +24,6 @@ public class AssetManager {
 public void loadLevel(int level_number){
     logger.log(Level.INFO, "Loading new level");
         clearLevel();
-    ArrayList<Game_Object> tempobj = new ArrayList<>();
-    ArrayList<Entity> temnpcs = new ArrayList<>();
         loadObjects(level_number);
         loadNPCs(level_number);
         tileManager.loadmap(level_number);
@@ -120,8 +119,12 @@ public void loadObjects(int level_number) {
                             npc.setDialogue(level_number);
                             game_panel.getNpcs().add(npc);
                             break;
-                        case "npc_name":
-                            //
+                        case "Snail":
+                            npc = new Snail(game_panel);
+                            npc.setPosition_x(x * game_panel.getTile_size_x());
+                            npc.setPosition_y(y * game_panel.getTile_size_y());
+                            npc.setDialogue(level_number);
+                            game_panel.getNpcs().add(npc);
                             break;
                     }
                 } else {

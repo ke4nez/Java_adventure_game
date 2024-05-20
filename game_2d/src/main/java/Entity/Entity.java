@@ -33,7 +33,7 @@ public class Entity implements Serializable {
     private boolean collision = true;
 
     //DIALOGUE
-    private boolean isinteracteble;
+    private boolean ispeakble = true;
     ArrayList<String> dialogues = new ArrayList<>();
     int dialogueIndex = 0;
 
@@ -128,7 +128,6 @@ public class Entity implements Serializable {
         int scale = 0;
         Toolbox toolbox = new Toolbox();
         try {
-
                 this.setUp1(toolbox.scale_image(ImageIO.read(getClass().getClassLoader().getResourceAsStream("NPC/" + npc_name + "/up_1.png")),
                         game_panel.getTile_size_x() + scale, game_panel.getTile_size_y() + scale));
 
@@ -528,20 +527,20 @@ public Game_panel getGame_panel(){
         this.name = name;
     }
 
-    public boolean isIsinteracteble() {
-        return isinteracteble;
-    }
-
-    public void setIsinteracteble(boolean isinteracteble) {
-        this.isinteracteble = isinteracteble;
-    }
-
     public boolean isIslightsource() {
         return islightsource;
     }
 
     public void setIslightsource(boolean islightsource) {
         this.islightsource = islightsource;
+    }
+
+    public boolean isIspeakble() {
+        return ispeakble;
+    }
+
+    public void setIspeakble(boolean ispeakble) {
+        this.ispeakble = ispeakble;
     }
 }
 

@@ -193,9 +193,7 @@ public class CollisionChecker {
                         entity.getNPC_rectangle().y -= entity.getSpeed();//up
 
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
-
                             entity.setCollision(true);
-                            game_panel.getGui().addMessage("you  interacted with entity infront of you", 600, 100);
                             index = i;
                         }
 
@@ -203,8 +201,6 @@ public class CollisionChecker {
 
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
                             entity.setCollision(true);
-
-                            game_panel.getGui().addMessage("you  interacted with entity behind of you", 600, 100);
                             index = i;
 
                         }
@@ -214,7 +210,6 @@ public class CollisionChecker {
 
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
                             entity.setCollision(true);
-                            game_panel.getGui().addMessage("you  interacted with entity to  you left", 600, 100);
                             index = i;
                         }
 
@@ -222,14 +217,12 @@ public class CollisionChecker {
 
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
                             entity.setCollision(true);
-                            game_panel.getGui().addMessage("you can interacted with entity to  you right", 600, 100);
                             index = i;
                         }
                         break;
                     case "up":
                         entity.getNPC_rectangle().y -= entity.getSpeed();
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
-                            System.out.println("up collision");
                             entity.setCollision(true);
                             index = i;
                         }
@@ -238,7 +231,6 @@ public class CollisionChecker {
                     case "down":
                         entity.getNPC_rectangle().y += entity.getSpeed();
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
-                            System.out.println("down collision");
                             entity.setCollision(true);
                             index = i;
                         }
@@ -246,8 +238,6 @@ public class CollisionChecker {
                     case "left":
                         entity.getNPC_rectangle().x -= entity.getSpeed();
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
-                            System.out.println("left collision");
-                            System.out.print(target.get(i).getCollision());
                             entity.setCollision(true);
                             index = i;
                         }
@@ -255,7 +245,6 @@ public class CollisionChecker {
                     case "right":
                         entity.getNPC_rectangle().x += entity.getSpeed();
                         if (entity.getNPC_rectangle().intersects(target.get(i).getNPC_rectangle())) {
-                            System.out.println("right collision");
                             entity.setCollision(true);
                             index = i;
                         }

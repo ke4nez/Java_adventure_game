@@ -113,7 +113,6 @@ private int gameState;
     public void run() {
 
         while(gameThread != null) {
-
             update();
             repaint();
             try {
@@ -121,10 +120,6 @@ private int gameState;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
-
-
         }
     }
 

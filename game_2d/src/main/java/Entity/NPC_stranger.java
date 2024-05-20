@@ -16,7 +16,7 @@ public class NPC_stranger extends Entity {
         this.setSpeed(1);
         this.setName("Stranger");
         this.setupNPCimages("Stranger");
-        setDialogue(game_panel.getHero().getOn_level_number());
+        this.setDialogue(game_panel.getHero().getOn_level_number());
     }
     //LOAD DIALOGUES FROM NPC FOLDER FROM LEVEL FOLDER
     public void setDialogue(int level_number) {

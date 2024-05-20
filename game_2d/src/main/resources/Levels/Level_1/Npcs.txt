@@ -1,1 +1,5 @@
 Stranger 24 27
+Snail 45 27
+Snail 50 29
+Snail 51 23
+Snail 44 30
