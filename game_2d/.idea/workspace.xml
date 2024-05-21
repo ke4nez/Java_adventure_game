@@ -45,11 +45,17 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "JUnit.CraftTest.executor": "Run",
     "JUnit.HeroTest.executor": "Run",
+    "JUnit.InteractNPC.executor": "Run",
+    "JUnit.InteractObject.executor": "Run",
+    "JUnit.PickupTest.executor": "Run",
+    "JUnit.java in game_2d.executor": "Run",
+    "JUnit.test in game_2d.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Ke4Nez/Desktop/test_git_semestralka/lysenan1/game_2d",
+    "last_opened_file_path": "C:/Users/Ke4Nez/Desktop/test_3/lysenan1/game_2d/src/test/java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,7 +81,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.java in game_2d">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="game_2d" />
@@ -84,22 +90,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="HeroTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="java in game_2d" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="game_2d" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="HeroTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.HeroTest" />
+      <item itemvalue="JUnit.java in game_2d" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.HeroTest" />
+        <item itemvalue="JUnit.java in game_2d" />
       </list>
     </recent_temporary>
   </component>
@@ -173,6 +181,8 @@
       <workItem from="1716239010217" duration="10770000" />
       <workItem from="1716251198412" duration="3740000" />
       <workItem from="1716254963037" duration="553000" />
+      <workItem from="1716255663969" duration="681000" />
+      <workItem from="1716323645563" duration="9550000" />
     </task>
     <servers />
   </component>

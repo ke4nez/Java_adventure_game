@@ -39,11 +39,11 @@ public class Game_panel extends JPanel implements Runnable{
 
     //CREATION OF THE GAME WINDOW AND THREAD
 
-    Game_controls game_controls = new Game_controls(this);
+    private Game_controls game_controls = new Game_controls(this);
 
     Thread gameThread;
 
-    private Hero hero = new Hero(this,game_controls);
+    private Hero hero = new Hero(this, game_controls);
 
     private ArrayList <Game_Object>  obj = new ArrayList<>();
     private ArrayList<Entity> npcs = new ArrayList<>();
@@ -55,7 +55,7 @@ public class Game_panel extends JPanel implements Runnable{
 
     private GUI gui = new GUI(this);
 
-    SaveLoad saveLoad = new SaveLoad(this);
+    private SaveLoad saveLoad = new SaveLoad(this);
 
 
 
@@ -296,5 +296,53 @@ public void changelightning(int x){
     }
     public int getGameEndState() {
         return GameEndState;
+    }
+
+    public Game_controls getGame_controls() {
+        return game_controls;
+    }
+
+    public void setGame_controls(Game_controls game_controls) {
+        this.game_controls = game_controls;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public void setObj(ArrayList<Game_Object> obj) {
+        this.obj = obj;
+    }
+
+    public void setNpcs(ArrayList<Entity> npcs) {
+        this.npcs = npcs;
+    }
+
+    public void setTileManager(TileManager tileManager) {
+        this.tileManager = tileManager;
+    }
+
+    public void setAssetManager(AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
+
+    public void setCollisionChecker(CollisionChecker collisionChecker) {
+        this.collisionChecker = collisionChecker;
+    }
+
+    public void setEnviromentManager(EnviromentManager enviromentManager) {
+        this.enviromentManager = enviromentManager;
+    }
+
+    public void setGui(GUI gui) {
+        this.gui = gui;
+    }
+
+    public void setSaveLoad(SaveLoad saveLoad) {
+        this.saveLoad = saveLoad;
+    }
+
+    public SaveLoad getSaveLoad() {
+        return saveLoad;
     }
 }

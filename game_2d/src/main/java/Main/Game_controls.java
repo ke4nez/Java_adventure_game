@@ -74,7 +74,7 @@ public class Game_controls implements KeyListener {
                     game_panel.setGameState(game_panel.getPlayState());
                 }
                 if (game_panel.getGui().getCommand_number() == 2) {
-                    game_panel.saveLoad.load();
+                    game_panel.getSaveLoad().load();
                     game_panel.setGameState(game_panel.getPlayState());
                 }
                 if (game_panel.getGui().getCommand_number() == 3) {
@@ -108,7 +108,7 @@ public class Game_controls implements KeyListener {
                     game_panel.setGameState(game_panel.getPlayState());
                 }
                 if (game_panel.getGui().getCommand_number() == 2) {
-                    game_panel.saveLoad.save();
+                    game_panel.getSaveLoad().save();
                     game_panel.setGameState(game_panel.getPlayState());
                     text = "Game saved";
                     game_panel.getGui().addMessage(text, game_panel.getGui().getXfortextincenter(text),

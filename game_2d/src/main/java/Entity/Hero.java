@@ -142,7 +142,6 @@ public class Hero extends Entity {
                 //INTERACTION COOLDOWN;
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastInteractionTime > INTERACTION_COOLDOWN) {
-
                     setDirection("interaction");
                     setCollision(false);
                     index = collisionChecker.check_object(this);

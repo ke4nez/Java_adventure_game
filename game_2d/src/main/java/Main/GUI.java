@@ -18,7 +18,7 @@ public class GUI {
 
     private Game_panel game_panel;
     private static final Logger logger = Logger.getLogger(GUI.class.getName());
-    Graphics2D g2;
+    private Graphics2D g2;
     private Font font;
     private String currentDialogue = "";
     //INGAME MESSAGES
@@ -75,7 +75,7 @@ public class GUI {
      * @param g2 The Graphics2D object for drawing.
      */
     public void draw(Graphics2D g2) {
-        this.g2 = g2;
+        this.setG2(g2);
         g2.setFont(font);
         g2.setColor(Color.white);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -124,46 +124,46 @@ public class GUI {
         String text = "Pause";
         int x = getXfortextincenter(text);
         int y = game_panel.getWindow_height()/2;
-        g2.drawString(text,x,y);
+        getG2().drawString(text,x,y);
     }
     //pause menu
    private void drawPauseMenu(){
-       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-       g2.drawImage(Main_menu_image,0,0,null);
+       getG2().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+       getG2().drawImage(Main_menu_image,0,0,null);
        //GAME TITLE
-       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
+       getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
        String text ="Survival island adventure";
        int x = getXfortextincenter(text);
        int y = game_panel.getTile_size_y() * 4;
-       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+       drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
 
 
        //GAME PAUSE MENU
-       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+       getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
        text = "Resume game";
        x = getXfortextincenter(text);
        y += game_panel.getTile_size_y()*5;
-       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+       drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
        if(getCommand_number() == 1){
-           drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+           drawWithOutline(getG2(),">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
        }
 
-       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+       getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
        text = "Save game";
        x = getXfortextincenter(text);
        y += game_panel.getTile_size_y()*2;
-       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+       drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
        if(getCommand_number() == 2){
-           drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+           drawWithOutline(getG2(),">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
        }
 
-       g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+       getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
        text = "Quit";
        x = getXfortextincenter(text);
        y += game_panel.getTile_size_y()*2;
-       drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+       drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
        if(getCommand_number() == 3){
-           drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+           drawWithOutline(getG2(),">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
        }
 
    }
@@ -176,11 +176,11 @@ public class GUI {
         int heigth = game_panel.getTile_size_y() * 3;
         drawWindow(x,y,width,heigth);
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD,30));
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,30));
         x += game_panel.getTile_size_x();
         y += game_panel.getTile_size_y();
         for(String line: currentDialogue.split("\n")){
-            g2.drawString(line,x,y);
+            getG2().drawString(line,x,y);
             y += 40;
         }
 
@@ -195,8 +195,8 @@ public class GUI {
         drawWindow(x,y,width,height);
 
         //text
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35f));
+        getG2().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD, 35f));
 
         int text_x = x + 20;
         int text_y = y + game_panel.getTile_size_y();
@@ -204,11 +204,11 @@ public class GUI {
 
         //Labels
 
-        g2.drawString("Level", text_x,text_y);
+        getG2().drawString("Level", text_x,text_y);
         text_y += lineHeight;
-        g2.drawString("Exp", text_x,text_y);
+        getG2().drawString("Exp", text_x,text_y);
         text_y += lineHeight;
-        g2.drawString("Next level in", text_x,text_y);
+        getG2().drawString("Next level in", text_x,text_y);
 
         //Values
 
@@ -220,27 +220,27 @@ public class GUI {
 
         value = String.valueOf(game_panel.getHero().getLevel());
         text_x = getXfotrightText(value,tail_x);
-        g2.drawString(value,text_x,text_y);
+        getG2().drawString(value,text_x,text_y);
         text_y += lineHeight;
 
 
         value = String.valueOf(game_panel.getHero().getExp());
         text_x = getXfotrightText(value,tail_x);
-        g2.drawString(value,text_x,text_y);
+        getG2().drawString(value,text_x,text_y);
         text_y += lineHeight;
 
         value = String.valueOf(game_panel.getHero().getNextlevelexp());
         text_x = getXfotrightText(value,tail_x);
-        g2.drawString(value,text_x,text_y);
+        getG2().drawString(value,text_x,text_y);
         text_y += lineHeight * 2 + game_panel.getTile_size_y();
 
 
         //ITEM IN HANDS
         text_x = x + 20;
         value = "Item in hands:";
-        g2.drawString(value,text_x,text_y);
+        getG2().drawString(value,text_x,text_y);
         if(game_panel.getHero().getItemInHeands() != null) {
-            g2.drawImage(game_panel.getHero().getItemInHeands().getStands1(), x + game_panel.getTile_size_x(), text_y, null);
+            getG2().drawImage(game_panel.getHero().getItemInHeands().getStands1(), x + game_panel.getTile_size_x(), text_y, null);
         }
     }
     private void drawinventory(){
@@ -251,15 +251,15 @@ public class GUI {
         int x = game_panel.getWindow_width() - width - game_panel.getTile_size_x();
         int height = game_panel.getTile_size_y() * 6;
 
-        g2.drawString("INVENTORY:",x,y);
+        getG2().drawString("INVENTORY:",x,y);
         y += 26;
         drawWindow(x,y,width,height);
         //inventory controls
-        g2.drawString("To exit press 'I'",x,y+height+ game_panel.getTile_size_y());
-        g2.drawString("To craft press pick first item with 'C'",x,y+height+game_panel.getTile_size_x()+32);
-        g2.drawString("then pick second item wiht 'C'",x,y+height+game_panel.getTile_size_x()+31*2);
-        g2.drawString( "and finally press 'C' again to craft",x,y+height+game_panel.getTile_size_x()+31*3);
-        g2.drawString("Press 'E' to equip item",x,y+height+game_panel.getTile_size_x()+31*4);
+        getG2().drawString("To exit press 'I'",x,y+height+ game_panel.getTile_size_y());
+        getG2().drawString("To craft press pick first item with 'C'",x,y+height+game_panel.getTile_size_x()+32);
+        getG2().drawString("then pick second item wiht 'C'",x,y+height+game_panel.getTile_size_x()+31*2);
+        getG2().drawString( "and finally press 'C' again to craft",x,y+height+game_panel.getTile_size_x()+31*3);
+        getG2().drawString("Press 'E' to equip item",x,y+height+game_panel.getTile_size_x()+31*4);
         //slot
         final int slotxstart = x +20;
         final int slotystart = y +20;
@@ -273,19 +273,19 @@ public class GUI {
         int cursor_height = game_panel.getTile_size_y();
 
         //DRAW CURSOR
-        g2.setColor(Color.white);
-        g2.setStroke(new BasicStroke(3));
-        g2.drawRoundRect(cursor_x,cursor_y,cursor_width,cursor_height, 10,10);
+        getG2().setColor(Color.white);
+        getG2().setStroke(new BasicStroke(3));
+        getG2().drawRoundRect(cursor_x,cursor_y,cursor_width,cursor_height, 10,10);
 
         //DRAW ITEMS
         int index;
         for (int i = 0; i < game_panel.getHero().getInventory().size(); i++){
             // DRAW EQUIP CURSOR
             if(game_panel.getHero().inventory.get(i) == game_panel.getHero().getItemInHeands()){
-                g2.setColor(Color.ORANGE);
-                g2.fillRoundRect(slot_x,slot_y,game_panel.getTile_size_x(),game_panel.getTile_size_y(), 10, 10);
+                getG2().setColor(Color.ORANGE);
+                getG2().fillRoundRect(slot_x,slot_y,game_panel.getTile_size_x(),game_panel.getTile_size_y(), 10, 10);
             }
-                g2.drawImage(game_panel.getHero().inventory.get(i).getStands1(), slot_x, slot_y, null);
+                getG2().drawImage(game_panel.getHero().inventory.get(i).getStands1(), slot_x, slot_y, null);
                 slot_x += game_panel.getTile_size_x();
                 if (i == 4 || i == 9 || i == 14 || i ==19) {
                     slot_x = slotxstart;
@@ -299,51 +299,51 @@ public class GUI {
     }
     //MAIN MENU
     public void drawMenu(){
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.drawImage(Main_menu_image,0,0,null);
+        getG2().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        getG2().drawImage(Main_menu_image,0,0,null);
         //GAME TITLE
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
         String text ="Survival island adventure";
         int x = getXfortextincenter(text);
         int y = game_panel.getTile_size_y() * 4;
-        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+        drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
 
         //GAME MENU
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
         text = "Start new game";
         x = getXfortextincenter(text);
         y += game_panel.getTile_size_y()*5;
-        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+        drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
         if(getCommand_number() == 1){
-            drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+            drawWithOutline(getG2(),">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
         }
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
         text = "Load game";
         x = getXfortextincenter(text);
         y += game_panel.getTile_size_y()*2;
-        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+        drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
         if(getCommand_number() == 2){
-            drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+            drawWithOutline(getG2(),">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
         }
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/25f));
         text = "Quit";
         x = getXfortextincenter(text);
         y += game_panel.getTile_size_y()*2;
-        drawWithOutline(g2,text,x,y,new Color(68,64,60),new Color(0,0,0));
+        drawWithOutline(getG2(),text,x,y,new Color(68,64,60),new Color(0,0,0));
         if(getCommand_number() == 3){
-            drawWithOutline(g2,">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
+            drawWithOutline(getG2(),">",x- game_panel.getTile_size_x(),y + game_panel.getTile_size_y()/6,new Color(68,64,60),new Color(0,0,0));
         }
 
     }
     //WIN SCREEN
     private void drawWinScreen(){
         String text = "YOU WON!!!";
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        drawWithOutline(g2,text,getXfortextincenter(text),getYForCenterinGameMessage(),new Color(68,64,60),new Color(0,0,0));
+        getG2().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        drawWithOutline(getG2(),text,getXfortextincenter(text),getYForCenterinGameMessage(),new Color(68,64,60),new Color(0,0,0));
         text = "To exit press 'E'";
-        g2.drawString("To exit press 'E'",getXfortextincenter(text), game_panel.getWindow_height() - game_panel.getTile_size_x()*2);
+        getG2().drawString("To exit press 'E'",getXfortextincenter(text), game_panel.getWindow_height() - game_panel.getTile_size_x()*2);
     }
     //GAME RUNNING (INGAME MESSAGES AND INSTRUCTIONS)
         //DRAW INGAME MESSAGES
@@ -352,7 +352,7 @@ public class GUI {
             Iterator<Message> iterator = messages.iterator();
             while (iterator.hasNext()) {
                 Message message = iterator.next();
-                drawWithOutline(g2, message.text, message.position.x, message.position.y + verticalOffset, Color.white, Color.black);
+                drawWithOutline(getG2(), message.text, message.position.x, message.position.y + verticalOffset, Color.white, Color.black);
                 verticalOffset += 40;
                 if (message.isReaded) {
                     iterator.remove();
@@ -363,35 +363,35 @@ public class GUI {
         private void Drawinstractions(){
         int x = game_panel.getTile_size_x();
         int y = game_panel.getWindow_height() - game_panel.getTile_size_x()*2;
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD,32));
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.drawString("To open/close inventory press 'I'",x,y);
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,32));
+        getG2().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        getG2().drawString("To open/close inventory press 'I'",x,y);
         y+=28;
-        g2.drawString("To interact or speak press 'E'",x,y);
+        getG2().drawString("To interact or speak press 'E'",x,y);
         y+=28;
-        g2.drawString("Use WASD to move",x,y);
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD,50));
+        getG2().drawString("Use WASD to move",x,y);
+        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,50));
         }
     //SUB FUNCTION TO DRAW SMALL WINDOWS
     private void drawWindow(int x, int y, int width, int heigth){
-        g2.setColor(new Color(0,0,0,200));
-        g2.fillRoundRect(x,y,width,heigth,35,35);
+        getG2().setColor(new Color(0,0,0,200));
+        getG2().fillRoundRect(x,y,width,heigth,35,35);
 
-        g2.setColor(new Color(255,255,255));
-        g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(x+5,y+5,width-10,heigth-10,25,25);
+        getG2().setColor(new Color(255,255,255));
+        getG2().setStroke(new BasicStroke(5));
+        getG2().drawRoundRect(x+5,y+5,width-10,heigth-10,25,25);
     }
 
 
     //SUB FUNCTION TO GET X FOR CENTERED TEXT
     public int getXfortextincenter(String text){
-        int lenght = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        int lenght = (int) getG2().getFontMetrics().getStringBounds(text, getG2()).getWidth();
         int x = game_panel.getWindow_width()/2 - lenght/2;
         return x;
     }
     //SUB FUNCTION TO GET X FOR RIGHT TEXT
     public int getXfotrightText(String text, int tailx){
-        int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        int length = (int) getG2().getFontMetrics().getStringBounds(text, getG2()).getWidth();
         int x = tailx - length;
         return x;
     }
@@ -431,8 +431,17 @@ public class GUI {
     //DRAW RENDER TIME
     public void drawLogRenderTime(long x) {
         String renderTimeAsString = String.valueOf(x);
-        g2.drawString(renderTimeAsString,getXfortextincenter(renderTimeAsString)+400,400 );
+        getG2().drawString(renderTimeAsString,getXfortextincenter(renderTimeAsString)+400,400 );
     }
+
+    public Graphics2D getG2() {
+        return g2;
+    }
+
+    public void setG2(Graphics2D g2) {
+        this.g2 = g2;
+    }
+
     //INGAME MESSAGES
     private static class Message {
         String text;
