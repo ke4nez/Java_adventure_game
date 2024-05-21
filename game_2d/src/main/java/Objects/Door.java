@@ -1,9 +1,17 @@
+/**
+ * The Objects package is responsible for handling in-game objects,
+ * including interactive elements, items, and non-player characters (NPCs).
+ */
 package Objects;
 
 import Main.Game_panel;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The Door class represents a door object in the game.
+ * It extends the Game_Object class and adds functionality for opening and closing the door.
+ */
 public class Door extends Game_Object{
 
 private boolean open;
@@ -14,6 +22,13 @@ String text = "";
 
     private long lastChangeTime;
     private static final long CHANGE_DELAY = 1000; // Задержка в миллисекундах
+
+    /**
+     * Constructor to initialize a Door object.
+     * Sets initial properties for the door, such as collision, interactability, and image.
+     *
+     * @param game_panel The Game_panel instance to which this door belongs.
+     */
     public Door (Game_panel game_panel){
         super(game_panel);
         this.setGame_panel(game_panel);
@@ -33,7 +48,11 @@ String text = "";
     }
 
 
-   public void open(){
+    /**
+     * Opens the door if it's closed and enough time has passed since the last state change.
+     * Notifies the GUI with a message when the door is opened.
+     */
+   private void open(){
        long currentTime = System.currentTimeMillis();
        if (currentTime - lastChangeTime >= CHANGE_DELAY) {
            try {
@@ -51,7 +70,11 @@ String text = "";
        }
    }
 
-   public void close(){
+    /**
+     * Closes the door if it's open and enough time has passed since the last state change.
+     * Notifies the GUI with a message when the door is closed.
+     */
+    private void close(){
        long currentTime = System.currentTimeMillis();
        if (currentTime - lastChangeTime >= CHANGE_DELAY) {
            try {
@@ -70,7 +93,12 @@ String text = "";
     }
 
 
-
+    /**
+     * Interacts with the door object.
+     * If the player has an axe, the door will open when interacted with.
+     * If the door is already open, it will close.
+     * If the player doesn't have an axe, a message will be displayed indicating the requirement.
+     */
     public void interactObject() {
 
         if (getGame_panel().getHero().getItemInHeands() != null) {

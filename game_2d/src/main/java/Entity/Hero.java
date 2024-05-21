@@ -4,80 +4,135 @@ package Entity;
 import Main.CollisionChecker;
 import Main.Game_controls;
 import Main.Game_panel;
-import Objects.Game_Object;
 
 import java.io.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * This class represents the Hero entity in the game.
+ * The Hero is controlled by the player and can move around the game world,
+ * interact with objects and NPCs, pick up items, and perform various actions.
+ */
 public class Hero extends Entity {
+
+    /**
+     * The Game_panel instance associated with the Hero.
+     */
     Game_panel game_panel;
+
+    /**
+     * The Game_controls instance for controlling the Hero.
+     */
     Game_controls game_controls;
 
-    //X Y ON SCREEN
-    private  int screen_x;
-    private  int screen_y;
+    /**
+     * The x-coordinate of the Hero on the screen.
+     */
+    private int screen_x;
+
+    /**
+     * The y-coordinate of the Hero on the screen.
+     */
+    private int screen_y;
+
+    /**
+     * The CollisionChecker instance for handling collisions.
+     */
     CollisionChecker collisionChecker;
-    //INVENTORY
+
+    /**
+     * The inventory of the Hero to store items.
+     */
     public ArrayList<Entity> inventory = new ArrayList<>();
+
+    /**
+     * The maximum size of the Hero's inventory.
+     */
     private final int inventory_size = 25;
-    // LEVEL STATUS
+
+    /**
+     * The current level number of the Hero.
+     */
     private int on_level_number = 1;
 
-
-    //INTERACTION_COOLDOWN TIMER
+    /**
+     * The last time the Hero interacted with an object.
+     */
     private long lastInteractionTime = 0;
+
+    /**
+     * The cooldown duration for interactions.
+     */
     private static final long INTERACTION_COOLDOWN = 1000;
 
-
-
-
-    //String for adding to addmessage method
+    /**
+     * The text message to be displayed.
+     */
     String text = "";
 
-    //CRAFT
+    /**
+     * The first index used in crafting.
+     */
     private int index_1;
+
+    /**
+     * The second index used in crafting.
+     */
     private int index_2;
+
+    /**
+     * Flag indicating whether the Hero is crafting.
+     */
     boolean craft = false;
 
-
-
-
-    public Hero(Game_panel game_panel ,Game_controls game_controls){
+    /**
+     * Constructs a new Hero object.
+     *
+     * @param game_panel     The Game_panel instance associated with the Hero.
+     * @param game_controls  The Game_controls instance for controlling the Hero.
+     */
+    public Hero(Game_panel game_panel, Game_controls game_controls) {
         super(game_panel);
         this.game_controls = game_controls;
         this.game_panel = game_panel;
-        //RECTANGLE FOR COLLISION
         this.setNPC_rectangle_x(8);
         this.setNPC_rectangle_y(16);
         this.setNPC_rectangle_default_x(8);
         this.setNPC_rectangle_default_y(16);
         this.setNPC_rectangle_width(game_panel.getTile_size_x());
         this.setNPC_rectangle_height(game_panel.getTile_size_y());
-        this.setNPC_rectangle(new Rectangle(8,16,getNPC_rectangle_width()/2,getNPC_rectangle_height()/2));
-
+        this.setNPC_rectangle(new Rectangle(8, 16, getNPC_rectangle_width() / 2, getNPC_rectangle_height() / 2));
         collisionChecker = new CollisionChecker(game_panel);
         setDefaultStats();
         setHero();
         setupNPCimages("Hero");
     }
 
-
-    public void setHero(){
+    /**
+     * Sets the initial position and speed of the Hero.
+     */
+    private void setHero(){
         setPosition_x(36 * game_panel.getTile_size_x());
         setPosition_y(53 * game_panel.getTile_size_y());
         setSpeed(5);
         setScreen_x(game_panel.getWindow_width()/2 - game_panel.getTile_size_x());
         setScreen_y(game_panel.getWindow_height()/2 - game_panel.getTile_size_y());
     }
-    public void setDefaultStats(){
+
+    /**
+     * Sets the default statistics of the Hero.
+     */
+    private void setDefaultStats(){
         setLevel(1);
         setExp(1);
         setNextlevelexp(10);
         LoadStartItems();
     }
 
-    //UPDATING IN GAME LOOP
+    /**
+     * Updates the state of the Hero in the game loop.
+     */
     public void updatehero() {
         if (game_controls.go_right || game_controls.go_down || game_controls.go_up || game_controls.go_left || game_controls.interaction) {
             //INDEXES FOR INTERACTIONS AND DIALOGUES
@@ -195,7 +250,11 @@ public class Hero extends Entity {
 
     }
 
-    //DRAWING METHOD AND ANIMATION
+    /**
+     * Paints the Hero on the game screen and handles its animation.
+     *
+     * @param g2 The graphics context.
+     */
     public void painthero(Graphics2D g2) {
         switch(getDirection()){
             case "up":
@@ -244,22 +303,32 @@ public class Hero extends Entity {
         g2.drawImage(image, getScreen_x(), getScreen_y(), null);
     }
 
-
-    //PICK UP SOMETHING
-    public void pickup( int i){
+    /**
+     * Picks up an object at the specified index from the game world.
+     *
+     * @param i The index of the object to pick up.
+     */
+   private void pickup( int i){
         if(i != 99 && !checkIfInventoryisFull()){
             game_panel.getObj().get(i).pickup(i);
             }
     }
 
-    //INTERACTION WITH OBJECTS
-    public void interactObject(int index){
+    /**
+     * Interacts with an object at the specified index from the game world.
+     *
+     * @param index The index of the object to interact with.
+     */
+    private void interactObject(int index){
             if (index != 99) {
                 game_panel.getObj().get(index).interactObject();
                 }
     }
-    //LOAD ITEMS FROM HERO FOLDER
-    public void LoadStartItems(){
+
+    /**
+     * Loads starting items for the Hero from a file.
+     */
+    private void LoadStartItems(){
         try{
             InputStream is = getClass().getClassLoader().getResourceAsStream("NPC/Hero/Start_items.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -286,7 +355,11 @@ public class Hero extends Entity {
         }
     }
 
-    //FULL INVENTORY CHECK
+    /**
+     * Checks if the Hero's inventory is full.
+     *
+     * @return True if the inventory is full, otherwise false.
+     */
     public boolean checkIfInventoryisFull(){
         if(inventory.size()<inventory_size){return false;}
         else {
@@ -297,15 +370,21 @@ public class Hero extends Entity {
         }
     }
 
-    //SPEAK
-    public void  interactNPC(int index){
+    /**
+     * Interacts with an NPC at the specified index from the game world.
+     *
+     * @param index The index of the NPC to interact with.
+     */
+    private void  interactNPC(int index){
         if(game_panel.getNpcs().get(index).isIspeakble()) {
             game_panel.setGameState(game_panel.getDialogState());
             game_panel.getNPCfromNPCs(index).speak();
         }
     }
 
-    //TAKE ITEM IN HANDS
+    /**
+     * Selects an item from the Hero's inventory.
+     */
     public void selectitem(){
 
         int itemindex = game_panel.getGui().getindexofitem();
@@ -324,7 +403,13 @@ public class Hero extends Entity {
         }
 
     }
-    //CRAFT
+
+    /**
+     * Crafts an item using two specified inventory indexes.
+     *
+     * @param index_1 The index of the first item in the inventory.
+     * @param index_2 The index of the second item in the inventory.
+     */
     public void craftItem(int index_1, int index_2) {
         if (index_1 != index_2 && index_1 < inventory.size() && index_2 < inventory.size()) {
             if ((inventory.get(index_1).getName().equals("Lamp_of") && inventory.get(index_2).getName().equals("Bulp")) ||
@@ -347,7 +432,10 @@ public class Hero extends Entity {
         }
         }
     }
-    //CHECK LEVEL UP
+
+    /**
+     * Checks if the Hero has enough experience to level up.
+     */
     public void checkLevelUp(){
         if(getExp() > getNextlevelexp()){
             setLevel(getLevel() + 1);

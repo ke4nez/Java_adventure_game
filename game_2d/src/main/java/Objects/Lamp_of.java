@@ -1,12 +1,24 @@
+/**
+ * The Objects package is responsible for handling in-game objects,
+ * including interactive elements, items, and non-player characters (NPCs).
+ */
 package Objects;
 
-import Entity.Blup;
 import Main.Game_panel;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The Lamp_of class represents a lamp object in the game.
+ */
 public class Lamp_of extends Game_Object {
     Game_panel game_panel;
+
+    /**
+     * Constructs a Lamp_of object with the specified Game_panel.
+     *
+     * @param game_panel The Game_panel instance associated with the lamp object.
+     */
     public Lamp_of(Game_panel game_panel) {
         super(game_panel);
         this.game_panel = game_panel;
@@ -22,7 +34,11 @@ public class Lamp_of extends Game_Object {
 
     }
 
-
+    /**
+     * Picks up the lamp object from the game world and adds it to the hero's inventory.
+     *
+     * @param i The index of the lamp object in the list of game objects.
+     */
     public void pickup(int i) {
         game_panel.getObj().remove(i);
         getGame_panel().getHero().inventory.add(new Entity.Lamp_of(game_panel));

@@ -5,17 +5,29 @@ import Main.Game_panel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Lightning {
-    Game_panel game_panel;
-    BufferedImage darknessFilter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
+/**
+ * Represents the lighting effect in the game.
+ */
+public class Lightning {
+
+    private Game_panel game_panel;
+    private BufferedImage darknessFilter;
     private int circleSize;
 
-    //SET RING OF DARKNESS AROUND PLAYER
+    /**
+     * Constructs a lightning effect with the specified game panel and circle size.
+     *
+     * @param game_panel The game panel associated with the lightning effect.
+     * @param circleSize The size of the circle representing the lighting effect.
+     */
     public Lightning(Game_panel game_panel, int circleSize) {
+        this.game_panel = game_panel;
         this.setCircleSize(circleSize);
 
-        // Create a buffered image
+        // Create a buffered image for the darkness filter
         darknessFilter = new BufferedImage(game_panel.getWindow_width(), game_panel.getWindow_height(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
 
@@ -23,59 +35,50 @@ public class Lightning {
         int centerX = game_panel.getHero().getScreen_x() + (game_panel.getTile_size_x()) / 2;
         int centerY = game_panel.getHero().getScreen_y() + (game_panel.getTile_size_y()) / 2;
 
-        // Create a gradation effect
-        Color color[] = new Color[12];
-        float fraction[] = new float[12];
+        // Create color and fraction arrays for the gradient effect
+        Color[] color = new Color[]{
+                new Color(0, 0, 0, 25),
+                new Color(0, 0, 0, 100),
+                new Color(0, 0, 0, 130),
+                new Color(0, 0, 0, 150),
+                new Color(0, 0, 0, 165),
+                new Color(0, 0, 0, 180),
+                new Color(0, 0, 0, 195),
+                new Color(0, 0, 0, 210),
+                new Color(0, 0, 0, 220),
+                new Color(0, 0, 0, 230),
+                new Color(0, 0, 0, 240),
+                new Color(0, 0, 0, 250)
+        };
+        float[] fraction = new float[]{
+                0f, 0.4f, 0.5f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 0.95f, 1f
+        };
 
-        color[0] = new Color(0, 0, 0, 0.1f);
-        color[1] = new Color(0, 0, 0, 0.42f);
-        color[2] = new Color(0, 0, 0, 0.52f);
-        color[3] = new Color(0, 0, 0, 0.61f);
-        color[4] = new Color(0, 0, 0, 0.69f);
-        color[5] = new Color(0, 0, 0, 0.76f);
-        color[6] = new Color(0, 0, 0, 0.82f);
-        color[7] = new Color(0, 0, 0, 0.87f);
-        color[8] = new Color(0, 0, 0, 0.91f);
-        color[9] = new Color(0, 0, 0, 0.94f);
-        color[10] = new Color(0, 0, 0, 0.96f);
-        color[11] = new Color(0, 0, 0, 0.98f);
+        // Create a radial gradient paint for the lighting effect
+        RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, circleSize / 2, fraction, color);
 
-        fraction[0] = 0f;
-        fraction[1] = 0.4f;
-        fraction[2] = 0.5f;
-        fraction[3] = 0.6f;
-        fraction[4] = 0.65f;
-        fraction[5] = 0.7f;
-        fraction[6] = 0.75f;
-        fraction[7] = 0.8f;
-        fraction[8] = 0.85f;
-        fraction[9] = 0.9f;
-        fraction[10] = 0.95f;
-        fraction[11] = 1f;
-
-        // Create a gradation paint settings
-        RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, (circleSize / 2), fraction, color);
-
-        // Set the gradient data on g2
+        // Set the gradient paint settings on the graphics context
         g2.setPaint(gPaint);
-
         g2.fillRect(0, 0, game_panel.getWindow_width(), game_panel.getWindow_height());
-
         g2.dispose();
     }
 
-
-    public void draw(Graphics2D g2){
-        g2.drawImage(darknessFilter,0,0,null);
+    /**
+     * Draws the lightning effect on the specified graphics context.
+     *
+     * @param g2 The graphics context on which to draw the lightning effect.
+     */
+    public void draw(Graphics2D g2) {
+        g2.drawImage(darknessFilter, 0, 0, null);
     }
 
-    public int getCircleSize() {
-        return circleSize;
-    }
-
+    /**
+     * Sets the size of the circle representing the lighting effect.
+     *
+     * @param circleSize The size of the circle.
+     */
     public void setCircleSize(int circleSize) {
         this.circleSize = circleSize;
     }
 }
-
 

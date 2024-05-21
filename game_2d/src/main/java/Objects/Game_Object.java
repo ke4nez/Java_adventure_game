@@ -1,3 +1,7 @@
+/**
+ * The Objects package is responsible for handling in-game objects,
+ * including interactive elements, items, and non-player characters (NPCs).
+ */
 package Objects;
 
 import Main.Game_panel;
@@ -5,70 +9,71 @@ import Main.Game_panel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * The Game_Object class represents a generic object within the game.
+ * This class provides common properties and methods for various game objects.
+ */
 public class Game_Object {
 
     protected Game_panel game_panel;
     private BufferedImage image;
     private String name;
-
     protected String text;
     private boolean collision = true;
     private int position_x = 0;
     private int position_y = 0;
-
     private int index;
-
-    private int Obj_rectangle_x = 0;
-    private int Obj_rectangle_y = 0;
-    private int  Obj_rectangle_width = 48;
-    private int  Obj_rectangle_height = 48;
-
-    private Rectangle object_rectangle = new Rectangle(0,0,48,48);
-
+    private int Obj_rectangle_width = 48;
+    private int Obj_rectangle_height = 48;
+    private Rectangle object_rectangle = new Rectangle(0, 0, 48, 48);
     private int object_rectangle_default_x = 0;
     private int object_rectangle_default_y = 0;
-
-
-
-
     private boolean ispickeble = false;
     private boolean isinteractable = false;
 
-    public Game_Object(Game_panel gamePanel){
+    /**
+     * Constructs a Game_Object with the specified Game_panel.
+     *
+     * @param gamePanel The Game_panel instance associated with the game object.
+     */
+    public Game_Object(Game_panel gamePanel) {
         this.game_panel = gamePanel;
     }
 
-
+    /**
+     * Paints the game object on the screen.
+     *
+     * @param g2 The Graphics2D context used for drawing the object.
+     */
     public void paintObject(Graphics2D g2) {
-            int screen_x = position_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
-            int screen_y = position_y - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
+        int screen_x = position_x - game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x();
+        int screen_y = position_y - game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y();
 
-        if(        position_x + game_panel.getTile_size_x() > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
+        if (position_x + game_panel.getTile_size_x() > game_panel.getHero().getPosition_x() - game_panel.getHero().getScreen_x()
                 && position_x - game_panel.getTile_size_x() < game_panel.getHero().getPosition_x() + game_panel.getHero().getScreen_x()
                 && position_y + game_panel.getTile_size_y() > game_panel.getHero().getPosition_y() - game_panel.getHero().getScreen_y()
-                && position_y - game_panel.getTile_size_y() < game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y()
-        ) {
-
-
+                && position_y - game_panel.getTile_size_y() < game_panel.getHero().getPosition_y() + game_panel.getHero().getScreen_y()) {
             g2.drawImage(image, screen_x, screen_y, game_panel.getTile_size_x(), game_panel.getTile_size_y(), null);
         }
     }
 
-
-
-    public void interactObject(){
-        //
+    /**
+     * Interacts with the game object.
+     * This method is intended to be overridden by subclasses to provide specific interaction behavior.
+     */
+    public void interactObject() {
+        // Default implementation does nothing
     }
-    public void pickup(int i){
-        //
+
+    /**
+     * Picks up the game object.
+     * This method is intended to be overridden by subclasses to provide specific pickup behavior.
+     *
+     * @param i The index of the object to be picked up.
+     */
+    public void pickup(int i) {
+        // Default implementation does nothing
     }
-
-
-
-
-
-
-
 
         public BufferedImage getImage () {
             return image;
@@ -121,65 +126,21 @@ public class Game_Object {
     public int getObject_rectangle_default_x() {
         return object_rectangle_default_x;
     }
-
-    public void setObject_rectangle_default_x(int object_rectangle_default_x) {
-        this.object_rectangle_default_x = object_rectangle_default_x;
-    }
-
     public int getObject_rectangle_default_y() {
         return object_rectangle_default_y;
-    }
-
-    public void setObject_rectangle_default_y(int object_rectangle_default_y) {
-        this.object_rectangle_default_y = object_rectangle_default_y;
     }
 
     public Rectangle getObject_rectangle() {
         return object_rectangle;
     }
-
-    public void setObject_rectangle(Rectangle object_rectangle) {
-        this.object_rectangle = object_rectangle;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
     public void setIndex(int index) {
         this.index = index;
     }
-
-    public int getObj_rectangle_x() {
-        return Obj_rectangle_x;
-    }
-
-    public void setObj_rectangle_x(int obj_rectangle_x) {
-        Obj_rectangle_x = obj_rectangle_x;
-    }
-
-    public int getObj_rectangle_y() {
-        return Obj_rectangle_y;
-    }
-
-    public void setObj_rectangle_y(int obj_rectangle_y) {
-        Obj_rectangle_y = obj_rectangle_y;
-    }
-
     public int getObj_rectangle_width() {
         return Obj_rectangle_width;
     }
-
-    public void setObj_rectangle_width(int obj_rectangle_width) {
-        Obj_rectangle_width = obj_rectangle_width;
-    }
-
     public int getObj_rectangle_height() {
         return Obj_rectangle_height;
-    }
-
-    public void setObj_rectangle_height(int obj_rectangle_height) {
-        Obj_rectangle_height = obj_rectangle_height;
     }
 
     public boolean isIspickeble() {

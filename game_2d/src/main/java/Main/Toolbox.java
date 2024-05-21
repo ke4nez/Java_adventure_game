@@ -5,10 +5,20 @@ import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The Toolbox class provides image scaling method
+ */
 public class Toolbox {
     private static final Logger logger = Logger.getLogger(Toolbox.class.getName());
 
-    //SCALE IMAGE TO WHATEVER SIZE YOU WANT
+    /**
+     * Scales a given BufferedImage to the specified width and height.
+     *
+     * @param image The original BufferedImage to be scaled.
+     * @param width The desired width of the scaled image.
+     * @param height The desired height of the scaled image.
+     * @return The scaled BufferedImage, or null if the scaling operation fails.
+     */
     public BufferedImage scale_image(BufferedImage image, int width, int height){
         try {
             BufferedImage scale_image = new BufferedImage(width,height, image.getType());

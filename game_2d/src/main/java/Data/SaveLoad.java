@@ -20,7 +20,7 @@ public class SaveLoad {
     private static final Logger logger = Logger.getLogger(SaveLoad.class.getName());
 
     /**
-     * Constructs a SaveLoad object with the specified game panel.
+     * Constructs a SaveLoad object with the game panel.
      *
      * @param game_panel the game panel to be saved and loaded
      */
@@ -144,7 +144,7 @@ public class SaveLoad {
      * @param item_name the name of the item to create
      * @return the created item entity
      */
-    public Entity make_item(String item_name) {
+    private Entity make_item(String item_name) {
         Entity item = null;
 
         switch (item_name) {
@@ -172,7 +172,7 @@ public class SaveLoad {
      * @param y           the y position of the object
      * @return the created game object
      */
-    public Game_Object make_object(String object_name, int x, int y) {
+    private Game_Object make_object(String object_name, int x, int y) {
         Game_Object object = null;
         switch (object_name) {
             case "Axe":
@@ -205,6 +205,12 @@ public class SaveLoad {
                 object.setPosition_x(x);
                 object.setPosition_y(y);
                 break;
+            case "End_chest":
+                object = new End_chest(game_panel);
+                object.setPosition_x(x);
+                object.setPosition_y(y);
+                break;
+
         }
         return object;
     }
@@ -217,7 +223,7 @@ public class SaveLoad {
      * @param y    the y position of the NPC
      * @return the created NPC entity
      */
-    public Entity make_NPC(String name, int x, int y) {
+    private Entity make_NPC(String name, int x, int y) {
         Entity npc = null;
         switch (name) {
             case "Stranger":

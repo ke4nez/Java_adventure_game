@@ -1,15 +1,36 @@
+/**
+ * The Main package is responsible for managing the core aspects of the game,
+ * such as level loading, collision detection, game controls, game panel,
+ * user interface. And image scaling.
+ */
 package Main;
 
 import Entity.Entity;
 import Entity.Hero;
 import java.util.ArrayList;
 
+/**
+ * The CollisionChecker class is responsible for detecting collisions between entities and tiles or objects in the game world.
+ * It provides methods to check for collisions with tiles and objects based on the movement direction of the entity.
+ */
 public class CollisionChecker {
     Game_panel game_panel;
+
+    /**
+     * Constructs a CollisionChecker with a reference to the Game_panel.
+     *
+     * @param game_panel The Game_panel object representing the game environment.
+     */
     public CollisionChecker(Game_panel game_panel) {
         this.game_panel = game_panel;
     }
 
+    /**
+     * Checks for collisions between the given entity and tiles in the game world based on its movement direction.
+     * Updates the entity's collision flag if collision occurs with any impassable tile.
+     *
+     * @param entity The Entity object whose collision with tiles needs to be checked.
+     */
     public void check_tile(Entity entity) {
 
         // 4 coordinates of rectangle of collision left x,
@@ -70,14 +91,20 @@ public class CollisionChecker {
     }
 
     //ENTITY TO TILES COLLISION
-    public void checktiles(int tile_1_number, int tile_2_number, Entity entity){
+    private void checktiles(int tile_1_number, int tile_2_number, Entity entity){
         if (game_panel.getTileManager().getTileByNumber(tile_1_number).getIfNotPasseble() == true ||
                 game_panel.getTileManager().getTileByNumber(tile_2_number).getIfNotPasseble() == true) {
             entity.setCollision(true);
         }
     }
 
-    //ENTITY TO OBJECTS COLLISION
+    /**
+     * Checks for collisions between the given entity and game objects in the game world.
+     * Determines the collision based on the entity's movement direction and updates its collision flag accordingly.
+     *
+     * @param entity The Entity object whose collision with game objects needs to be checked.
+     * @return The index of the colliding object in the game_panel's object list, or 99 if no collision occurs.
+     */
     public int check_object(Entity entity) {
 
         int index = 99;
@@ -171,7 +198,14 @@ public class CollisionChecker {
         return index;
     }
 
-    //HERO TO NPS COLLISION
+    /**
+     * Checks for collisions between the specified entity and a list of target entities (NPCs).
+     * Updates the collision flag of the entity if a collision is detected.
+     *
+     * @param entity The entity for which collision is being checked.
+     * @param target The list of target entities (NPCs) to check collision against.
+     * @return The index of the target entity with which collision occurred, or 99 if no collision.
+     */
     public int checknpc(Entity entity, ArrayList<Entity> target) {
 
         int index = 99;
@@ -259,7 +293,13 @@ public class CollisionChecker {
         return  index;
     }
 
-    //NPC TO HERO COLLISION
+    /**
+     * Checks for collisions between the specified entity and the hero.
+     * Updates the collision flag of the entity if a collision is detected.
+     *
+     * @param entity The entity for which collision is being checked.
+     * @param hero   The hero entity to check collision against.
+     */
     public void checkhero (Entity entity, Hero hero) {
         entity.getNPC_rectangle().x = entity.getPosition_x() + entity.getNPC_rectangle().x;
         entity.getNPC_rectangle().y = entity.getPosition_y() + entity.getNPC_rectangle().y;
@@ -328,7 +368,6 @@ public class CollisionChecker {
         hero.getNPC_rectangle().y = hero.getNPC_rectangle_default_y();
 
     }
-
 }
 
 

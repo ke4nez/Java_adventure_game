@@ -11,6 +11,9 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The GUI class manages the graphical user interface elements in the game.
+ */
 public class GUI {
 
     private Game_panel game_panel;
@@ -34,7 +37,11 @@ public class GUI {
 
 
 
-
+    /**
+     * Constructs a GUI object.
+     *
+     * @param game_panel The Game_panel instance associated with the GUI.
+     */
     public GUI(Game_panel game_panel) {
         this.game_panel = game_panel;
         YForCenterinGameMessage = game_panel.getTile_size_y()*2;
@@ -51,7 +58,7 @@ public class GUI {
             logger.log(Level.SEVERE, "Failed to load custom font", e);
         }
     }
-    public void setMain_menu_image(){
+    private void setMain_menu_image(){
         Toolbox toolbox = new Toolbox();
         try {
              Main_menu_image = toolbox.scale_image((ImageIO.read(getClass().getClassLoader().getResourceAsStream("GUI/Main_menu/main.png"))), game_panel.getWindow_width(),game_panel.getWindow_height());
@@ -60,6 +67,13 @@ public class GUI {
             logger.log(Level.SEVERE, "Failed to load main menu image", e);
         }
     }
+
+
+    /**
+     * Draws the graphical elements on the screen depends on game state.
+     *
+     * @param g2 The Graphics2D object for drawing.
+     */
     public void draw(Graphics2D g2) {
         this.g2 = g2;
         g2.setFont(font);
@@ -106,14 +120,14 @@ public class GUI {
         }
     }
     //pause
-    public void drawPauseSreen(){
+    private void drawPauseSreen(){
         String text = "Pause";
         int x = getXfortextincenter(text);
         int y = game_panel.getWindow_height()/2;
         g2.drawString(text,x,y);
     }
     //pause menu
-   public void drawPauseMenu(){
+   private void drawPauseMenu(){
        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
        g2.drawImage(Main_menu_image,0,0,null);
        //GAME TITLE
@@ -154,7 +168,7 @@ public class GUI {
 
    }
     //DIALOGUE
-    public void drawDialogscreen(){
+    private void drawDialogscreen(){
         //WINDOW
         int x = game_panel.getWindow_width()/4;
         int y = game_panel.getWindow_height()/6;
@@ -172,7 +186,7 @@ public class GUI {
 
     }
     //INVENTORY
-    public void drawherostatus(){
+    private void drawherostatus(){
         //window
         final int x = game_panel.getTile_size_x();
         final int y = game_panel.getTile_size_y() * 3;
@@ -229,7 +243,7 @@ public class GUI {
             g2.drawImage(game_panel.getHero().getItemInHeands().getStands1(), x + game_panel.getTile_size_x(), text_y, null);
         }
     }
-    public void drawinventory(){
+    private void drawinventory(){
 
         //window
         int y = game_panel.getTile_size_y() * 3;
@@ -324,7 +338,7 @@ public class GUI {
 
     }
     //WIN SCREEN
-    public void drawWinScreen(){
+    private void drawWinScreen(){
         String text = "YOU WON!!!";
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         drawWithOutline(g2,text,getXfortextincenter(text),getYForCenterinGameMessage(),new Color(68,64,60),new Color(0,0,0));
@@ -333,7 +347,7 @@ public class GUI {
     }
     //GAME RUNNING (INGAME MESSAGES AND INSTRUCTIONS)
         //DRAW INGAME MESSAGES
-    public void Drawmessageonscreen(){
+    private void Drawmessageonscreen(){
             int verticalOffset = 0;
             Iterator<Message> iterator = messages.iterator();
             while (iterator.hasNext()) {
@@ -346,7 +360,7 @@ public class GUI {
             }
         }
         //DRAW INSTRUCTIONS
-        public void Drawinstractions(){
+        private void Drawinstractions(){
         int x = game_panel.getTile_size_x();
         int y = game_panel.getWindow_height() - game_panel.getTile_size_x()*2;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,32));
@@ -359,7 +373,7 @@ public class GUI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,50));
         }
     //SUB FUNCTION TO DRAW SMALL WINDOWS
-    public void drawWindow(int x, int y, int width, int heigth){
+    private void drawWindow(int x, int y, int width, int heigth){
         g2.setColor(new Color(0,0,0,200));
         g2.fillRoundRect(x,y,width,heigth,35,35);
 
@@ -381,7 +395,14 @@ public class GUI {
         int x = tailx - length;
         return x;
     }
-    //ADD MASSAGE TO MESSAGES ARRAY
+
+    /**
+     * Adds a message to be displayed on the screen.
+     *
+     * @param text The text of the message.
+     * @param x The x-coordinate of the message.
+     * @param y The y-coordinate of the message.
+     */
     public void addMessage(String text, int x, int y) {
         Message message = new Message(text, new Point(x, y));
         messages.add(message);
@@ -395,7 +416,7 @@ public class GUI {
         }, 2000); // 2000 миллисекунд (2 секунды)
     }
     //DRAW TEXT WITH SHADOW
-    public void drawWithOutline(Graphics2D g2, String text, int x, int y, Color textColor, Color outlineColor) {
+    private void drawWithOutline(Graphics2D g2, String text, int x, int y, Color textColor, Color outlineColor) {
         g2.setColor(outlineColor);
         g2.drawString(text, x - 5, y - 5);
         g2.drawString(text, x + 5, y - 5);
@@ -421,9 +442,6 @@ public class GUI {
             this.text = text;
             this.position = position;
         }
-    }
-    public String getCurrentDialogue() {
-        return currentDialogue;
     }
     public void setCurrentDialogue(String currentDialogue) {
         this.currentDialogue = currentDialogue;
@@ -457,20 +475,6 @@ public class GUI {
     public void setGame_panel(Game_panel game_panel) {
         this.game_panel = game_panel;
     }
-    public ArrayList<Message> getMessages() {
-        return messages;
-    }
-    public void setMessages(ArrayList<Message> messages) {
-        this.messages = messages;
-    }
-    public Timer getTimer() {
-        return timer;
-    }
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
-
-
 
 }
 

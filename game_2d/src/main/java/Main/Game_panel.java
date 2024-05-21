@@ -15,7 +15,11 @@ import Enviroment.Lightning;
 import Objects.Lamp_of;
 import Surroundings.TileManager;
 
-
+/**
+ * The Game_panel class extends JPanel and implements the Runnable interface.
+ * This class is responsible for setting up the game panel, handling the game loop,
+ * and managing the rendering and updating of game objects.
+ */
 public class Game_panel extends JPanel implements Runnable{
 
 
@@ -26,17 +30,10 @@ public class Game_panel extends JPanel implements Runnable{
     private int tile_size_y =64;
     private final int max_world_col = 64;
     private final int max_world_row = 64;
-
-    private final int max_world_width = getMax_world_col() * tile_size_x;
-    private final int max_world_heigth = getMax_world_col() * tile_size_y;
-
     //SCREEN SETTINGS
 
     private final int window_width = 1600;
     private final int window_height =900;
-    private int max_screen_col = window_width/tile_size_x;
-    private int max_screen_row = window_height/tile_size_y;
-
 
 
 
@@ -76,23 +73,14 @@ private int gameState;
     //private int gameState;
     private boolean logON = false;
 
-    long draw_rime_start ;
-    long draw_time_end = System.nanoTime();
-    long passed;
-
-
-
-
-
-
-
-
     public void setGame(){
         hero.setOn_level_number(1);
         setGameState(getMainMenuState());
     }
 
-
+    /**
+     * Configures the game panel settings.
+     */
     public void set_game_panel(){
 
         this.setPreferredSize(new Dimension(getWindow_width(), getWindow_height()));
@@ -102,27 +90,34 @@ private int gameState;
         this.setFocusable(true);
     }
 
-
+    /**
+     * Starts the game by initializing the game thread.
+     */
     public void start_game(){
         gameThread = new Thread(this);
         gameThread.start();
     }
 
 
-
+    /**
+     * The main game loop, responsible for updating the game state and repainting the panel.
+     */
     public void run() {
 
         while(gameThread != null) {
             update();
             repaint();
             try {
-                Thread.sleep(1000 / 60); // Задержка для 60 FPS
+                Thread.sleep(1000 / 60); //60 fps
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Updates the game objects based on the current game state.
+     */
 public void update()
 {
 
@@ -193,10 +188,8 @@ public void update()
                 gui.drawLogRenderTime(passed);
             }
 
-
             //GUI
             gui.draw(g2);
-
 
         }
 
@@ -220,32 +213,9 @@ public void changelightning(int x){
         return tile_size_x;
     }
 
-    public void setTile_size_x(int tile_size_x) {
-        this.tile_size_x = tile_size_x;
-    }
 
     public int getTile_size_y() {
         return tile_size_y;
-    }
-
-    public void setTile_size_y(int tile_size_y) {
-        this.tile_size_y = tile_size_y;
-    }
-
-    public int getMax_screen_col() {
-        return max_screen_col;
-    }
-
-    public void setMax_screen_col(int max_screen_height) {
-        this.max_screen_col = max_screen_height;
-    }
-
-    public int getMax_screen_row() {
-        return max_screen_row;
-    }
-
-    public void setMax_screen_row(int max_screen_width) {
-        this.max_screen_row = max_screen_row;
     }
 
     public int getWindow_width() {
@@ -256,36 +226,14 @@ public void changelightning(int x){
         return window_height;
     }
 
-    public int getMax_world_width() {
-        return max_world_width;
-    }
-
-    public int getMax_world_heigth() {
-        return max_world_heigth;
-    }
-
     public Hero getHero(){
        return hero;
     }
-
-    public void setHero(Hero hero) {
-        this.hero = hero;
-    }
-
     public TileManager getTileManager() {
         return tileManager;
     }
-
-    public void setTileManager(TileManager tileManager) {
-        this.tileManager = tileManager;
-    }
-
     public CollisionChecker getCollisionChecker() {
         return collisionChecker;
-    }
-
-    public void setCollisionChecker(CollisionChecker collisionChecker) {
-        this.collisionChecker = collisionChecker;
     }
 
     public ArrayList<Game_Object> getObj() {
@@ -299,30 +247,18 @@ public void changelightning(int x){
         return new Lamp_of(this);
     }
 
-    public void setObj(ArrayList<Game_Object> obj) {
-        this.obj = obj;
-    }
-
     public GUI getGui() {
         return gui;
     }
-
-    public void setGui(GUI gui) {
-        this.gui = gui;
-    }
-
     public boolean isLogON() {
         return logON;
     }
-
     public void setLogON(boolean logON) {
         this.logON = logON;
     }
-
     public int getGameState() {
         return gameState;
     }
-
     public void setGameState(int gameState) {
         this.gameState = gameState;
     }
@@ -334,55 +270,30 @@ public void changelightning(int x){
     public int getPauseState() {
         return pauseState;
     }
-
     public ArrayList<Entity> getNpcs() {
         return npcs;
     }
-
     public Entity getNPCfromNPCs(int x){
         return npcs.get(x);
     }
-
-    public void setNpcs(ArrayList<Entity> entities) {
-        this.npcs = entities;
-    }
-
     public int getDialogState() {
         return dialogState;
     }
-
     public int getMainMenuState() {
         return MainMenuState;
     }
-
     public int getPause_menu() {
         return pause_menu;
     }
-
     public int getInventoryState() {
         return inventoryState;
     }
-
-    public Game_panel getGamePanel(){
-        return this;
-    }
-
     public EnviromentManager getEnviromentManager() {
         return enviromentManager;
     }
-
-    public void setEnviromentManager(EnviromentManager enviromentManager) {
-        this.enviromentManager = enviromentManager;
-    }
-
     public AssetManager getAssetManager() {
         return assetManager;
     }
-
-    public void setAssetManager(AssetManager assetManager) {
-        this.assetManager = assetManager;
-    }
-
     public int getGameEndState() {
         return GameEndState;
     }

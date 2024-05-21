@@ -5,6 +5,12 @@ import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The Game_controls class implements the KeyListener interface and handles
+ * various game controls based on keyboard input.
+ * This class is responsible for updating the game state, handling player
+ * movement, interactions, and menu navigation.
+ */
 public class Game_controls implements KeyListener {
 
     Game_panel game_panel;
@@ -33,6 +39,12 @@ public class Game_controls implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
+    /**
+     * Invoked when a key has been pressed. This method processes the key press events
+     * and updates the game state or player actions accordingly.
+     *
+     * @param e The KeyEvent to be processed.
+     */
     @Override
     public void keyPressed(KeyEvent e) {
 
@@ -243,13 +255,9 @@ public class Game_controls implements KeyListener {
                     }
                 }
             }
-
                 if (e.getKeyCode() == KeyEvent.VK_E) {
                     game_panel.getHero().selectitem();
                 }
-
-
-
         }
 
             //PAUSE STATE
@@ -264,15 +272,8 @@ public class Game_controls implements KeyListener {
                 if (e.getKeyCode() == KeyEvent.VK_E) {
                     game_panel.setGameState(game_panel.getPlayState());
                 }
-
-
             }
-
-
     }
-
-
-
         @Override
         public void keyReleased (KeyEvent e){
 
@@ -298,7 +299,4 @@ public class Game_controls implements KeyListener {
                 counter = 0;
             }
         }
-
-
-
 }

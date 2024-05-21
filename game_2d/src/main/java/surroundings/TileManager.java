@@ -1,3 +1,7 @@
+/**
+ * The Surroundings package is responsible for rendering the game map and includes
+ * functionalities related to the camera.
+ */
 package Surroundings;
 import Main.Game_panel;
 import Main.Toolbox;
@@ -11,7 +15,9 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * The TileManager class manages the tiles in the game world.
+ */
 public class TileManager {
 
 Game_panel game_panel;
@@ -19,6 +25,11 @@ private static final Logger logger = Logger.getLogger(TileManager.class.getName(
  private Tile[] tiles;
  private int[][] map;
 
+    /**
+     * Constructs a TileManager object.
+     *
+     * @param game_panel The Game_panel instance associated with the tile manager.
+     */
 public TileManager(Game_panel game_panel){
     this.game_panel = game_panel;
     setMap(new int[game_panel.getMax_world_col()][game_panel.getMax_world_row()]);
@@ -27,6 +38,7 @@ public TileManager(Game_panel game_panel){
     loadmap(1);
 
 }
+
 
 private void getTileImages(){
     try{
@@ -55,7 +67,7 @@ private void getTileImages(){
         logger.log(Level.SEVERE, "Failed to load tile images", e);
     }
 }
-public void  setup (int index, String imagePath, boolean collision){
+private void  setup (int index, String imagePath, boolean collision){
     Toolbox toolbox = new Toolbox();
     try {
         getTiles()[index] = new Tile();
@@ -67,6 +79,12 @@ public void  setup (int index, String imagePath, boolean collision){
         logger.log(Level.SEVERE, "Failed to setup tile at index " + index, e);
     }
 }
+
+    /**
+     * Loads the map for the specified level number.
+     *
+     * @param level_number The level number.
+     */
 public void loadmap(int level_number){
     try {
         InputStream is = getClass().getClassLoader().getResourceAsStream("Levels/Level_" + level_number + "/map_1.txt");
@@ -97,6 +115,12 @@ public void loadmap(int level_number){
     }
 }
 
+
+    /**
+     * Draws the tiles on the screen. Implements camera function
+     *
+     * @param g2 The Graphics2D object for drawing.
+     */
 public void draw(Graphics2D g2){
     try {
         int world_col = 0;

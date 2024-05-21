@@ -2,6 +2,9 @@ package Surroundings;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * The Tile class represents a tile in the game world.
+ */
 public class Tile {
 private BufferedImage image;
 private boolean collision = false;

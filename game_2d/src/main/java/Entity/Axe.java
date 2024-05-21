@@ -1,3 +1,6 @@
+/**
+ * The Entity package is responsible for classes representing NPCs or items in the inventory.
+ */
 package Entity;
 
 import Main.Game_panel;
