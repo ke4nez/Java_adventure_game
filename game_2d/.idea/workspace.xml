@@ -41,34 +41,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "JUnit.CraftTest.executor": "Run",
-    "JUnit.HeroTest.executor": "Run",
-    "JUnit.InteractNPC.executor": "Run",
-    "JUnit.InteractObject.executor": "Run",
-    "JUnit.PickupTest.executor": "Run",
-    "JUnit.java in game_2d.executor": "Run",
-    "JUnit.test in game_2d.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Ke4Nez/Desktop/test_3/lysenan1/game_2d/src/test/java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/Ke4Nez/Desktop/semestralka/game_2d/src/main/java/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CraftTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.HeroTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.InteractNPC.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.InteractObject.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PickupTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.java in game_2d.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.test in game_2d.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ke4Nez/Desktop/test_3/lysenan1/game_2d/src/test/java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Ke4Nez/Desktop/semestralka/game_2d/src/main/java/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Ke4Nez\Desktop\git_semestralka\lysenan1\lysenan1\game_2d\src\main\resources\Levels\Level_1" />
@@ -183,6 +183,7 @@
       <workItem from="1716254963037" duration="553000" />
       <workItem from="1716255663969" duration="681000" />
       <workItem from="1716323645563" duration="9550000" />
+      <workItem from="1716334994018" duration="14000" />
     </task>
     <servers />
   </component>

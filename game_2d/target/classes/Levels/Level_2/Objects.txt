@@ -1,2 +1,0 @@
-Hole_to_previous_level 32 32
-End_chest 28 29
