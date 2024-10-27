@@ -32,9 +32,9 @@ public class Game_panel extends JPanel implements Runnable{
     private final int max_world_row = 64;
     //SCREEN SETTINGS
 
-    private final int window_width = 1600;
-    private final int window_height =900;
-
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int window_width = (int) screenSize.getWidth(); // Ширина экрана
+    int window_height = (int) screenSize.getHeight(); // Высота экрана
 
 
     //CREATION OF THE GAME WINDOW AND THREAD
@@ -61,7 +61,7 @@ public class Game_panel extends JPanel implements Runnable{
 
     //LOGGING
 
-private int gameState;
+    private int gameState;
     private  final int MainMenuState = 0;
     private final int playState = 1;
     private final int pauseState = 2;
@@ -82,7 +82,6 @@ private int gameState;
      * Configures the game panel settings.
      */
     public void set_game_panel(){
-
         this.setPreferredSize(new Dimension(getWindow_width(), getWindow_height()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -109,7 +108,7 @@ private int gameState;
             repaint();
             try {
                 Thread.sleep(1000 / 60); //60 fps
-            } catch (InterruptedException e) {
+            }catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -150,6 +149,7 @@ public void update()
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
         //MAIN MENU OR PAUSE MENU
         if(gameState == getMainMenuState()){
@@ -344,5 +344,13 @@ public void changelightning(int x){
 
     public SaveLoad getSaveLoad() {
         return saveLoad;
+    }
+
+    public void setWindow_width(int window_width) {
+        this.window_width = window_width;
+    }
+
+    public void setWindow_height(int window_height) {
+        this.window_height = window_height;
     }
 }

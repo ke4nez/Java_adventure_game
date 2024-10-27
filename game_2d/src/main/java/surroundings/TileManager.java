@@ -112,6 +112,7 @@ public void loadmap(int level_number){
         logger.info("Map loaded successfully");
     }catch (Exception e){
         logger.log(Level.SEVERE, "Failed to load map", e);
+        throw new RuntimeException("Failed to load map");
     }
 }
 

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
@@ -44,15 +45,20 @@ public class GUI {
      */
     public GUI(Game_panel game_panel) {
         this.game_panel = game_panel;
-        YForCenterinGameMessage = game_panel.getTile_size_y()*2;
+        YForCenterinGameMessage = game_panel.getTile_size_y() * 2;
 
         setMain_menu_image();
 
-        try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/GUI/bigdonstarve.ttf"));
-            this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 70);
-            logger.log(Level.INFO, "Custom font loaded");
+        // Загрузка шрифта из ресурсов
+        try (InputStream fontStream = getClass().getResourceAsStream("/GUI/bigdonstarve.ttf")) {
+            if (fontStream == null) {
+                throw new IOException("Font not found in resources.");
+            }
 
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+            this.font = customFont.deriveFont(Font.BOLD | Font.ITALIC, 70);
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(this.font);
+            logger.log(Level.INFO, "Custom font loaded and registered.");
 
         } catch (FontFormatException | IOException e) {
             logger.log(Level.SEVERE, "Failed to load custom font", e);
@@ -129,7 +135,7 @@ public class GUI {
     //pause menu
    private void drawPauseMenu(){
        getG2().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-       getG2().drawImage(Main_menu_image,0,0,null);
+       getG2().drawImage(Main_menu_image,-1,-1,null);
        //GAME TITLE
        getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
        String text ="Survival island adventure";
@@ -300,7 +306,7 @@ public class GUI {
     //MAIN MENU
     public void drawMenu(){
         getG2().setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        getG2().drawImage(Main_menu_image,0,0,null);
+        getG2().drawImage(Main_menu_image,-1,-1,null);
         //GAME TITLE
         getG2().setFont(getG2().getFont().deriveFont(Font.BOLD,game_panel.getWindow_width()/10f));
         String text ="Survival island adventure";

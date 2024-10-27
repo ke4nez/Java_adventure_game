@@ -45,24 +45,34 @@
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.17.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.game-final.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.game_2d-1.0-SNAPSHOT.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in game_2d.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CompleteLevel_1Test.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.CraftTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.HeroTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.InteractNPC.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.InteractObject.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoadLevelUnitTests.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PickupTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.java in game_2d.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.test in game_2d.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.game [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.game [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.game_2d [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.game_2d [package].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ke4Nez/Desktop/test_3/lysenan1/game_2d/src/test/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ke4Nez/Desktop/game_2d&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Ke4Nez/Desktop/semestralka/game_2d/src/main/java/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
@@ -81,11 +91,25 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.java in game_2d">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean" />
+      <command value="mvn package" />
+    </option>
+  </component>
+  <component name="RunManager" selected="JAR Application.game-final.jar">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="game_2d" />
       <option name="PROGRAM_PARAMETERS" value="--enable-logging" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in game_2d" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="game_2d" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -101,12 +125,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="17.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/17.jar" />
+      <method v="2" />
+    </configuration>
+    <configuration name="game-final.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/game-final.jar" />
+      <method v="2" />
+    </configuration>
+    <configuration name="game_2d-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/game_2d-1.0-SNAPSHOT.jar" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="JAR Application.17.jar" />
+      <item itemvalue="JAR Application.game-final.jar" />
+      <item itemvalue="JAR Application.game_2d-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JUnit.All in game_2d" />
       <item itemvalue="JUnit.java in game_2d" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.game-final.jar" />
+        <item itemvalue="JAR Application.17.jar" />
+        <item itemvalue="JAR Application.game_2d-1.0-SNAPSHOT.jar" />
+        <item itemvalue="JUnit.All in game_2d" />
         <item itemvalue="JUnit.java in game_2d" />
       </list>
     </recent_temporary>
@@ -114,6 +158,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
         <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
@@ -184,6 +229,16 @@
       <workItem from="1716255663969" duration="681000" />
       <workItem from="1716323645563" duration="9550000" />
       <workItem from="1716334994018" duration="14000" />
+      <workItem from="1716375350815" duration="1048000" />
+      <workItem from="1716399976748" duration="23000" />
+      <workItem from="1716748871918" duration="1531000" />
+      <workItem from="1717610547020" duration="24837000" />
+      <workItem from="1717770747613" duration="8744000" />
+      <workItem from="1718842128803" duration="77000" />
+      <workItem from="1729976636478" duration="6535000" />
+      <workItem from="1730026171483" duration="4174000" />
+      <workItem from="1730030775868" duration="22000" />
+      <workItem from="1730031422150" duration="52000" />
     </task>
     <servers />
   </component>

@@ -4,6 +4,7 @@ import Entity.Lamp_of;
 import Entity.Lamp_on;
 import Main.Game_panel;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -11,7 +12,6 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 //TESTING WORKING LAMP CRAFT
 public class CraftTest {
 
@@ -45,7 +45,6 @@ public class CraftTest {
 
         //Crafting
         game_panel.getHero().craftItem(0,1);
-
         assertSame("Lamp_on", hero.inventory.get(0).getName(), "Lamp_on should be added to inventory");
         assertEquals(1, hero.inventory.size(), "Lamp_of and Blup should be removed from inventory and Lamp on is added, so inventory size should be 1");
     }

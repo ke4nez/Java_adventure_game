@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>_2d_game</groupId>
-    <artifactId>game_2d</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>game</artifactId>
+    <version>final</version>
 <dependencies>
 
     <dependency>
@@ -35,6 +35,23 @@
 
 </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- Укажите main-класс без пакета -->
+                            <mainClass>Main.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

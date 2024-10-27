@@ -140,8 +140,8 @@ public class Hero extends Entity {
             int npc_collision_index = 99;
             if (game_controls.interaction) {
                 //INTERACTION COOLDOWN;
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastInteractionTime > INTERACTION_COOLDOWN) {
+               // long currentTime = System.currentTimeMillis();
+              //  if (currentTime - lastInteractionTime > INTERACTION_COOLDOWN) {
                     setDirection("interaction");
                     setCollision(false);
                     index = collisionChecker.check_object(this);
@@ -162,8 +162,8 @@ public class Hero extends Entity {
 
                     //INTERACTION COOLDOWN;
                     game_controls.interaction = false;
-                    lastInteractionTime = currentTime;
-                }
+                   // lastInteractionTime = currentTime;
+               // }
             }
 
 

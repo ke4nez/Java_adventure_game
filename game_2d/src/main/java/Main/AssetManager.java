@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class AssetManager {
 
     private Game_panel game_panel;
-    private static final Logger logger = Logger.getLogger(AssetManager.class.getName());
+    public static final Logger logger = Logger.getLogger(AssetManager.class.getName());
     private TileManager tileManager;
 
     /**
@@ -48,7 +48,7 @@ public class AssetManager {
      *
      * @param level_number The number of the level from which to load objects.
      */
-    private void loadObjects(int level_number) {
+    public void loadObjects(int level_number) {
         game_panel.getObj().clear();
         try {
             InputStream is = getClass().getClassLoader().getResourceAsStream("Levels/Level_" + level_number + "/Objects.txt");
@@ -106,14 +106,18 @@ public class AssetManager {
                             new_object.setPosition_y(y * game_panel.getTile_size_y());
                             game_panel.getObj().add(new_object);
                             break;
+                        default:
+                            throw new IOException("Invalid Objects name: "+ line);
                     }
                 } else {
                     logger.log(Level.SEVERE, "Invalid line format in Objects.txt file: " + line);
+                    throw new IOException("Invalid line format in Objects.txt file: "+ line);
                 }
             }
             logger.log(Level.INFO, "Objects were loaded");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error reading file: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error reading Objects: " + e.getMessage(), e);
+            throw new RuntimeException("Error reading Objects: " + e.getMessage(), e);
         }
     }
 
@@ -122,7 +126,7 @@ public class AssetManager {
      *
      * @param level_number The number of the level from which to load NPCs.
      */
-    private void loadNPCs(int level_number) {
+    public void loadNPCs(int level_number) {
         game_panel.getNpcs().clear();
         try {
             InputStream is = getClass().getClassLoader().getResourceAsStream("Levels/Level_" + level_number + "/Npcs.txt");
@@ -152,23 +156,24 @@ public class AssetManager {
                             npc.setDialogue(level_number);
                             game_panel.getNpcs().add(npc);
                             break;
+                        default:
+                            throw new IOException("Invalid NPC name: " + line);
                     }
                 } else {
                     logger.log(Level.SEVERE, "Invalid line format in Npcs.txt file: " + line);
                 }
             }
             logger.log(Level.INFO, "NPCs were loaded");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error reading file: " + e.getMessage(), e);
-        } catch (NumberFormatException e) {
-            logger.log(Level.SEVERE, "Error converting number: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error reading file with NPCs: " + e.getMessage(), e);
+            throw new RuntimeException("Error reading file with NPCs: " + e.getMessage(), e);
         }
     }
 
     /**
      * Clears the current level by removing objects and NPCs.
      */
-    private void clearLevel() {
+    public void clearLevel() {
         game_panel.getObj().clear();
         game_panel.getNpcs().clear();
     }

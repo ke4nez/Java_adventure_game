@@ -33,7 +33,8 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle("my adventure");
-        window.setResizable(false);
+        window.setUndecorated(true);
+        window.setResizable(true);
 
         Game_panel game_panel = new Game_panel();
         game_panel.set_game_panel();

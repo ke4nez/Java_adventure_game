@@ -5,10 +5,10 @@ import Main.Game_panel;
 import Objects.Axe;
 import Entity.Hero;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import Main.Game_controls;
 import java.awt.Graphics2D;
-
 public class PickupTest {
 
     private Game_panel game_panel;

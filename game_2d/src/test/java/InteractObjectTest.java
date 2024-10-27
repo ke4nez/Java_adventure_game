@@ -3,6 +3,7 @@ import Entity.Lamp_on;
 import Main.Game_controls;
 import Main.Game_panel;
 import Objects.Hole_to_next_level;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
